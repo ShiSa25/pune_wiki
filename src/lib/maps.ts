@@ -6,3 +6,8 @@ export function mapsSearchUrl(query: string): string {
   });
   return `https://www.google.com/maps/search/?${params.toString()}`;
 }
+
+/** Prefer a verified Maps URL. Otherwise build a text search. */
+export function placeMapsUrl(place: { mapsQuery: string; mapsUrl?: string }): string {
+  return place.mapsUrl ?? mapsSearchUrl(place.mapsQuery);
+}

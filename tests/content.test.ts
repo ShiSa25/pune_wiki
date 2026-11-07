@@ -3,6 +3,8 @@ import pairingsJson from "../src/content/pairings.json";
 import placesJson from "../src/content/places.json";
 import { categoryIds } from "../src/lib/categories";
 import { pairings, places } from "../src/lib/catalog";
+import { placeMapsUrl } from "../src/lib/maps";
+import { googleMapsUrlSchema, httpUrlSchema } from "../src/lib/schema";
 
 const bannedKeys = new Set([
   "rating",
@@ -55,7 +57,9 @@ describe("content validity", () => {
       expect(place.updatedOn).toBe("2026-11-07");
       for (const source of [...place.sources, ...place.recheck]) {
         expect(source.checkedOn).toBe("2026-11-07");
-        expect(source.url.startsWith("http")).toBe(true);
+        expect(httpUrlSchema.safeParse(source.url).success).toBe(true);
+        const protocol = new URL(source.url).protocol;
+        expect(protocol === "http:" || protocol === "https:").toBe(true);
       }
       for (const reported of place.venueReported) {
         expect(place.sources.some((source) => source.url === reported.sourceUrl)).toBe(true);
@@ -91,5 +95,37 @@ describe("content validity", () => {
     const fortPairing = pairings.find((pairing) => pairing.stops.includes("sinhagad"));
     expect(fortPairing?.limit.toLowerCase()).toContain("not a trek");
     expect(fortPairing?.limit.toLowerCase()).toMatch(/night|monsoon/);
+  });
+
+  it("rejects non-http content URLs and accepts only https Google Maps links", () => {
+    for (const value of ["javascript:alert(1)", "data:text/html,hi", "ftp://example.com/place", "https://user:pass@example.com/"]) {
+      expect(httpUrlSchema.safeParse(value).success).toBe(false);
+    }
+    expect(httpUrlSchema.safeParse("https://www.kayanibakerypune.com/").success).toBe(true);
+    expect(httpUrlSchema.safeParse("http://www.vaishalihotel.in/").success).toBe(true);
+    expect(googleMapsUrlSchema.safeParse("javascript:alert(1)").success).toBe(false);
+    expect(googleMapsUrlSchema.safeParse("https://evil.example/maps/search/").success).toBe(false);
+    expect(googleMapsUrlSchema.safeParse("http://www.google.com/maps/search/?api=1&query=Pune").success).toBe(false);
+    expect(
+      googleMapsUrlSchema.safeParse(
+        "https://www.google.com/maps/search/?api=1&query=Saras+Baug+Pune&query_place_id=ChIJPTTMtErBwjsR4x5gOiq7Azw",
+      ).success,
+    ).toBe(true);
+  });
+
+  it("points the three corrected map links at the listings that were opened", () => {
+    const chitale = places.find((place) => place.slug === "chitale-bandhu");
+    const saras = places.find((place) => place.slug === "saras-baug");
+    const kasba = places.find((place) => place.slug === "kasba-ganpati");
+    expect(placeMapsUrl(chitale!)).toBe(
+      "https://www.google.com/maps/search/?api=1&query=Pune%20Sevasadan%20Building%20Sadashiv%20Peth",
+    );
+    expect(placeMapsUrl(saras!)).toBe(
+      "https://www.google.com/maps/search/?api=1&query=Saras+Baug+Pune&query_place_id=ChIJPTTMtErBwjsR4x5gOiq7Azw",
+    );
+    expect(placeMapsUrl(kasba!)).toBe(
+      "https://www.google.com/maps/search/?api=1&query=Kasaba%20Ganpati%20Mandir%20Kasba%20Peth%20Pune",
+    );
+    expect(placeMapsUrl(kasba!).toLowerCase()).not.toContain("lal+mahal");
   });
 });

@@ -1,6 +1,6 @@
 ---
 import { categoryLabel } from "../lib/categories";
-import { mapsSearchUrl } from "../lib/maps";
+import { placeMapsUrl } from "../lib/maps";
 import type { Place } from "../lib/schema";
 
 interface Props {
@@ -18,7 +18,7 @@ const { places, grouped = false } = Astro.props;
         <h3>
           <a href={`/places/${place.slug}`}>{place.name}</a>
         </h3>
-        <a class="map-link" href={mapsSearchUrl(place.mapsQuery)} rel="noreferrer">
+        <a class="map-link" href={placeMapsUrl(place)} rel="noreferrer">
           Map
           <span class="sr"> for {place.name}</span>
         </a>

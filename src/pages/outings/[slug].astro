@@ -1,7 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { findPairing, pairingPlaces, pairings } from "../../lib/catalog";
-import { mapsSearchUrl } from "../../lib/maps";
+import { placeMapsUrl } from "../../lib/maps";
 
 export function getStaticPaths() {
   return pairings.map((pairing) => ({ params: { slug: pairing.slug } }));
@@ -26,7 +26,7 @@ const stops = pairingPlaces(pairing);
             <span class="meta"> · {place.area}</span>
             <p>{place.summary}</p>
             <p>
-              <a href={mapsSearchUrl(place.mapsQuery)}>Map for stop {index + 1}</a>
+              <a href={placeMapsUrl(place)} rel="noreferrer">Map for stop {index + 1}</a>
             </p>
           </li>
         ))

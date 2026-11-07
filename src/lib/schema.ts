@@ -4,10 +4,34 @@ import { categoryIds } from "./categories";
 const slug = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
 const day = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 
+function isHttpUrl(value: string, httpsOnly = false): boolean {
+  let url: URL;
+  try {
+    url = new URL(value);
+  } catch {
+    return false;
+  }
+  if (url.username || url.password) return false;
+  if (httpsOnly) return url.protocol === "https:";
+  return url.protocol === "http:" || url.protocol === "https:";
+}
+
+/** http(s) only. Rejects javascript:, data:, ftp:, and embedded credentials. */
+export const httpUrlSchema = z.url().refine((value) => isHttpUrl(value), "Use an http or https URL");
+
+/** A Google Maps https URL. Place ids must come from a page Google actually opened. */
+export const googleMapsUrlSchema = z.url().refine((value) => {
+  if (!isHttpUrl(value, true)) return false;
+  const url = new URL(value);
+  const hostOk = url.hostname === "www.google.com" || url.hostname === "maps.google.com";
+  const pathOk = url.pathname === "/maps" || url.pathname.startsWith("/maps/");
+  return hostOk && pathOk;
+}, "Use a https Google Maps URL");
+
 export const sourceSchema = z
   .object({
     title: z.string().min(3),
-    url: z.url(),
+    url: httpUrlSchema,
     checkedOn: day,
     usedFor: z.string().min(8),
   })
@@ -17,7 +41,7 @@ export const venueReportedSchema = z
   .object({
     label: z.string().min(3),
     value: z.string().min(3),
-    sourceUrl: z.url(),
+    sourceUrl: httpUrlSchema,
     checkedOn: day,
   })
   .strict();
@@ -33,6 +57,7 @@ export const placeSchema = z
     summary: z.string().min(40).max(240),
     note: z.string().min(80),
     mapsQuery: z.string().min(8),
+    mapsUrl: googleMapsUrlSchema.optional(),
     aliases: z.array(z.string().min(2)).min(1),
     sort: z.number().int().positive(),
     editorVisit: z.literal(false),

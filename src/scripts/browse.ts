@@ -1,6 +1,7 @@
 import {
   describeFilter,
   emptyFilter,
+  emptyFilterMessage,
   filterPlaces,
   filterStateFromParams,
   paramsFromFilter,
@@ -67,8 +68,7 @@ if (root) {
     }
     if (empty && emptyReason) {
       empty.hidden = allowed.size > 0;
-      emptyReason.textContent =
-        allowed.size > 0 ? "" : `No place matches ${described}. Clear the filters to see every place.`;
+      emptyReason.textContent = allowed.size > 0 ? "" : emptyFilterMessage(described);
     }
     if (historyMode !== "none") {
       const path = `/${paramsFromFilter(state)}`;

@@ -87,3 +87,9 @@ export function describeFilter(
   if (query) parts.push(`matching “${query}”`);
   return parts.length > 0 ? parts.join(" ") : "All places";
 }
+
+/** Empty-state sentence. A query-only description already starts with “matching”. */
+export function emptyFilterMessage(described: string): string {
+  const detail = described.startsWith("matching ") ? described.slice("matching ".length) : described;
+  return `No place matches ${detail}. Clear the filters to see every place.`;
+}

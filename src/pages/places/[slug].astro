@@ -3,7 +3,7 @@ import Base from "../../layouts/Base.astro";
 import { findPlace, places } from "../../lib/catalog";
 import { categoryLabel } from "../../lib/categories";
 import { formatDay } from "../../lib/format";
-import { mapsSearchUrl } from "../../lib/maps";
+import { placeMapsUrl } from "../../lib/maps";
 
 export function getStaticPaths() {
   return places.map((place) => ({ params: { slug: place.slug } }));
@@ -23,7 +23,7 @@ if (!place) throw new Error(`Missing place ${slug}`);
     <p class="lede">{place.summary}</p>
     <p>{place.note}</p>
     <p>
-      <a href={mapsSearchUrl(place.mapsQuery)}>Open {place.name} in Google Maps</a>
+      <a href={placeMapsUrl(place)} rel="noreferrer">Open {place.name} in Google Maps</a>
     </p>
     <h2>Recorded</h2>
     <ul class="fact-list">
@@ -53,7 +53,7 @@ if (!place) throw new Error(`Missing place ${slug}`);
       {
         place.sources.map((source) => (
           <li>
-            <a href={source.url}>{source.title}</a>
+            <a href={source.url} rel="noreferrer">{source.title}</a>
             <span class="meta"> · checked {formatDay(source.checkedOn)} · {source.usedFor}</span>
           </li>
         ))
@@ -67,7 +67,7 @@ if (!place) throw new Error(`Missing place ${slug}`);
           <ul class="fact-list sources">
             {place.recheck.map((source) => (
               <li>
-                <a href={source.url}>{source.title}</a>
+                <a href={source.url} rel="noreferrer">{source.title}</a>
                 <span class="meta"> · {source.usedFor}</span>
               </li>
             ))}

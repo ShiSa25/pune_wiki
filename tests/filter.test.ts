@@ -3,12 +3,13 @@ import { searchRecords } from "../src/lib/catalog";
 import {
   describeFilter,
   emptyFilter,
+  emptyFilterMessage,
   filterPlaces,
   filterStateFromParams,
   paramsFromFilter,
   sanitizeFilter,
 } from "../src/lib/filter";
-import { mapsSearchUrl } from "../src/lib/maps";
+import { mapsSearchUrl, placeMapsUrl } from "../src/lib/maps";
 
 const records = searchRecords;
 
@@ -85,6 +86,17 @@ describe("filter state", () => {
     expect(describeFilter(state, () => "Central Pune")).toBe("Culture in Central Pune matching “wada”");
     expect(describeFilter(emptyFilter, () => "")).toBe("All places");
   });
+
+  it("does not say a query matches matching itself", () => {
+    const described = describeFilter({ ...emptyFilter, query: "zzz-no-such-place" }, () => "");
+    expect(emptyFilterMessage(described)).toBe(
+      "No place matches “zzz-no-such-place”. Clear the filters to see every place.",
+    );
+    expect(emptyFilterMessage(described)).not.toContain("matches matching");
+    expect(emptyFilterMessage("Culture in Central Pune matching “wada”")).toBe(
+      "No place matches Culture in Central Pune matching “wada”. Clear the filters to see every place.",
+    );
+  });
 });
 
 describe("maps links", () => {
@@ -95,5 +107,15 @@ describe("maps links", () => {
     expect(params.get("api")).toBe("1");
     expect(params.get("query")).toContain("Kayani Bakery");
     expect(url).not.toMatch(/\d{2}\.\d{4}/);
+  });
+
+  it("uses a verified Maps URL when a place has one", () => {
+    expect(
+      placeMapsUrl({
+        mapsQuery: "ignored",
+        mapsUrl: "https://www.google.com/maps/search/?api=1&query=Saras+Baug+Pune&query_place_id=ChIJPTTMtErBwjsR4x5gOiq7Azw",
+      }),
+    ).toBe("https://www.google.com/maps/search/?api=1&query=Saras+Baug+Pune&query_place_id=ChIJPTTMtErBwjsR4x5gOiq7Azw");
+    expect(placeMapsUrl({ mapsQuery: "Kayani Bakery, Camp, Pune" })).toContain("query=Kayani+Bakery");
   });
 });
