@@ -43,6 +43,7 @@ export const placeSchema = z
     lat: z.number().nullable(),
     lng: z.number().nullable(),
     pin: z.enum(["osm", "venue", "wikipedia"]).nullable(),
+    pinNote: z.string().min(12).nullable(),
     coordUrl: httpUrl.nullable(),
     coordTitle: z.string().min(8).nullable(),
     coordCheckedOn: day.nullable(),
@@ -61,11 +62,10 @@ export const placeSchema = z
   })
   .strict()
   .superRefine((place, context) => {
-    const pinned = place.pin !== null;
-    if (pinned !== (place.lat !== null && place.lng !== null && place.coordUrl !== null)) {
-      context.addIssue({ code: "custom", message: `${place.id} pin and coordinate evidence disagree` });
+    if (place.pin === null || place.lat === null || place.lng === null || !place.coordUrl || !place.coordTitle || !place.coordCheckedOn) {
+      context.addIssue({ code: "custom", message: `${place.id} is on the list without coordinate evidence` });
+      return;
     }
-    if (!pinned || place.lat === null || place.lng === null || !place.coordUrl) return;
     if (!inPuneBox({ lat: place.lat, lng: place.lng })) {
       context.addIssue({ code: "custom", message: `${place.id} is outside the Pune box` });
     }

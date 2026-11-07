@@ -30,7 +30,7 @@ npm run preview   # serve the build on port 4173
 
 ## Edit a place
 
-Places live in `src/content/guide.json`. The checks are in `src/lib/guide.ts`. A pin needs `lat`, `lng`, `pin` (`osm`, `venue`, or `wikipedia`), and `coordUrl` for that source. Do not paste a coordinate out of a Google Maps link. A Google link, when there is one, is only the “Google Maps” anchor.
+Places live in `src/content/guide.json`. The checks are in `src/lib/guide.ts`. Every place on the page needs `lat`, `lng`, `pin` (`osm`, `venue`, or `wikipedia`), and `coordUrl` for that source. A name with no such source stays in `docs/backlog.md` instead of appearing as an empty pin. Do not paste a coordinate out of a Google Maps link. A Google link, when there is one, is only the “Google Maps” anchor. A dot that marks a building, a gate, or a park centre says so in `pinNote`.
 
 `npm test` checks the list size, the sources, and that stored points are not the Google listing geometry. `docs/map.md` covers tiles, attribution, and the content-security hosts.
 

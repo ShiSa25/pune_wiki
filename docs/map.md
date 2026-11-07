@@ -18,11 +18,11 @@ A pin is not taken from a Google Maps listing. A listing link is only a way out 
 - A coordinate the venue publishes on its own site (schema.org `GeoCoordinates`, or the business location on that site).
 - A Wikipedia article coordinate for that exact place.
 
-No Nominatim request is made. Points outside Pune and PCMC are dropped. The map’s opening view is a city camera, not a venue. Places without one of those sources stay on the list and say “No verified pin”. Counts in this file are whatever `src/content/guide.json` says after the last edit; the tests read that file rather than a copied total.
+No Nominatim request is made. Points outside Pune and PCMC are dropped. The map’s opening view is a city camera, not a venue. A place with no allowed coordinate is not shown. Those names are in `docs/backlog.md`. The visible list is 50 places, and every one has coordinate evidence. Counts below are that list, not a quota.
 
 Donna Cucina’s own site publishes a schema.org point that matches its Google listing number. That pin is kept, and the coordinate URL is the venue site. Cafe Goodluck is OpenStreetMap node 1534457948 at Good Luck Chowk, not the road of the same name and not the Baner outlet. The Pu La Deshpande pin is the centre of way 197954185, the park tagged as the Pune-Okayama Friendship Garden. A proposed metro station also named Deshpande Udyan is not used. The heritage-walk pin is Delhi Darwaja, the gate the PMC page names as the assembly point, not the whole route and not the Shaniwar Wada relation.
 
-A name search of the Pune box, plus venue pages, did not find an element for these branches: The Place, Poona Guest House, Badshahi Boarding House, Shri Krishna Bhuvan, Newale Misal, Gatti Chutney in Koregaon Park, Aragma, Farro, Nanna’s Negroni, Bai Mu Dan, Godaam, Kumaradhara, Gujar Cold Drink House, and Elephant & Co. in Kalyani Nagar. An Elephant & Co. pub on OSM is in Baner, so it is not used. Kaka Halwai nodes in Bavdhan, on Sinhagad Road, and on other streets were not used; the pin is the confectionery node beside Lokmanya Tilak Marg. Doolally is pinned to The KOPA mall node, and Independence Brewing’s Kalyani room is pinned to the Mulik Palace node named in its address. Neither of those is a separate restaurant node.
+The visible list stopped at 50. Eleven researched replacements, each an OpenStreetMap node for that branch, took the place of the fourteen names that still had no allowed coordinate. Those fourteen are in `docs/backlog.md`, not on the page. Building, gate, and park-centre dots say so in the popup and in Notes. A restaurant node with no street tag says which road was nearby, or that none was.
 
 ## Practical limits
 

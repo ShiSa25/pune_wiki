@@ -79,6 +79,7 @@ import { cardLine, places, placesIn, sections } from "../lib/guide";
                       {cardLine(place.line) !== place.line && <p>{place.line}</p>}
                       {place.dish && <p>{place.dish}</p>}
                       {place.flag && <p>{place.flag}</p>}
+                      {place.pinNote && <p>{place.pinNote}</p>}
                       {place.address && <p>{place.address}</p>}
                       {place.coordTitle && <p>{place.coordTitle}. Checked {place.coordCheckedOn}.</p>}
                       <ul>

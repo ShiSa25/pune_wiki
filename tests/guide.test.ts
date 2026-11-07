@@ -4,7 +4,7 @@ import { inPuneBox, placeGeometry } from "../src/lib/coords";
 import { cardLine, MAP_STYLE, placeSchema, TILE_HOST, places, sections } from "../src/lib/guide";
 import { visibleLabelIds, type LabelBox } from "../src/lib/labels";
 
-const excludedNames = ["garden vada", "vetal tekdi", "chitale", "gather", "ground up", "kowloon", "shreyas", "gatti anna"];
+const excludedNames = ["garden vada", "vetal tekdi", "sevasadan", "gather", "ground up", "kowloon", "shreyas", "gatti anna"];
 
 describe("guide data", () => {
   it("stays between 50 and 60 places in eight sections", () => {
@@ -30,16 +30,15 @@ describe("guide data", () => {
     }
   });
 
-  it("does not copy Google listing coordinates onto the map", () => {
-    let pins = 0;
+  it("requires independent coordinate evidence on every displayed place", () => {
+    expect(places.length).toBe(50);
+    const off = ["the-place", "poona-guest-house", "badshahi-boarding-house", "elephant-and-co", "gatti-chutney"];
+    expect(places.map((place) => place.id)).not.toEqual(expect.arrayContaining(off));
     for (const place of places) {
       expect(place.pin).not.toBe("maps-place-geometry");
-      if (!place.pin) {
-        expect(place.lat).toBeNull();
-        expect(place.lng).toBeNull();
-        continue;
-      }
-      pins += 1;
+      expect(place.pin).toBeTruthy();
+      expect(place.lat).not.toBeNull();
+      expect(place.lng).not.toBeNull();
       expect(place.coordUrl).toBeTruthy();
       expect(place.coordCheckedOn).toBe("2026-11-07");
       expect(inPuneBox({ lat: place.lat!, lng: place.lng! })).toBe(true);
@@ -49,33 +48,18 @@ describe("guide data", () => {
       if (place.pin === "venue") expect(host.endsWith("google.com")).toBe(false);
     }
     const donna = places.find((place) => place.id === "donna-cucina");
-    const donnaGeometry = placeGeometry(donna?.mapsUrl ?? "");
-    expect(donna?.pin).toBe("venue");
-    expect(donna?.coordUrl).toBe("https://www.donnacucina.com/");
-    expect(donnaGeometry).toEqual({ lat: donna?.lat, lng: donna?.lng });
-    expect(pins).toBe(39);
-    expect(places.filter((place) => !place.pin).map((place) => place.id).sort()).toEqual([
-      "aragma",
-      "badshahi-boarding-house",
-      "bai-mu-dan",
-      "elephant-and-co",
-      "farro",
-      "gatti-chutney",
-      "godaam-specialty-coffee-co",
-      "gujar-cold-drink-house",
-      "kumaradhara",
-      "nannas-negroni",
-      "newale-misal",
-      "poona-guest-house",
-      "shri-krishna-bhuvan",
-      "the-place",
-    ]);
+    expect(placeGeometry(donna?.mapsUrl ?? "")).toEqual({ lat: donna?.lat, lng: donna?.lng });
+    for (const id of ["doolally-taproom", "independence-brewing-co", "al-di-la", "aasmana", "blue-nile", "chitale-bandhu-bajirao", "wadeshwar"]) {
+      expect(places.find((place) => place.id === id)?.pinNote?.length).toBeGreaterThan(12);
+    }
+    expect(places.find((place) => place.id === "chitale-bandhu-bajirao")?.flag).toMatch(/Sevasadan/);
+    expect(places.find((place) => place.id === "prems")?.flag).toMatch(/Baner/);
+    expect(places.find((place) => place.id === "blue-tokai-ghole-road")?.flag).toMatch(/Ghole Road/);
   });
 
   it("leaves the unresolved branches out of the names", () => {
     const names = places.map((place) => place.name.toLowerCase()).join("\n");
     for (const name of excludedNames) expect(names).not.toContain(name);
-    expect(places.find((place) => place.id === "gatti-chutney")?.flag).toMatch(/Koregaon Park/);
     expect(places.find((place) => place.id === "independence-brewing-co")?.flag?.toLowerCase()).toContain("mundhwa");
     expect(places.find((place) => place.id === "kayani-bakery")?.pin).toBe("osm");
   });
@@ -105,9 +89,7 @@ describe("filters", () => {
 
   it("finds Marathi names and the Fergusson College Road spelling", () => {
     expect(filterPlaces(places, { section: "", query: "वैशाली" }).map((place) => place.id)).toEqual(["vaishali"]);
-    expect(filterPlaces(places, { section: "", query: "मिसळ" }).map((place) => place.id)).toEqual(
-      expect.arrayContaining(["bedekar-tea-stall", "newale-misal"]),
-    );
+    expect(filterPlaces(places, { section: "", query: "मिसळ" }).map((place) => place.id)).toContain("bedekar-tea-stall");
     expect(filterPlaces(places, { section: "", query: "Ferguson" }).map((place) => place.id)).toEqual(
       expect.arrayContaining(["vaishali", "cafe-goodluck"]),
     );

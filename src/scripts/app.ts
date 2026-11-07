@@ -171,6 +171,11 @@ if (root) {
     const line = document.createElement("p");
     line.textContent = place.line;
     wrap.append(title, line);
+    if (place.pinNote) {
+      const note = document.createElement("p");
+      note.textContent = place.pinNote;
+      wrap.append(note);
+    }
     if (place.mapsUrl) {
       const link = document.createElement("a");
       link.href = place.mapsUrl;
