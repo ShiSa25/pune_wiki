@@ -3,9 +3,11 @@ pune guide
 
 # pune
 
-A short, category-first guide to Pune for a weekend, a date, or a first day in the city. The list is source-checked editorial copy: iconic food, one named coffee branch, easy outings, culture, and two nearby escapes. It links out to Google Maps. It does not drop its own pins.
+One page of Pune places, laid out as a list beside a map. The wording is local. The visual reference is a light card list with section chips and a sticky map.
 
-No domain is configured. The pages send `noindex` until there is a real decision about where they should live.
+`noindex` stays. Who can open a hosted link is the host’s setting, not something this page enforces.
+
+The map is MapLibre plus OpenFreeMap. See `docs/map.md`. Pins come from OpenStreetMap, a venue’s own page, or a Wikipedia article. They are not copied from Google Maps. Google star ratings are not stored.
 
 ## Run locally
 
@@ -16,7 +18,7 @@ npm install
 npm run dev
 ```
 
-Open [http://127.0.0.1:4173](http://127.0.0.1:4173).
+The dev server prints its own local URL. `npm run preview` serves the production build on port 4173.
 
 ```bash
 npm test          # search, filters, reset, content rules
@@ -28,21 +30,8 @@ npm run preview   # serve the build on port 4173
 
 ## Edit a place
 
-1. Edit `src/content/places.json`, or `src/content/pairings.json` for a two-stop note.
-2. Follow `docs/editing.md`. The schema is `src/lib/schema.ts`.
-3. Run `npm test` and `npm run build`.
-4. Read the place page. Unknown hours, prices, access, and coordinates stay blank.
+Places live in `src/content/guide.json`. The checks are in `src/lib/guide.ts`. Every place on the page needs `lat`, `lng`, `pin` (`osm`, `venue`, or `wikipedia`), and `coordUrl` for that source. A name with no such source stays in `docs/backlog.md` instead of appearing as an empty pin. Do not paste a coordinate out of a Google Maps link, and do not invent a listing id. A stored listing is labelled “Google Maps”. A place without one gets “Search Google Maps”, built from the name and area. The coordinate source is a separate link, “OpenStreetMap”, “Wikipedia”, or “Venue page”. The card face is `summary`. Method and branch caveats stay in Notes. A dot that marks a building, a gate, or a park centre says so in `pinNote`.
 
-Corrections pages prepare a note to copy. They do not send or store it.
-
-## Still needs a local pass
-
-Every card is **source-checked** against the linked page on 7 November 2026, and **not personally visited**. Shiva has not confirmed a favourite, a gate, or a meal. In particular:
-
-- Sinhagad’s current access, fees, and whether the road or a trail is open were not established. The entry is history plus that limit.
-- Venue-stated hours (Kayani, Empress Garden, Dagdusheth) can change, especially around festivals.
-- Aga Khan Palace hours and ticket prices were left out because public pages disagreed.
-- Map links are searches, not surveyed pins. Confirm the listing when a name has more than one branch.
-- Search plus category plus neighbourhood runs in the browser. Without JavaScript, the category and neighbourhood pages still list their places, and the full list is on the home page.
+`npm test` checks the list size, the sources, and that stored points are not the Google listing geometry. `docs/map.md` covers tiles, attribution, and the content-security hosts.
 
 Nothing here is deployed. A local preview is not a public launch.

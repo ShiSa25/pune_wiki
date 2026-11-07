@@ -1,113 +1,117 @@
 ---
-import PlaceList from "../components/PlaceList.astro";
-import { areaOptions, groupedPlaces, pairings, searchRecords } from "../lib/catalog";
-import { categories } from "../lib/categories";
 import Base from "../layouts/Base.astro";
-
-const groups = groupedPlaces();
-const areas = areaOptions();
-const indexJson = JSON.stringify(searchRecords).replaceAll("<", "\\u003c");
+import { places, placesIn, sections } from "../lib/guide";
+import { evidenceLink, onwardLink } from "../lib/outward";
 ---
 
 <Base
-  home
   title="pune"
-  description="A short, source-checked guide to food, coffee, easy outings, culture, and nearby escapes in Pune."
+  description="A local list of Pune places: old rooms, misal, coffee, a few bars, and things to do. One page, with a map of the pins that were checked."
 >
-  <script is:inline>
-    document.documentElement.classList.add("js");
-    var params = new URLSearchParams(location.search);
-    if (params.get("category") || params.get("area") || params.get("q")) {
-      document.documentElement.classList.add("filtering");
-    }
-  </script>
-  <main id="content" data-browse>
-    <script id="place-index" type="application/json" is:inline set:html={indexJson}></script>
-    <div class="layout">
-      <div>
-        <form class="filters" id="filters" role="search">
-          <label class="field">
-            <span>Search</span>
-            <input id="q" type="search" name="q" autocomplete="off" placeholder="Name, area, or alias" />
-          </label>
-          <div class="field">
-            <span id="category-label" class="field-label">Category</span>
-            <div class="chips" role="group" aria-labelledby="category-label">
-              <button class="chip" type="button" data-category="" aria-pressed="true">All</button>
-              {
-                categories.map((category) => (
-                  <button class="chip" type="button" data-category={category.id} aria-pressed="false">
-                    {category.label}
-                  </button>
-                ))
-              }
-            </div>
-          </div>
-          <div class="filter-row">
-            <label class="field">
-              <span>Neighbourhood</span>
-              <select id="area" name="area">
-                <option value="">All neighbourhoods</option>
-                {areas.map((area) => <option value={area.slug}>{area.label}</option>)}
-              </select>
-            </label>
-            <a class="reset" id="reset" href="/">Reset</a>
-          </div>
-        </form>
-        <p id="count" class="count" aria-live="polite">{searchRecords.length} places</p>
-        <div id="empty" class="empty" hidden>
-          <h2>No places match</h2>
-          <p id="empty-reason"></p>
-          <p><a href="/">Reset filters</a></p>
-        </div>
-        <div id="guide-list">
-          {
-            groups.map((group) => (
-              <section class="section" data-section={group.category.id} id={group.category.id}>
-                <h2>{group.category.label}</h2>
-                <p class="dek">{group.category.dek}</p>
-                <PlaceList places={group.places} grouped />
-              </section>
-            ))
-          }
-        </div>
-        <noscript>
-          <div class="fallback">
-            <p>Search and combined filters run in this browser. These pages still work without it.</p>
-            <ul>
-              {categories.map((category) => <li><a href={`/category/${category.id}`}>{category.label}</a></li>)}
-              {areas.map((area) => <li><a href={`/area/${area.slug}`}>{area.label}</a></li>)}
-            </ul>
-          </div>
-        </noscript>
+  <a class="skip" href="#content">Skip to content</a>
+  <header class="top">
+    <div class="brand">
+      <span class="mark" aria-hidden="true">pu</span>
+      <div class="brand-text">
+        <h1>pune</h1>
+        <p>a local list for eating, drinking, and a day out.</p>
       </div>
-      <aside class="rail">
-        <section>
-          <h2>Map links, not pins</h2>
-          <p>
-            Each Map link opens a Google Maps search for the name and address that was checked. This guide does not store coordinates, so it does not drop pins of its own. Confirm the listing before you go.
-          </p>
-        </section>
-        <section>
-          <h2>Three pairings</h2>
-          <p>Optional combinations of places already in the list. No route engine and no travel times.</p>
-          <ol>
-            {
-              pairings.map((pairing) => (
-                <li>
-                  <a class="pairing-link" href={`/outings/${pairing.slug}`}>
-                    {pairing.title}
-                  </a>
-                  <p>{pairing.suits}</p>
-                </li>
-              ))
-            }
-          </ol>
-        </section>
-      </aside>
     </div>
-  </main>
+    <form class="search" id="filters" role="search">
+      <label>
+        <span class="sr">Search</span>
+        <input id="q" type="search" name="q" autocomplete="off" placeholder="Search" />
+      </label>
+    </form>
+  </header>
+  <div class="nav-bar">
+    <div class="switch" role="group" aria-label="List or map">
+      <button type="button" data-view="list" aria-pressed="true">List</button>
+      <button type="button" data-view="map" aria-pressed="false">Map</button>
+    </div>
+    <div class="pills" role="group" aria-label="Sections">
+      <button type="button" class="pill" data-section="" aria-pressed="true">All ({places.length})</button>
+      {
+        sections.map((section) => (
+          <button type="button" class="pill" data-section={section.id} aria-pressed="false">
+            <span class="dot" style={`background:${section.color}`} />
+            {section.label} ({placesIn(section.id).length})
+          </button>
+        ))
+      }
+    </div>
+    <p id="count" class="count" aria-live="polite" hidden></p>
+  </div>
+  <div class="app" data-app>
+    <div class="list-pane">
+      <div id="empty" class="empty" hidden>
+        <h2>No places match</h2>
+        <p>Nothing in this list matches that search. Clear it to see every place.</p>
+        <button type="button" id="reset">Reset</button>
+      </div>
+      <noscript>
+        <p class="map-banner">Filters and the map need JavaScript. The full list is on this page.</p>
+      </noscript>
+      <main id="content">
+        {
+          sections.map((section) => (
+            <section class="group" data-group={section.id} data-color={section.color} id={section.id}>
+              <header class="group-head">
+                <h2>{section.label}</h2>
+                <p>{section.dek}</p>
+              </header>
+              <div class="cards">
+                {placesIn(section.id).map((place) => (
+                  <article class="card" data-place={place.id} id={place.id}>
+                    <button type="button" class="card-hit">
+                      <span class="card-name">{place.name}</span>
+                      <span class="card-meta">
+                        <span class="dot" style={`background:${section.color}`} />
+                        {place.kind} · {place.area}
+                      </span>
+                      <span class="card-line">{place.summary}</span>
+                    </button>
+                    <p class="card-actions">
+                      <a href={onwardLink(place).href} rel="noreferrer">{onwardLink(place).label}</a>
+                      {!place.pin && <span>No verified pin</span>}
+                    </p>
+                    <details class="notes">
+                      <summary>Notes</summary>
+                      {place.line !== place.summary && <p>{place.line}</p>}
+                      {place.dish && <p>{place.dish}</p>}
+                      {place.flag && <p>{place.flag}</p>}
+                      {place.pinNote && <p>{place.pinNote}</p>}
+                      {place.address && <p>{place.address}</p>}
+                      {place.coordUrl && <p><a href={evidenceLink(place.coordUrl).href} rel="noreferrer">{evidenceLink(place.coordUrl).label}</a>. {place.coordTitle}. Checked {place.coordCheckedOn}.</p>}
+                      <ul>
+                        {place.sources.map((source) => (
+                          <li>
+                            <a href={source.url} rel="noreferrer">{source.title}</a>
+                            <span> · {source.type} · {source.checkedOn}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </details>
+                  </article>
+                ))}
+              </div>
+            </section>
+          ))
+        }
+      </main>
+      <footer class="colophon">
+        <p>Source notes were checked on 7 November 2026. Hours and a live “open” line are not copied here.</p>
+        <p>Google’s star ratings are not reprinted. Open the listing if you want the current number.</p>
+        <p>This page asks search engines not to index it. Who can open the link is decided by the host, not by this page.</p>
+      </footer>
+    </div>
+    <aside class="map-pane">
+      <p id="map-note" class="map-banner" hidden>No verified pins match this filter.</p>
+      <p id="tile-note" class="map-banner" hidden>Map tiles did not load. The list still works. Tiles come from OpenFreeMap.</p>
+      <div id="map" role="region" aria-label="Map of places with a verified pin"></div>
+    </aside>
+  </div>
   <script>
-    import "../scripts/browse.ts";
+    import "../scripts/app.ts";
   </script>
 </Base>
