@@ -1,0 +1,64 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  home?: boolean;
+}
+
+const { title, description, home = false } = Astro.props;
+const documentTitle = home ? "pune" : `${title} — pune`;
+const yearLabel = "7 November 2026";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#f4f0e6" />
+    <title>{documentTitle}</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="skip" href="#content">Skip to content</a>
+    <div class="shell">
+      <header class="site-header">
+        {
+          home ? (
+            <h1 class="wordmark">pune</h1>
+          ) : (
+            <a class="wordmark wordmark-small" href="/">
+              pune
+            </a>
+          )
+        }
+        <p class="kicker">A short Pune list for weekends, dates, and a first day in the city.</p>
+        {
+          home && (
+            <p class="lede">
+              A short list, written from public sources and dated. No ratings, no accounts, and no map pins.
+            </p>
+          )
+        }
+        <nav aria-label="Guide">
+          <ul class="nav-links">
+            <li><a href="/" aria-current={home ? "page" : undefined}>Places</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/corrections">Corrections</a></li>
+          </ul>
+        </nav>
+      </header>
+      <slot />
+      <footer class="site-footer">
+        <p>
+          Source-checked on {yearLabel}. Not personally visited. Not an official tourism site, and not affiliated with any other city guide.
+        </p>
+        <p>Pages stay out of search indexes until someone chooses a real home for them. No domain is claimed here.</p>
+      </footer>
+    </div>
+  </body>
+</html>

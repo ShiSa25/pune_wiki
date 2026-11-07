@@ -1,0 +1,41 @@
+---
+import Base from "../../layouts/Base.astro";
+import { findPairing, pairingPlaces, pairings } from "../../lib/catalog";
+import { mapsSearchUrl } from "../../lib/maps";
+
+export function getStaticPaths() {
+  return pairings.map((pairing) => ({ params: { slug: pairing.slug } }));
+}
+
+const pairing = findPairing(Astro.params.slug ?? "");
+if (!pairing) throw new Error(`Missing pairing ${Astro.params.slug}`);
+const stops = pairingPlaces(pairing);
+---
+
+<Base title={pairing.title} description={pairing.suits}>
+  <article class="prose" id="content">
+    <p class="meta">Pairing · {stops.length} stops · no route</p>
+    <h1>{pairing.title}</h1>
+    <p class="lede">{pairing.suits}</p>
+    <h2>Stops, in this order</h2>
+    <ol>
+      {
+        stops.map((place, index) => (
+          <li>
+            <a href={`/places/${place.slug}`}>{place.name}</a>
+            <span class="meta"> · {place.area}</span>
+            <p>{place.summary}</p>
+            <p>
+              <a href={mapsSearchUrl(place.mapsQuery)}>Map for stop {index + 1}</a>
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+    <h2>What this assumes</h2>
+    <p>{pairing.assumption}</p>
+    <h2>What this does not do</h2>
+    <p>{pairing.limit}</p>
+    <p><a href="/">Back to the list</a></p>
+  </article>
+</Base>
