@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import { places, placesIn, sections } from "../lib/guide";
+import { cardLine, places, placesIn, sections } from "../lib/guide";
 ---
 
 <Base
@@ -11,38 +11,38 @@ import { places, placesIn, sections } from "../lib/guide";
   <header class="top">
     <div class="brand">
       <span class="mark" aria-hidden="true">pu</span>
-      <div>
+      <div class="brand-text">
         <h1>pune</h1>
-        <p>a short list for eating, drinking, and a day out.</p>
+        <p>a local list for eating, drinking, and a day out.</p>
       </div>
     </div>
+    <form class="search" id="filters" role="search">
+      <label>
+        <span class="sr">Search</span>
+        <input id="q" type="search" name="q" autocomplete="off" placeholder="Search" />
+      </label>
+    </form>
   </header>
+  <div class="nav-bar">
+    <div class="switch" role="group" aria-label="List or map">
+      <button type="button" data-view="list" aria-pressed="true">List</button>
+      <button type="button" data-view="map" aria-pressed="false">Map</button>
+    </div>
+    <div class="pills" role="group" aria-label="Sections">
+      <button type="button" class="pill" data-section="" aria-pressed="true">All ({places.length})</button>
+      {
+        sections.map((section) => (
+          <button type="button" class="pill" data-section={section.id} aria-pressed="false">
+            <span class="dot" style={`background:${section.color}`} />
+            {section.label} ({placesIn(section.id).length})
+          </button>
+        ))
+      }
+    </div>
+    <p id="count" class="count" aria-live="polite" hidden></p>
+  </div>
   <div class="app" data-app>
     <div class="list-pane">
-      <div class="tools">
-        <div class="switch" role="group" aria-label="List or map">
-          <button type="button" data-view="list" aria-pressed="true">List</button>
-          <button type="button" data-view="map" aria-pressed="false">Map</button>
-        </div>
-        <form class="search" id="filters" role="search">
-          <label class="query">
-            <span class="sr">Search</span>
-            <input id="q" type="search" name="q" autocomplete="off" placeholder="Search the list" />
-          </label>
-          <div class="pills" role="group" aria-label="Sections">
-            <button type="button" class="pill" data-section="" aria-pressed="true">All ({places.length})</button>
-            {
-              sections.map((section) => (
-                <button type="button" class="pill" data-section={section.id} aria-pressed="false">
-                  <span class="dot" style={`background:${section.color}`} />
-                  {section.label} ({placesIn(section.id).length})
-                </button>
-              ))
-            }
-          </div>
-          <p id="count" class="count" aria-live="polite">{places.length} places</p>
-        </form>
-      </div>
       <div id="empty" class="empty" hidden>
         <h2>No places match</h2>
         <p>Nothing in this list matches that search. Clear it to see every place.</p>
@@ -68,23 +68,25 @@ import { places, placesIn, sections } from "../lib/guide";
                         <span class="dot" style={`background:${section.color}`} />
                         {place.kind} · {place.area}
                       </span>
-                      <span class="card-line">{place.line}</span>
-                      {place.dish && <span class="card-dish">{place.dish}</span>}
-                      {place.flag && <span class="card-flag">{place.flag}</span>}
+                      <span class="card-line">{cardLine(place.line)}</span>
                     </button>
                     <p class="card-actions">
-                      {place.mapsUrl ? (
-                        <a href={place.mapsUrl} rel="noreferrer">Google Maps</a>
-                      ) : (
-                        <span>No verified pin</span>
-                      )}
+                      {place.mapsUrl && <a href={place.mapsUrl} rel="noreferrer">Google Maps</a>}
+                      {!place.pin && <span>No verified pin</span>}
                     </p>
                     <details class="notes">
                       <summary>Notes</summary>
+                      {cardLine(place.line) !== place.line && <p>{place.line}</p>}
+                      {place.dish && <p>{place.dish}</p>}
+                      {place.flag && <p>{place.flag}</p>}
                       {place.address && <p>{place.address}</p>}
+                      {place.coordTitle && <p>{place.coordTitle}. Checked {place.coordCheckedOn}.</p>}
                       <ul>
                         {place.sources.map((source) => (
-                          <li><a href={source.url} rel="noreferrer">{source.title}</a></li>
+                          <li>
+                            <a href={source.url} rel="noreferrer">{source.title}</a>
+                            <span> · {source.type} · {source.checkedOn}</span>
+                          </li>
                         ))}
                       </ul>
                     </details>

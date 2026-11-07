@@ -7,7 +7,7 @@ One page of Pune places, laid out as a list beside a map. The wording is local. 
 
 `noindex` stays. Who can open a hosted link is the host’s setting, not something this page enforces.
 
-The map is MapLibre plus OpenFreeMap. See `docs/map.md`. Pins are only coordinates taken from an opened Google Maps listing, not from a map camera and not from a guess. Google star ratings are not stored.
+The map is MapLibre plus OpenFreeMap. See `docs/map.md`. Pins come from OpenStreetMap, a venue’s own page, or a Wikipedia article. They are not copied from Google Maps. Google star ratings are not stored.
 
 ## Run locally
 

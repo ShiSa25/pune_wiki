@@ -16,6 +16,8 @@ const mapsUrl = httpUrl.refine((value) => {
   );
 }, "Use a https Google Maps listing URL");
 
+const day = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
+
 export const sectionSchema = z
   .object({
     id: z.string().regex(/^[a-z]+$/),
@@ -39,22 +41,43 @@ export const placeSchema = z
     mapsUrl: mapsUrl.nullable(),
     lat: z.number().nullable(),
     lng: z.number().nullable(),
-    pin: z.literal("maps-place-geometry").nullable(),
-    sources: z.array(z.object({ title: z.string().min(3), url: httpUrl }).strict()).min(1),
+    pin: z.enum(["osm", "venue", "wikipedia"]).nullable(),
+    coordUrl: httpUrl.nullable(),
+    coordTitle: z.string().min(8).nullable(),
+    coordCheckedOn: day.nullable(),
+    sources: z
+      .array(
+        z
+          .object({
+            title: z.string().min(3),
+            url: httpUrl,
+            type: z.string().min(3),
+            checkedOn: day,
+          })
+          .strict(),
+      )
+      .min(1),
   })
   .strict()
   .superRefine((place, context) => {
-    const pinned = place.pin === "maps-place-geometry";
-    if (pinned !== (place.lat !== null && place.lng !== null)) {
-      context.addIssue({ code: "custom", message: `${place.id} pin and coordinates disagree` });
+    const pinned = place.pin !== null;
+    if (pinned !== (place.lat !== null && place.lng !== null && place.coordUrl !== null)) {
+      context.addIssue({ code: "custom", message: `${place.id} pin and coordinate evidence disagree` });
     }
-    if (!pinned) return;
-    const geometry = placeGeometry(place.mapsUrl ?? "");
-    if (!geometry || geometry.lat !== place.lat || geometry.lng !== place.lng) {
-      context.addIssue({ code: "custom", message: `${place.id} coordinates are not the listing geometry` });
-    }
-    if (!inPuneBox(geometry!)) {
+    if (!pinned || place.lat === null || place.lng === null || !place.coordUrl) return;
+    if (!inPuneBox({ lat: place.lat, lng: place.lng })) {
       context.addIssue({ code: "custom", message: `${place.id} is outside the Pune box` });
+    }
+    const host = new URL(place.coordUrl).hostname;
+    if (place.pin === "osm" && host !== "www.openstreetmap.org") {
+      context.addIssue({ code: "custom", message: `${place.id} OSM pin needs an openstreetmap.org URL` });
+    }
+    if (place.pin === "wikipedia" && !host.endsWith("wikipedia.org")) {
+      context.addIssue({ code: "custom", message: `${place.id} Wikipedia pin needs a wikipedia.org URL` });
+    }
+    const copied = placeGeometry(place.mapsUrl ?? "");
+    if (copied && copied.lat === place.lat && copied.lng === place.lng) {
+      context.addIssue({ code: "custom", message: `${place.id} coordinate is copied from the Google listing URL` });
     }
   });
 
@@ -69,9 +92,7 @@ export const guideSchema = z
     const ids = new Set(guide.sections.map((section) => section.id));
     const seen = new Set<string>();
     for (const place of guide.places) {
-      if (!ids.has(place.section)) {
-        context.addIssue({ code: "custom", message: `${place.id} has an unknown section` });
-      }
+      if (!ids.has(place.section)) context.addIssue({ code: "custom", message: `${place.id} has an unknown section` });
       if (seen.has(place.id)) context.addIssue({ code: "custom", message: `duplicate ${place.id}` });
       seen.add(place.id);
     }
@@ -95,4 +116,12 @@ export const TILE_HOST = "tiles.openfreemap.org";
 
 export function placesIn(sectionId: string): Place[] {
   return places.filter((place) => place.section === sectionId);
+}
+
+/** One short line for the card. Longer provenance stays in Notes. */
+export function cardLine(line: string): string {
+  const trimmed = line.trim();
+  if (trimmed.length <= 96) return trimmed;
+  const cut = trimmed.split(/;\s|\.\s/)[0] ?? trimmed;
+  return cut.endsWith(".") ? cut : `${cut}.`;
 }

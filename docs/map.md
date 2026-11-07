@@ -12,7 +12,13 @@ OpenFreeMap states that the public instance needs no account, no API key, and no
 
 blr.wiki’s map credits CARTO as well as OpenStreetMap. That shows which tiles that site requested. It is not a licence to copy their tile URL. CARTO’s hosted basemaps are a separate service with their own account terms, so they are not used here.
 
-No Nominatim lookup is made. Pins come only from the `!8m2!3d…!4d…` point in a Google Maps listing URL that was opened on 7 November 2026. A URL that only has an `@lat,lng` camera is not a pin. Points outside Pune and PCMC are dropped. The map’s opening view is a city camera, not a venue.
+Pins are not copied out of Google Maps URLs. Google’s terms do not allow those coordinates to be drawn on another provider’s map, so a listing link is only a way out to Google. A stored point has to come from one of these, checked on 7 November 2026:
+
+- An OpenStreetMap element whose name and area match the branch. One Overpass query, plus two smaller follow-ups, were run once while editing, with a User-Agent naming this guide. That is inside the public Overpass one-off allowance (well under 10,000 queries or 1 GB a day). The site does not call Overpass when someone opens the page. See the [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API) instances and their limits.
+- A coordinate the venue publishes on its own site (schema.org `GeoCoordinates`, or the business location on that site).
+- A Wikipedia article coordinate for that exact place.
+
+No Nominatim request is made. Points outside Pune and PCMC are dropped. The map’s opening view is a city camera, not a venue. Places without one of those sources stay on the list and say “No verified pin”. After this pass, 29 places have a pin and 24 do not. Donna Cucina publishes a schema.org point that is identical to the Google listing geometry, so that pin was not kept. Cafe Goodluck, Gatti Chutney in Koregaon Park, Doolally, and the Kalyani Nagar Independence room were not found as those branches in OpenStreetMap.
 
 ## Practical limits
 
@@ -22,4 +28,4 @@ No Nominatim lookup is made. Pins come only from the `!8m2!3d…!4d…` point in
 - A host content-security policy needs `connect-src` for `https://tiles.openfreemap.org`, `worker-src blob:`, and `img-src` for the sprite images on that host. This repository does not send a CSP header.
 - Google star ratings and review counts from the research snapshots are not stored in the guide. Republishing scraped Maps metrics is a terms risk. The listing link is the way to see the current number.
 
-Pins are a subset of the list. A card with no verified point says so and does not drop a marker.
+Labels are white pills. At a wide view they collide: overlapping names are hidden, and zooming or selecting a card brings a name back. The selected pill is kept even when it overlaps. A card with no verified point says so and does not drop a marker.
