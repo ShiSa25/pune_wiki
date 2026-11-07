@@ -1,0 +1,113 @@
+---
+import PlaceList from "../components/PlaceList.astro";
+import { areaOptions, groupedPlaces, pairings, searchRecords } from "../lib/catalog";
+import { categories } from "../lib/categories";
+import Base from "../layouts/Base.astro";
+
+const groups = groupedPlaces();
+const areas = areaOptions();
+const indexJson = JSON.stringify(searchRecords).replaceAll("<", "\\u003c");
+---
+
+<Base
+  home
+  title="pune"
+  description="A short, source-checked guide to food, coffee, easy outings, culture, and nearby escapes in Pune."
+>
+  <script is:inline>
+    document.documentElement.classList.add("js");
+    var params = new URLSearchParams(location.search);
+    if (params.get("category") || params.get("area") || params.get("q")) {
+      document.documentElement.classList.add("filtering");
+    }
+  </script>
+  <main id="content" data-browse>
+    <script id="place-index" type="application/json" is:inline set:html={indexJson}></script>
+    <div class="layout">
+      <div>
+        <form class="filters" id="filters" role="search">
+          <label class="field">
+            <span>Search</span>
+            <input id="q" type="search" name="q" autocomplete="off" placeholder="Name, area, or alias" />
+          </label>
+          <div class="field">
+            <span id="category-label" class="field-label">Category</span>
+            <div class="chips" role="group" aria-labelledby="category-label">
+              <button class="chip" type="button" data-category="" aria-pressed="true">All</button>
+              {
+                categories.map((category) => (
+                  <button class="chip" type="button" data-category={category.id} aria-pressed="false">
+                    {category.label}
+                  </button>
+                ))
+              }
+            </div>
+          </div>
+          <div class="filter-row">
+            <label class="field">
+              <span>Neighbourhood</span>
+              <select id="area" name="area">
+                <option value="">All neighbourhoods</option>
+                {areas.map((area) => <option value={area.slug}>{area.label}</option>)}
+              </select>
+            </label>
+            <a class="reset" id="reset" href="/">Reset</a>
+          </div>
+        </form>
+        <p id="count" class="count" aria-live="polite">{searchRecords.length} places</p>
+        <div id="empty" class="empty" hidden>
+          <h2>No places match</h2>
+          <p id="empty-reason"></p>
+          <p><a href="/">Reset filters</a></p>
+        </div>
+        <div id="guide-list">
+          {
+            groups.map((group) => (
+              <section class="section" data-section={group.category.id} id={group.category.id}>
+                <h2>{group.category.label}</h2>
+                <p class="dek">{group.category.dek}</p>
+                <PlaceList places={group.places} grouped />
+              </section>
+            ))
+          }
+        </div>
+        <noscript>
+          <div class="fallback">
+            <p>Search and combined filters run in this browser. These pages still work without it.</p>
+            <ul>
+              {categories.map((category) => <li><a href={`/category/${category.id}`}>{category.label}</a></li>)}
+              {areas.map((area) => <li><a href={`/area/${area.slug}`}>{area.label}</a></li>)}
+            </ul>
+          </div>
+        </noscript>
+      </div>
+      <aside class="rail">
+        <section>
+          <h2>Map links, not pins</h2>
+          <p>
+            Each Map link opens a Google Maps search for the name and address that was checked. This guide does not store coordinates, so it does not drop pins of its own. Confirm the listing before you go.
+          </p>
+        </section>
+        <section>
+          <h2>Three pairings</h2>
+          <p>Optional combinations of places already in the list. No route engine and no travel times.</p>
+          <ol>
+            {
+              pairings.map((pairing) => (
+                <li>
+                  <a class="pairing-link" href={`/outings/${pairing.slug}`}>
+                    {pairing.title}
+                  </a>
+                  <p>{pairing.suits}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </section>
+      </aside>
+    </div>
+  </main>
+  <script>
+    import "../scripts/browse.ts";
+  </script>
+</Base>

@@ -1,0 +1,28 @@
+---
+import Base from "../../layouts/Base.astro";
+import { places } from "../../lib/catalog";
+---
+
+<Base
+  title="Corrections"
+  description="How to report a mistake in this Pune guide. Nothing is submitted or stored from these pages."
+>
+  <article class="prose" id="content">
+    <h1>Corrections</h1>
+    <p>
+      If a gate, hour, or address is wrong, copy a note and send it yourself to whoever is editing the list. These pages do not submit a form, save a message, or show a fake “sent” state.
+    </p>
+    <h2>Pick a place</h2>
+    <ul class="fact-list">
+      {
+        places.map((place) => (
+          <li>
+            <a href={`/corrections/${place.slug}`}>{place.name}</a>
+            <span class="meta"> · {place.area}</span>
+          </li>
+        ))
+      }
+    </ul>
+    <p>For a general note, use the <a href="/corrections/general">blank correction</a>.</p>
+  </article>
+</Base>

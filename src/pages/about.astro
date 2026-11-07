@@ -1,0 +1,51 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base
+  title="About"
+  description="Editorial standards for this Pune guide: what source-checked means, what is left out, and how corrections work."
+>
+  <article class="prose" id="content">
+    <h1>About this list</h1>
+    <p>
+      pune is a small editorial list for people choosing a weekend, a date, or a short stay. It is not a directory, a booking site, or an official tourism publication. The working title is the city name. No domain is registered or printed here.
+    </p>
+    <h2>Source-checked</h2>
+    <p>
+      Every place was read against a venue site, the Maharashtra tourism department, the Pune district site, or a memorial page, on 7 November 2026. The sources are linked on the place page, with the claim they support.
+    </p>
+    <p>
+      <strong>Source-checked</strong> means those specific sentences were compared with the linked pages.
+      <strong>Not personally visited</strong> means Shiva, the editor this list is being built for, has not yet signed off a visit. No card says otherwise. When that changes, the record should say who went, on what date, and what they actually saw.
+    </p>
+    <h2>What stays blank</h2>
+    <p>
+      Hours, prices, and a weekly clock appear only when the venue’s own page stated them on the check date, and they are labelled as venue-stated. Missing hours are omitted, not guessed. The same rule covers parking, step-free access, “best time,” closures, travel times, and coordinates. If two official pages disagree, the disagreement is described and no winner is picked.
+    </p>
+    <h2>Forts and the dam</h2>
+    <p>
+      Sinhagad is historical context. Current access, a safe trail, night visits, and monsoon plans are not published, because they were not established. Khadakwasla is described as a water source, not a place to swim. A cancelled outing is a reasonable outcome.
+    </p>
+    <h2>Pairings</h2>
+    <p>
+      The three pairings reuse places already in the list. They state the assumption and the limit. They do not calculate a route.
+    </p>
+    <h2>Maps</h2>
+    <p>
+      Map links are Google Maps searches built from the checked name and address. They are not surveyed pins. Confirm the listing, especially where a name has more than one branch.
+    </p>
+    <h2>Money and voice</h2>
+    <p>
+      Nothing is paid placement. Venues cannot buy a slot. There are no star ratings and no copied reviews. The notes are original summaries of the sources, not a visit.
+    </p>
+    <h2>Corrections</h2>
+    <p>
+      The <a href="/corrections">corrections page</a> prepares a note you can copy. This site does not send, store, or pretend to receive it. There is no account and no inbox wired up yet.
+    </p>
+    <h2>Editing the list</h2>
+    <p>
+      Places live in <code>src/content/places.json</code> and pairings in <code>src/content/pairings.json</code>. The shape is checked by the schema in <code>src/lib/schema.ts</code>. See <code>docs/editing.md</code> before adding a card.
+    </p>
+  </article>
+</Base>

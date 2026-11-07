@@ -1,0 +1,26 @@
+---
+import PlaceList from "../../components/PlaceList.astro";
+import Base from "../../layouts/Base.astro";
+import { placesInCategory } from "../../lib/catalog";
+import { categories, isCategoryId } from "../../lib/categories";
+
+export function getStaticPaths() {
+  return categories.map((category) => ({ params: { category: category.id } }));
+}
+
+const { category: categoryId = "" } = Astro.params;
+if (!isCategoryId(categoryId)) throw new Error(`Unknown category ${categoryId}`);
+const category = categories.find((item) => item.id === categoryId);
+if (!category) throw new Error(`Unknown category ${categoryId}`);
+const matched = placesInCategory(category.id);
+---
+
+<Base title={category.label} description={category.dek}>
+  <main id="content" class="prose">
+    <h1>{category.label}</h1>
+    <p class="dek">{category.dek}</p>
+    <p class="count">{matched.length} {matched.length === 1 ? "place" : "places"}</p>
+    <PlaceList places={matched} />
+    <p><a href="/">Back to the full list</a></p>
+  </main>
+</Base>
