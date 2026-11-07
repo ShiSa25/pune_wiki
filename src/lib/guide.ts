@@ -38,6 +38,7 @@ export const placeSchema = z
     dish: z.string().min(2).nullable(),
     flag: z.string().min(8).nullable(),
     address: z.string().min(8).nullable(),
+    aliases: z.array(z.string().min(1)).optional(),
     mapsUrl: mapsUrl.nullable(),
     lat: z.number().nullable(),
     lng: z.number().nullable(),

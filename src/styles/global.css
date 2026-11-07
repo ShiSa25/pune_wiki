@@ -437,7 +437,7 @@ body[data-view="map"] .map-pane {
   }
 
   #map {
-    height: calc(100vh - 7.2rem);
+    height: calc(100vh - 8.4rem);
   }
 
   .search input {

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { filterPlaces, filterStateFromParams, paramsFromFilter } from "../src/lib/browse";
+import { cameraForSelection, filterPlaces, filterStateFromParams, paramsFromFilter } from "../src/lib/browse";
 import { inPuneBox, placeGeometry } from "../src/lib/coords";
-import { cardLine, MAP_STYLE, TILE_HOST, places, sections } from "../src/lib/guide";
+import { cardLine, MAP_STYLE, placeSchema, TILE_HOST, places, sections } from "../src/lib/guide";
 import { visibleLabelIds, type LabelBox } from "../src/lib/labels";
 
 const excludedNames = ["garden vada", "vetal tekdi", "chitale", "gather", "ground up", "kowloon", "shreyas", "gatti anna"];
@@ -85,6 +85,38 @@ describe("filters", () => {
     );
     expect(filterPlaces(places, { section: "nope", query: "" })).toEqual([]);
     expect(filterPlaces(places, { section: "", query: "zzz-no-such-place" })).toEqual([]);
+  });
+
+  it("finds Marathi names and the Fergusson College Road spelling", () => {
+    expect(filterPlaces(places, { section: "", query: "वैशाली" }).map((place) => place.id)).toEqual(["vaishali"]);
+    expect(filterPlaces(places, { section: "", query: "मिसळ" }).map((place) => place.id)).toEqual(
+      expect.arrayContaining(["bedekar-tea-stall", "newale-misal"]),
+    );
+    expect(filterPlaces(places, { section: "", query: "Ferguson" }).map((place) => place.id)).toEqual(
+      expect.arrayContaining(["vaishali", "cafe-goodluck"]),
+    );
+    expect(filterPlaces(places, { section: "", query: "शनिवार" }).map((place) => place.id)).toEqual(["shaniwar-wada"]);
+  });
+
+  it("rejects unsafe urls through the place schema", () => {
+    const sample = places[0];
+    expect(placeSchema.safeParse({ ...sample, mapsUrl: "javascript:alert(1)" }).success).toBe(false);
+    expect(placeSchema.safeParse({ ...sample, mapsUrl: "data:text/html,hi" }).success).toBe(false);
+    expect(placeSchema.safeParse({ ...sample, mapsUrl: "ftp://example.com/place" }).success).toBe(false);
+    expect(
+      placeSchema.safeParse({
+        ...sample,
+        sources: [{ ...sample.sources[0], url: "https://user:pass@example.com/secret" }],
+      }).success,
+    ).toBe(false);
+  });
+
+  it("only recenters a revealed map when the selection has an independent pin", () => {
+    const pinned = places.find((place) => place.pin);
+    const unpinned = places.find((place) => !place.pin);
+    expect(cameraForSelection(pinned)?.lat).toBe(pinned?.lat);
+    expect(cameraForSelection(unpinned)).toBeNull();
+    expect(cameraForSelection(undefined)).toBeNull();
   });
 
   it("round-trips the query string and drops an unknown section at the edges", () => {

@@ -30,21 +30,8 @@ npm run preview   # serve the build on port 4173
 
 ## Edit a place
 
-1. Edit `src/content/places.json`, or `src/content/pairings.json` for a two-stop note.
-2. Follow `docs/editing.md`. The schema is `src/lib/schema.ts`.
-3. Run `npm test` and `npm run build`.
-4. Read the place page. Unknown hours, prices, access, and coordinates stay blank.
+Places live in `src/content/guide.json`. The checks are in `src/lib/guide.ts`. A pin needs `lat`, `lng`, `pin` (`osm`, `venue`, or `wikipedia`), and `coordUrl` for that source. Do not paste a coordinate out of a Google Maps link. A Google link, when there is one, is only the “Google Maps” anchor.
 
-Corrections pages prepare a note to copy. They do not send or store it.
-
-## Still needs a local pass
-
-Every card is **source-checked** against the linked page on 7 November 2026, and **not personally visited**. Shiva has not confirmed a favourite, a gate, or a meal. In particular:
-
-- Sinhagad’s current access, fees, and whether the road or a trail is open were not established. The entry is history plus that limit.
-- Venue-stated hours (Kayani, Empress Garden, Dagdusheth) can change, especially around festivals.
-- Aga Khan Palace hours and ticket prices were left out because public pages disagreed.
-- Map links are searches, not surveyed pins. Confirm the listing when a name has more than one branch.
-- Search plus category plus neighbourhood runs in the browser. Without JavaScript, the category and neighbourhood pages still list their places, and the full list is on the home page.
+`npm test` checks the list size, the sources, and that stored points are not the Google listing geometry. `docs/map.md` covers tiles, attribution, and the content-security hosts.
 
 Nothing here is deployed. A local preview is not a public launch.

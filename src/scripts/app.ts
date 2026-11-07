@@ -1,7 +1,7 @@
 import * as maplibregl from "maplibre-gl";
 import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?url";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { filterPlaces, filterStateFromParams, paramsFromFilter, type FilterState } from "../lib/browse";
+import { cameraForSelection, filterPlaces, filterStateFromParams, paramsFromFilter, type FilterState } from "../lib/browse";
 import { MAP_STYLE, places, type Place } from "../lib/guide";
 import { visibleLabelIds, type LabelBox } from "../lib/labels";
 
@@ -23,6 +23,7 @@ if (root) {
   let state: FilterState = { section: "", query: "" };
   let selected = "";
   let map: maplibregl.Map | null = null;
+  let mapFailed = false;
   let popup: maplibregl.Popup | null = null;
   let popupId = "";
   const markers = new Map<string, maplibregl.Marker>();
@@ -119,14 +120,32 @@ if (root) {
     popupId = "";
   }
 
+  function showMapFailure(message: string) {
+    mapFailed = true;
+    if (tileNote) {
+      tileNote.hidden = false;
+      tileNote.textContent = message;
+    }
+  }
+
   function openPopup(place: Place) {
-    if (!map || place.lat === null || place.lng === null) return;
+    const camera = cameraForSelection(place);
+    if (!map || !camera) return;
     closePopup();
     popupId = place.id;
-    popup = new maplibregl.Popup({ offset: 18, closeButton: true })
-      .setLngLat([place.lng, place.lat])
+    popup = new maplibregl.Popup({ offset: 18, closeButton: true, closeOnClick: false })
+      .setLngLat([camera.lng, camera.lat])
       .setDOMContent(popupNode(place))
       .addTo(map);
+  }
+
+  function focusSelection() {
+    const place = places.find((item) => item.id === selected);
+    const camera = cameraForSelection(place);
+    if (!map || !place || !camera) return;
+    map.easeTo({ center: [camera.lng, camera.lat], zoom: Math.max(map.getZoom(), 14) });
+    openPopup(place);
+    layoutLabels();
   }
 
   function selectPlace(id: string, scroll: boolean) {
@@ -136,14 +155,12 @@ if (root) {
     const place = places.find((item) => item.id === id);
     const card = cards.find((item) => item.dataset.place === id);
     if (scroll && card && !card.hidden) card.scrollIntoView({ block: "nearest" });
-    if (!place?.pin || place.lat === null || place.lng === null) {
+    if (!cameraForSelection(place)) {
       closePopup();
       return;
     }
     ensureMap();
-    map?.easeTo({ center: [place.lng, place.lat], zoom: Math.max(map?.getZoom() ?? 14, 14) });
-    openPopup(place);
-    layoutLabels();
+    focusSelection();
   }
 
   function popupNode(place: Place): HTMLElement {
@@ -175,34 +192,36 @@ if (root) {
     const label = document.createElement("span");
     label.textContent = place.name;
     button.append(dot, label);
-    button.addEventListener("click", (event) => {
+    const choose = (event: Event) => {
       event.stopPropagation();
       selectPlace(place.id, true);
-    });
+    };
+    button.addEventListener("click", choose);
     button.addEventListener("pointerdown", (event) => event.stopPropagation());
+    button.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") event.stopPropagation();
+    });
     return button;
   }
 
   function ensureMap() {
-    if (map || !mapElement || mapElement.clientWidth === 0) return;
-    map = new maplibregl.Map({
-      container: mapElement,
-      style: MAP_STYLE,
-      center: [73.856, 18.52],
-      zoom: 11.5,
-      attributionControl: false,
-      maxZoom: 17,
-      minZoom: 10,
-    });
+    if (map || mapFailed || !mapElement || mapElement.clientWidth === 0) return;
+    try {
+      map = new maplibregl.Map({
+        container: mapElement,
+        style: MAP_STYLE,
+        center: [73.856, 18.52],
+        zoom: 11.5,
+        attributionControl: false,
+        maxZoom: 17,
+        minZoom: 10,
+      });
+    } catch {
+      showMapFailure("The map did not start. The list still works.");
+      return;
+    }
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
-    map.addControl(
-      new maplibregl.AttributionControl({
-        compact: false,
-        customAttribution:
-          '<a href="https://openfreemap.org/" rel="noreferrer">OpenFreeMap</a> © <a href="https://openmaptiles.org/" rel="noreferrer">OpenMapTiles</a> · Data <a href="https://www.openstreetmap.org/copyright" rel="noreferrer">© OpenStreetMap</a>',
-      }),
-      "bottom-right",
-    );
+    map.addControl(new maplibregl.AttributionControl({ compact: false }), "bottom-right");
     map.on("error", () => {
       if (tileNote) tileNote.hidden = false;
     });
@@ -231,6 +250,7 @@ if (root) {
       requestAnimationFrame(() => {
         ensureMap();
         map?.resize();
+        focusSelection();
         layoutLabels();
       });
     }
@@ -258,6 +278,6 @@ if (root) {
   window.addEventListener("resize", () => layoutLabels());
 
   apply(filterStateFromParams(new URLSearchParams(location.search)), "replace");
-  ensureMap();
   setView("list");
+  ensureMap();
 }

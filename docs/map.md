@@ -25,7 +25,7 @@ No Nominatim request is made. Points outside Pune and PCMC are dropped. The map�
 - Tiles load for the current view only. There is no offline download and no prefetch of the city.
 - MapLibre asks the browser for `https://tiles.openfreemap.org/…` (style, vector tiles, fonts, sprites). Do not put a page-level `Referrer-Policy: no-referrer` in front of that host. `rel="noreferrer"` on ordinary links does not apply to those tile requests.
 - OpenFreeMap does not offer an SLA. If the style or tiles fail, the page keeps the list and says the tiles did not load.
-- A host content-security policy needs `connect-src` for `https://tiles.openfreemap.org`, `worker-src blob:`, and `img-src` for the sprite images on that host. This repository does not send a CSP header.
+- A host content-security policy needs `connect-src` and `img-src` for `https://tiles.openfreemap.org`, and `worker-src 'self'` because the page sets MapLibre’s worker to the bundled `maplibre-gl-worker` file. This repository does not send a CSP header. The map credit is the one control inside the map, kept in the first screen by sizing the map to the space under the header.
 - Google star ratings and review counts from the research snapshots are not stored in the guide. Republishing scraped Maps metrics is a terms risk. The listing link is the way to see the current number.
 
 Labels are white pills. At a wide view they collide: overlapping names are hidden, and zooming or selecting a card brings a name back. The selected pill is kept even when it overlaps. A card with no verified point says so and does not drop a marker.
