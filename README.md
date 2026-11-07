@@ -3,9 +3,11 @@ pune guide
 
 # pune
 
-A short, category-first guide to Pune for a weekend, a date, or a first day in the city. The list is source-checked editorial copy: iconic food, one named coffee branch, easy outings, culture, and two nearby escapes. It links out to Google Maps. It does not drop its own pins.
+One page of Pune places, laid out as a list beside a map. The wording is local. The visual reference is a light card list with section chips and a sticky map.
 
-No domain is configured. The pages send `noindex` until there is a real decision about where they should live.
+`noindex` stays. Who can open a hosted link is the host’s setting, not something this page enforces.
+
+The map is MapLibre plus OpenFreeMap. See `docs/map.md`. Pins are only coordinates taken from an opened Google Maps listing, not from a map camera and not from a guess. Google star ratings are not stored.
 
 ## Run locally
 

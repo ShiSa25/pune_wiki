@@ -1,0 +1,1384 @@
+{
+  "checkedOn": "2026-11-07",
+  "sections": [
+    {
+      "id": "og",
+      "label": "OG Spots",
+      "dek": "The institutions. Eating here is still a rite of passage.",
+      "color": "#c2410c"
+    },
+    {
+      "id": "misal",
+      "label": "Misal & Breakfast",
+      "dek": "Misal, tiffin, and the counters that open early.",
+      "color": "#b45309"
+    },
+    {
+      "id": "gourmet",
+      "label": "Gourmet",
+      "dek": "Smaller rooms and chefs with a point of view.",
+      "color": "#7c3aed"
+    },
+    {
+      "id": "coffee",
+      "label": "Coffee",
+      "dek": "Roasters, and a few cups people cross town for.",
+      "color": "#0f766e"
+    },
+    {
+      "id": "sweet",
+      "label": "Sweet Tooth",
+      "dek": "Bakeries, mastani, and an old mithai counter.",
+      "color": "#be185d"
+    },
+    {
+      "id": "pints",
+      "label": "Pints",
+      "dek": "Brewpubs, and one pub that has been on East Street since the 90s.",
+      "color": "#1d4ed8"
+    },
+    {
+      "id": "dates",
+      "label": "Date Plans",
+      "dek": "A bar, a garden, a rooftop. Not an itinerary.",
+      "color": "#be123c"
+    },
+    {
+      "id": "things",
+      "label": "Things to Do",
+      "dek": "Museums, a zoo, a walk, and the wada. Read the limit first.",
+      "color": "#15803d"
+    }
+  ],
+  "places": [
+    {
+      "id": "cafe-goodluck",
+      "name": "Cafe Goodluck",
+      "section": "og",
+      "kind": "Irani/Parsi café",
+      "area": "FC Rd / Deccan Gymkhana",
+      "line": "90-year-old Irani café (est. 1935); brun maska, chai, morning ritual.",
+      "dish": "Brun maska, bun omelette, kheema, berry pulao, caramel custard",
+      "flag": "Reopened 25 July 2025 after a short FDA stop.",
+      "address": "Ferguson College Rd, near Goodluck Chowk, Deccan Gymkhana, Pune, Maharashtra 411004",
+      "mapsUrl": "https://www.google.com/maps/place/Cafe+Goodluck/data=!4m7!3m6!1s0x3bc2bf87fad7cce1:0x782ac3a113379b17!8m2!3d18.5173131!4d73.8414923!16s%2Fm%2F0vpx53c!19sChIJ4czX-oe_wjsRF5s3E6HDKng",
+      "lat": 18.5173131,
+      "lng": 73.8414923,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "ELLE Gourmet: Pune's oldest cafés & eateries (6 Apr 2026)",
+          "url": "https://ellegourmet.in/travel/punes-oldest-caf%C3%A9s-bakeries-and-eateries-that-locals-still-swear-by-11457469"
+        },
+        {
+          "title": "LBB: 24 legendary restaurants in Pune",
+          "url": "https://lbb.in/pune/iconic-restaurants-in-pune/"
+        },
+        {
+          "title": "Free Press Journal: Goodluck cleared to reopen (Jul 2025)",
+          "url": "https://www.freepressjournal.in/pune/punes-iconic-goodluck-caf-cleared-to-reopen-as-fda-revokes-license-suspension-all-you-need-to-know"
+        }
+      ]
+    },
+    {
+      "id": "vohuman-cafe",
+      "name": "Vohuman Cafe",
+      "section": "og",
+      "kind": "Irani/Parsi café",
+      "area": "Sassoon Rd (near Ruby Hall)",
+      "line": "Est. 1978; boisterous breakfast institution; queues every morning; closes by late morning per ELLE.",
+      "dish": "Egg cheese omelette, bun maska, cream rolls, Irani chai",
+      "flag": null,
+      "address": "Millenium Star, Chatrapati Shahu Maharaj Rd, near Ruby Hall, Sangamvadi, Pune, Maharashtra 411001",
+      "mapsUrl": "https://www.google.com/maps/place/Vohuman+Cafe/data=!4m7!3m6!1s0x3bc2c0580f2b091d:0x17824b3c0a333279!8m2!3d18.5325972!4d73.8768405!16s%2Fg%2F1yfprvc1p!19sChIJHQkrD1jAwjsReTIzCjxLghc",
+      "lat": 18.5325972,
+      "lng": 73.8768405,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "ELLE Gourmet: Pune's oldest cafés & eateries (6 Apr 2026)",
+          "url": "https://ellegourmet.in/travel/punes-oldest-caf%C3%A9s-bakeries-and-eateries-that-locals-still-swear-by-11457469"
+        },
+        {
+          "title": "LBB: 24 legendary restaurants in Pune",
+          "url": "https://lbb.in/pune/iconic-restaurants-in-pune/"
+        }
+      ]
+    },
+    {
+      "id": "dorabjee-and-sons",
+      "name": "Dorabjee & Sons",
+      "section": "og",
+      "kind": "Irani/Parsi café",
+      "area": "Dastur Meher Rd, Camp",
+      "line": "Est. 1878; oldest Parsi restaurant in the city; menu barely changed.",
+      "dish": "Dhansak, dum biryani, salli boti, mutton kheema, mutton paya, keema pav with raspberry soda",
+      "flag": null,
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "ELLE Gourmet: Pune's oldest cafés & eateries (6 Apr 2026)",
+          "url": "https://ellegourmet.in/travel/punes-oldest-caf%C3%A9s-bakeries-and-eateries-that-locals-still-swear-by-11457469"
+        },
+        {
+          "title": "LBB: 24 legendary restaurants in Pune",
+          "url": "https://lbb.in/pune/iconic-restaurants-in-pune/"
+        },
+        {
+          "title": "Indian Express: restaurant with same menu since 1878",
+          "url": "https://indianexpress.com/article/cities/pune/know-your-city-pune-restaurant-menu-1878-8438417/"
+        },
+        {
+          "title": "r/pune: underrated old food places (thread)",
+          "url": "https://www.reddit.com/r/pune/comments/1vyrqcb/lesser_talked_about_underrated_old_food_places_in/"
+        }
+      ]
+    },
+    {
+      "id": "george-restaurant",
+      "name": "George Restaurant",
+      "section": "og",
+      "kind": "Biryani & Mughlai",
+      "area": "East Street, Camp",
+      "line": "Est. 1936; biryani recipe unchanged since the 1940s per ELLE.",
+      "dish": "Biryani, jujeh/chello kebab (select days), butter chicken, caramel custard",
+      "flag": null,
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "ELLE Gourmet: Pune's oldest cafés & eateries (6 Apr 2026)",
+          "url": "https://ellegourmet.in/travel/punes-oldest-caf%C3%A9s-bakeries-and-eateries-that-locals-still-swear-by-11457469"
+        },
+        {
+          "title": "LBB: 24 legendary restaurants in Pune",
+          "url": "https://lbb.in/pune/iconic-restaurants-in-pune/"
+        }
+      ]
+    },
+    {
+      "id": "marz-o-rin",
+      "name": "Marz-O-Rin",
+      "section": "og",
+      "kind": "Classic restaurants & cafés",
+      "area": "MG Rd, Camp",
+      "line": "Est. 1965; sandwiches, rolls, cold coffee in a heritage building.",
+      "dish": "Chutney/chicken sandwiches, cutlets, plum cake, mango thick shake",
+      "flag": null,
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "ELLE Gourmet: Pune's oldest cafés & eateries (6 Apr 2026)",
+          "url": "https://ellegourmet.in/travel/punes-oldest-caf%C3%A9s-bakeries-and-eateries-that-locals-still-swear-by-11457469"
+        },
+        {
+          "title": "LBB: 24 legendary restaurants in Pune",
+          "url": "https://lbb.in/pune/iconic-restaurants-in-pune/"
+        },
+        {
+          "title": "District: bakeries & patisseries (20 Sep 2026)",
+          "url": "https://www.district.in/blog/bakeries-patisseries-pune"
+        }
+      ]
+    },
+    {
+      "id": "the-place",
+      "name": "The Place",
+      "section": "og",
+      "kind": "Classic restaurants & cafés",
+      "area": "MG Rd, Camp",
+      "line": "Est. 1971; Pune's sizzler pioneer with ~40 sizzlers.",
+      "dish": "~40 sizzlers incl. Goan cafreal/balchao sizzlers; serradura",
+      "flag": null,
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "ELLE Gourmet: Pune's oldest cafés & eateries (6 Apr 2026)",
+          "url": "https://ellegourmet.in/travel/punes-oldest-caf%C3%A9s-bakeries-and-eateries-that-locals-still-swear-by-11457469"
+        },
+        {
+          "title": "LBB: 24 legendary restaurants in Pune",
+          "url": "https://lbb.in/pune/iconic-restaurants-in-pune/"
+        }
+      ]
+    },
+    {
+      "id": "poona-guest-house",
+      "name": "Poona Guest House",
+      "section": "og",
+      "kind": "Thali",
+      "area": "Laxmi Rd",
+      "line": "Est. 1935; thalipeeth, batata vada, Maharashtrian thali.",
+      "dish": "Thali, thalipeeth, ukadiche modak",
+      "flag": null,
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "ELLE Gourmet: Pune's oldest cafés & eateries (6 Apr 2026)",
+          "url": "https://ellegourmet.in/travel/punes-oldest-caf%C3%A9s-bakeries-and-eateries-that-locals-still-swear-by-11457469"
+        },
+        {
+          "title": "Pune Times Mirror: iconic thali spots (29 Apr 2025)",
+          "url": "https://punemirror.com/lifestyle/food/pune-s-iconic-thali-spots-to-savour/"
+        }
+      ]
+    },
+    {
+      "id": "badshahi-boarding-house",
+      "name": "Badshahi Boarding House",
+      "section": "og",
+      "kind": "Thali",
+      "area": "Tilak Rd, Sadashiv Peth",
+      "line": "Est. 1932; one of Pune's oldest thali houses.",
+      "dish": "Maharashtrian thali",
+      "flag": null,
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "Pune Times Mirror: iconic thali spots (29 Apr 2025)",
+          "url": "https://punemirror.com/lifestyle/food/pune-s-iconic-thali-spots-to-savour/"
+        }
+      ]
+    },
+    {
+      "id": "vaishali",
+      "name": "Vaishali",
+      "section": "misal",
+      "kind": "South Indian",
+      "area": "FC Rd",
+      "line": "Est. 1954; rite of passage; hour-long weekend queues.",
+      "dish": "SPDP, chikoo milkshake, vada sambar, Mysore masala dosa, kokum sherbet",
+      "flag": null,
+      "address": "1218/1, Ferguson College Rd, Ganeshwadi, Shivajinagar, Pune, Maharashtra 411004",
+      "mapsUrl": "https://www.google.com/maps/place/Vaishali+Restaurant/@18.5208789,73.841237,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2bf0f2dfc1f77:0x91569070e0816020!8m2!3d18.5208789!4d73.841237!16s%2Fg%2F11j10vz1k5",
+      "lat": 18.5208789,
+      "lng": 73.841237,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "ELLE Gourmet: Pune's oldest cafés & eateries (6 Apr 2026)",
+          "url": "https://ellegourmet.in/travel/punes-oldest-caf%C3%A9s-bakeries-and-eateries-that-locals-still-swear-by-11457469"
+        },
+        {
+          "title": "LBB: 24 legendary restaurants in Pune",
+          "url": "https://lbb.in/pune/iconic-restaurants-in-pune/"
+        }
+      ]
+    },
+    {
+      "id": "roopali",
+      "name": "Roopali",
+      "section": "misal",
+      "kind": "South Indian",
+      "area": "FC Rd",
+      "line": "College-crowd breakfast; buttered idli, filter coffee.",
+      "dish": "Buttered idli, filter coffee",
+      "flag": null,
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "LBB: 24 legendary restaurants in Pune",
+          "url": "https://lbb.in/pune/iconic-restaurants-in-pune/"
+        },
+        {
+          "title": "District: South Indian food in Pune",
+          "url": "https://www.district.in/blog/south-indian-food-in-pune"
+        }
+      ]
+    },
+    {
+      "id": "bedekar-tea-stall",
+      "name": "Bedekar Tea Stall",
+      "section": "misal",
+      "kind": "Misal & Maharashtrian snacks",
+      "area": "Narayan Peth",
+      "line": "Since the 1950s; sweet-tangy Puneri misal.",
+      "dish": "Misal pav with bread",
+      "flag": null,
+      "address": "418, Munjabacha Rd., Narayan Peth, Pune, Maharashtra 411030",
+      "mapsUrl": "https://www.google.com/maps/place/Bedekar+Misal/@18.5148471,73.8499297,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c0712045a1c9:0x23a1942274e443f0!8m2!3d18.5148471!4d73.8499297!16s%2Fg%2F1trswfwh",
+      "lat": 18.5148471,
+      "lng": 73.8499297,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "Condé Nast Traveller India: best misal in Pune",
+          "url": "https://www.cntraveller.in/story/the-best-misal-in-pune-heres-a-list/"
+        },
+        {
+          "title": "LBB: 24 legendary restaurants in Pune",
+          "url": "https://lbb.in/pune/iconic-restaurants-in-pune/"
+        },
+        {
+          "title": "Indian Express: Know Your City (Bedekar)",
+          "url": "https://indianexpress.com/article/cities/pune/know-your-city-tea-stall-original-flavours-puneri-misal-secret-family-recipe-8478971/"
+        },
+        {
+          "title": "ELLE Gourmet: Pune's oldest cafés & eateries (6 Apr 2026)",
+          "url": "https://ellegourmet.in/travel/punes-oldest-caf%C3%A9s-bakeries-and-eateries-that-locals-still-swear-by-11457469"
+        }
+      ]
+    },
+    {
+      "id": "shri-krishna-bhuvan",
+      "name": "Shri Krishna Bhuvan",
+      "section": "misal",
+      "kind": "Misal & Maharashtrian snacks",
+      "area": "Tulshibaug",
+      "line": "Coconut-rich Puneri misal per CNT summary.",
+      "dish": "Misal",
+      "flag": null,
+      "address": "1164, Shanipar Mandai Rd, Tulshibaug, Budhwar Peth, Pune, Maharashtra 411002",
+      "mapsUrl": "https://www.google.com/maps/place/ShriKrishna+Bhuvan/@18.513514,73.8550361,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c06dd82d6bdf:0x2bee7a22bbf9b03c!8m2!3d18.513514!4d73.8550361!16s%2Fg%2F1tcwv5bb",
+      "lat": 18.513514,
+      "lng": 73.8550361,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "Condé Nast Traveller India: best misal in Pune",
+          "url": "https://www.cntraveller.in/story/the-best-misal-in-pune-heres-a-list/"
+        }
+      ]
+    },
+    {
+      "id": "vaidya-upahar-gruha",
+      "name": "Vaidya Upahar Gruha",
+      "section": "misal",
+      "kind": "Misal & Maharashtrian snacks",
+      "area": "Budhwar Peth",
+      "line": "Since 1957 per LBB; green misal.",
+      "dish": "Green misal, poha, batata bhaji",
+      "flag": null,
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "Condé Nast Traveller India: best misal in Pune",
+          "url": "https://www.cntraveller.in/story/the-best-misal-in-pune-heres-a-list/"
+        },
+        {
+          "title": "LBB: 24 legendary restaurants in Pune",
+          "url": "https://lbb.in/pune/iconic-restaurants-in-pune/"
+        }
+      ]
+    },
+    {
+      "id": "newale-misal",
+      "name": "Newale Misal",
+      "section": "misal",
+      "kind": "Misal & Maharashtrian snacks",
+      "area": "Chinchwad Gaon",
+      "line": "Very spicy Chinchwad misal; WhatsHot calls it the top contender.",
+      "dish": "Misal, batata bhaji, solkadhi",
+      "flag": null,
+      "address": "Shop no 8,9,10, Guruganesh Apt, opp. Bakers zone Bakery, behind Ganesh Jewellers, Gandhi Peth, Prabhat Colony, Chinchwad Gaon, Chinchwad, Pimpri-Chinchwad, Maharashtra 411033",
+      "mapsUrl": "https://www.google.com/maps/place/Newale+Misal,+Chinchwad/@18.6284854,73.7810102,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2b9bac4affec1:0xe92a53cdc7211538!8m2!3d18.6284854!4d73.7810102!16s%2Fg%2F1hc6zjk_x",
+      "lat": 18.6284854,
+      "lng": 73.7810102,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "WhatsHot: 10 PCMC misal spots (updated May 2023)",
+          "url": "https://www.whatshot.in/pune/pcmc-has-insane-variety-of-misals-and-here-are-10-places-that-should-be-on-your-misal-trail-c-30910"
+        },
+        {
+          "title": "Condé Nast Traveller India: best misal in Pune",
+          "url": "https://www.cntraveller.in/story/the-best-misal-in-pune-heres-a-list/"
+        }
+      ]
+    },
+    {
+      "id": "bangalore-canteen",
+      "name": "Bangalore Canteen",
+      "section": "misal",
+      "kind": "South Indian",
+      "area": "Karve Nagar",
+      "line": "Bengaluru tiffin; filter-coffee soft serve.",
+      "dish": "Ghee podi idli, filter-coffee soft serve",
+      "flag": null,
+      "address": "Vibhav Cooperative Housing Society, Raghukul Society, Ganesh Nagar, Karvenagar, Pune, Maharashtra 411052",
+      "mapsUrl": "https://www.google.com/maps/place/Bangalore+canteen+Karve+Nagar/@18.4930753,73.8251333,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2bf00439fe831:0x86e707b86a5b4e55!8m2!3d18.4930753!4d73.8251333!16s%2Fg%2F11w9433l0n",
+      "lat": 18.4930753,
+      "lng": 73.8251333,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "Indian Express: Pune's newer South Indian restaurants (21 Nov 2025)",
+          "url": "https://indianexpress.com/article/cities/pune/pune-on-my-plate-south-indian-restaurants-idli-dosa-reimagined-fare-10377840/"
+        }
+      ]
+    },
+    {
+      "id": "gatti-chutney",
+      "name": "Gatti Chutney",
+      "section": "misal",
+      "kind": "South Indian",
+      "area": "Koregaon Park (also Baner, Kharadi)",
+      "line": "Bengaluru-style thatte idli from 7 am.",
+      "dish": "Ghee pudi thatte idli, ghee pudi masala dosa, filter coffee",
+      "flag": "Koregaon Park lane. Not Gatti Anna in Viman Nagar.",
+      "address": "Dattaguru complex, Lane no 6 plot no 354/1 Ghorpadi, Koregaon Park, Pune, Maharashtra 411001",
+      "mapsUrl": "https://www.google.com/maps/place/GATTI+CHUTNEY-KOREGAON+PARK/@18.5361533,73.8987638,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c1f199284df1:0x2d4a1d9e01f31d89!8m2!3d18.5361533!4d73.8987638!16s%2Fg%2F11rnrdwvwq",
+      "lat": 18.5361533,
+      "lng": 73.8987638,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "Indian Express: Pune's newer South Indian restaurants (21 Nov 2025)",
+          "url": "https://indianexpress.com/article/cities/pune/pune-on-my-plate-south-indian-restaurants-idli-dosa-reimagined-fare-10377840/"
+        },
+        {
+          "title": "Pune Times Mirror: top 10 new restaurants (Nov 2025)",
+          "url": "https://punemirror.com/lifestyle/food/new-restaurants-to-check-out-in-pune/"
+        }
+      ]
+    },
+    {
+      "id": "malaka-spice",
+      "name": "Malaka Spice",
+      "section": "gourmet",
+      "kind": "Dining",
+      "area": "Koregaon Park",
+      "line": "Est. 1997; farm-to-table Southeast Asian classic.",
+      "dish": "Pho chiru soup, Mandarin duck",
+      "flag": null,
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "CNT India: 11 best outdoor restaurants in Pune (18 Oct 2026)",
+          "url": "https://www.cntraveller.in/story/10-gorgeous-restaurants-for-outdoor-dining-in-pune/"
+        },
+        {
+          "title": "LBB: 24 legendary restaurants in Pune",
+          "url": "https://lbb.in/pune/iconic-restaurants-in-pune/"
+        },
+        {
+          "title": "Beer Asia: Pune craft beer guide (Dec 2025)",
+          "url": "https://beerasia.net/craft-beer-guides/craft-beer-in-pune-city-guide/"
+        }
+      ]
+    },
+    {
+      "id": "aragma",
+      "name": "Aragma",
+      "section": "gourmet",
+      "kind": "Dining",
+      "area": "Sangamvadi",
+      "line": "24-seat chef's table; 8-course tasting with no printed menu (District, Oct 2026); chef Amit Ghorpade per Mint.",
+      "dish": "Current tasting menu",
+      "flag": null,
+      "address": "Insignia, Wadia College Chowk, Ground, Balkrishna Sakharam Dhole Patil Rd, Sangamvadi, Pune, Maharashtra 411001",
+      "mapsUrl": "https://www.google.com/maps/place/Aragma/data=!4m7!3m6!1s0x3bc2c108c30a0139:0xa6c405e875e571ef!8m2!3d18.534615!4d73.8788519!16s%2Fg%2F11fn2rmk58!19sChIJOQEKwwjBwjsR73HldegFxKY",
+      "lat": 18.534615,
+      "lng": 73.8788519,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "District: date night spots (26 Oct 2026)",
+          "url": "https://www.district.in/blog/date-night-spots-pune"
+        },
+        {
+          "title": "Mint Lounge: Pune's F&B scene gets buzzier",
+          "url": "https://www.livemint.com/mint-lounge/food/pune-food-and-beverage-restaurants-cocktail-bars-chefs-11753417669905.html"
+        }
+      ]
+    },
+    {
+      "id": "farro",
+      "name": "Farro",
+      "section": "gourmet",
+      "kind": "Dining",
+      "area": "Lane 6, Koregaon Park",
+      "line": "Chef Vardaan Marwah; CNT and Mint coverage.",
+      "dish": "Parmesan jalebi, rajma cannoli, 30-layer truffle latke",
+      "flag": null,
+      "address": "Shop 1/2, 357/1, Lane No. 6, Meera Nagar Garden Society, Meera Nagar, Koregaon Park, Pune, Maharashtra 411001",
+      "mapsUrl": "https://www.google.com/maps/place/Farro/@18.5366656,73.8986979,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c1cc054724fb:0x857fd927e76297bf!8m2!3d18.5366656!4d73.8986979!16s%2Fg%2F11wvpq_kgn",
+      "lat": 18.5366656,
+      "lng": 73.8986979,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "CNT India: 11 best outdoor restaurants in Pune (18 Oct 2026)",
+          "url": "https://www.cntraveller.in/story/10-gorgeous-restaurants-for-outdoor-dining-in-pune/"
+        },
+        {
+          "title": "Mint Lounge: Pune's F&B scene gets buzzier",
+          "url": "https://www.livemint.com/mint-lounge/food/pune-food-and-beverage-restaurants-cocktail-bars-chefs-11753417669905.html"
+        },
+        {
+          "title": "District: cocktail bars (16 Sep 2026)",
+          "url": "https://www.district.in/blog/cocktail-bars-pune"
+        },
+        {
+          "title": "District: date night spots (26 Oct 2026)",
+          "url": "https://www.district.in/blog/date-night-spots-pune"
+        }
+      ]
+    },
+    {
+      "id": "nannas-negroni",
+      "name": "Nanna's Negroni",
+      "section": "gourmet",
+      "kind": "Dining",
+      "area": "Baner",
+      "line": "Chefs Ambar Rode & Damini Halli; opened Jan 2025 per Mint; European comfort food and cocktails.",
+      "dish": null,
+      "flag": null,
+      "address": "Siddh Icon, GA-1, Baner, Pune, Maharashtra 411069",
+      "mapsUrl": "https://www.google.com/maps/place/Nanna%27s+Negroni/@18.55759,73.7920479,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2bf0026a84829:0x892a59b1a87df9af!8m2!3d18.55759!4d73.7920479!16s%2Fg%2F11wtmnb7jf",
+      "lat": 18.55759,
+      "lng": 73.7920479,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "CNT India: Nanna's Negroni",
+          "url": "https://www.cntraveller.in/story/nannas-negroni-restaurant-pune/"
+        },
+        {
+          "title": "Mint Lounge: Pune's F&B scene gets buzzier",
+          "url": "https://www.livemint.com/mint-lounge/food/pune-food-and-beverage-restaurants-cocktail-bars-chefs-11753417669905.html"
+        },
+        {
+          "title": "District: cocktail bars (16 Sep 2026)",
+          "url": "https://www.district.in/blog/cocktail-bars-pune"
+        }
+      ]
+    },
+    {
+      "id": "savya-rasa",
+      "name": "Savya Rasa",
+      "section": "gourmet",
+      "kind": "Dining",
+      "area": "Koregaon Park",
+      "line": "Regional South Indian (Chettinad/Malabar/Mangaluru etc.) per official site and IE.",
+      "dish": "Neer dosa with kori gassi, bun parotta",
+      "flag": null,
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "Indian Express: Pune's newer South Indian restaurants (21 Nov 2025)",
+          "url": "https://indianexpress.com/article/cities/pune/pune-on-my-plate-south-indian-restaurants-idli-dosa-reimagined-fare-10377840/"
+        },
+        {
+          "title": "Savya Rasa official",
+          "url": "https://savyarasa.com/index.html"
+        }
+      ]
+    },
+    {
+      "id": "le-plaisir",
+      "name": "Le Plaisir",
+      "section": "gourmet",
+      "kind": "Dining",
+      "area": "Prabhat Rd",
+      "line": "Le Cordon Bleu-trained chef; since 2012.",
+      "dish": "Harissa grilled chicken, lamb bolognese, hazelnut macaron",
+      "flag": null,
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "LBB: 24 legendary restaurants in Pune",
+          "url": "https://lbb.in/pune/iconic-restaurants-in-pune/"
+        },
+        {
+          "title": "District: bakeries & patisseries (20 Sep 2026)",
+          "url": "https://www.district.in/blog/bakeries-patisseries-pune"
+        },
+        {
+          "title": "Mint Lounge: Pune's F&B scene gets buzzier",
+          "url": "https://www.livemint.com/mint-lounge/food/pune-food-and-beverage-restaurants-cocktail-bars-chefs-11753417669905.html"
+        }
+      ]
+    },
+    {
+      "id": "donna-cucina",
+      "name": "Donna Cucina",
+      "section": "gourmet",
+      "kind": "Dining",
+      "area": "Lane 6, Kalyani Nagar",
+      "line": "X favourite (prior research); official site live.",
+      "dish": "Pasta, pizza",
+      "flag": null,
+      "address": "Bungalow, Lane No. 6, Kalyani Nagar, Pune, Maharashtra 411006",
+      "mapsUrl": "https://www.google.com/maps/place/Donna+Cucina/@18.5472291,73.9036257,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2bece90000001:0xbdc6e7515d9a9ea6!8m2!3d18.5472291!4d73.9036257!16s%2Fg%2F11rs0sn7n0",
+      "lat": 18.5472291,
+      "lng": 73.9036257,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "Donna Cucina official",
+          "url": "https://www.donnacucina.com/"
+        }
+      ]
+    },
+    {
+      "id": "729-grams-coffee-roasters",
+      "name": "729 Grams Coffee Roasters",
+      "section": "coffee",
+      "kind": "Coffee & cafés",
+      "area": "Lane 5, Koregaon Park",
+      "line": "Roaster/café praised in a coffee-crawl thread and bean lists.",
+      "dish": null,
+      "flag": null,
+      "address": "C 26, Lane Number 5, across Lapiz Lazulli apartments, beside Sai Mandir, Iricen Railway Colony, Koregaon Park, Pune, Maharashtra 411001",
+      "mapsUrl": "https://www.google.com/maps/place/729+Grams+Coffee+Roasters/data=!4m7!3m6!1s0x3bc2c13eab7edb43:0xc986d5bd10e5af91!8m2!3d18.5324229!4d73.8970735!16s%2Fg%2F11k56g9_69!19sChIJQ9t-qz7BwjsRka_lEL3Vhsk",
+      "lat": 18.5324229,
+      "lng": 73.8970735,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "729 Grams official",
+          "url": "https://www.729grams.coffee/"
+        },
+        {
+          "title": "Urbanly: 6 spots for coffee beans",
+          "url": "https://www.urbanly.in/pune/top-6-spots-in-pune-to-get-your-coffee-bean-stash/"
+        },
+        {
+          "title": "r/punemeetup: Pune coffee crawl",
+          "url": "https://www.reddit.com/r/punemeetup/comments/1w7v1py/pune_coffee_crawl_my_caffeinated_hit_list/"
+        },
+        {
+          "title": "District: specialty coffee spots (4 Sep 2026)",
+          "url": "https://www.district.in/blog/specialty-coffee-cafes-pune"
+        }
+      ]
+    },
+    {
+      "id": "grey-soul-coffee-roasters",
+      "name": "Grey Soul Coffee Roasters",
+      "section": "coffee",
+      "kind": "Coffee & cafés",
+      "area": "Lane 6, Koregaon Park",
+      "line": "Roastery café; self-describes as Pune's only specialty roastery (first-party claim).",
+      "dish": null,
+      "flag": null,
+      "address": "2, Lane No. 6, Ashok Chakra Society, Meera Nagar, Koregaon Park, Pune, Maharashtra 411001",
+      "mapsUrl": "https://www.google.com/maps/place/Grey+Soul+Coffee+Roasters+%28Koregaon+Park%29/data=!4m7!3m6!1s0x3bc2c1e07c929ee9:0xfe0dd6e138d79381!8m2!3d18.5374892!4d73.8988508!16s%2Fg%2F11s548j2v0!19sChIJ6Z6SfODBwjsRgZPXOOHWDf4",
+      "lat": 18.5374892,
+      "lng": 73.8988508,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "Grey Soul official café page",
+          "url": "https://greysoul.coffee/pages/our-cafe"
+        },
+        {
+          "title": "Urbanly: 6 spots for coffee beans",
+          "url": "https://www.urbanly.in/pune/top-6-spots-in-pune-to-get-your-coffee-bean-stash/"
+        },
+        {
+          "title": "District: specialty coffee spots (4 Sep 2026)",
+          "url": "https://www.district.in/blog/specialty-coffee-cafes-pune"
+        }
+      ]
+    },
+    {
+      "id": "bai-mu-dan",
+      "name": "Bai Mu Dan",
+      "section": "coffee",
+      "kind": "Coffee & cafés",
+      "area": "Lane 1, Koregaon Park",
+      "line": "KP café popular on X; official café page live.",
+      "dish": null,
+      "flag": null,
+      "address": "No 1, Within, Sunderban Resort & spa, Lane, Plot No 19, next to Osho International Commune Centre, Koregaon Park, Pune, Maharashtra 411001",
+      "mapsUrl": "https://www.google.com/maps/place/bai+mu+dan/@18.537323,73.8889575,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c1bb2db4a413:0xa9967f72439637c!8m2!3d18.537323!4d73.8889575!16s%2Fg%2F11jt1zrh11",
+      "lat": 18.537323,
+      "lng": 73.8889575,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "Bai Mu Dan official café page",
+          "url": "https://www.baimudan.in/pages/cafe"
+        }
+      ]
+    },
+    {
+      "id": "godaam-specialty-coffee-co",
+      "name": "Godaam Specialty Coffee Co.",
+      "section": "coffee",
+      "kind": "Coffee & cafés",
+      "area": "Model Colony",
+      "line": "In District specialty list.",
+      "dish": null,
+      "flag": null,
+      "address": "1120, Model Colony Rd, Model Colony, Shivajinagar, Pune, Maharashtra 411016",
+      "mapsUrl": "https://www.google.com/maps/place/Godaam+Speciality+Coffee+Co./data=!4m7!3m6!1s0x3bc2bff17fc75c1b:0x2aefdeeded1bdfe5!8m2!3d18.5283486!4d73.8411515!16s%2Fg%2F11s33dvbgb!19sChIJG1zHf_G_wjsR5d8b7e3e7yo",
+      "lat": 18.5283486,
+      "lng": 73.8411515,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "District: specialty coffee spots (4 Sep 2026)",
+          "url": "https://www.district.in/blog/specialty-coffee-cafes-pune"
+        }
+      ]
+    },
+    {
+      "id": "pagdandi-books-chai-cafe",
+      "name": "Pagdandi Books Chai Cafe",
+      "section": "coffee",
+      "kind": "Coffee & cafés",
+      "area": "Baner–Pashan Link Rd",
+      "line": "Book café; in Urbanly beans list (blr's Coffee section also lists a bookstore café).",
+      "dish": null,
+      "flag": null,
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "Urbanly: 6 spots for coffee beans",
+          "url": "https://www.urbanly.in/pune/top-6-spots-in-pune-to-get-your-coffee-bean-stash/"
+        }
+      ]
+    },
+    {
+      "id": "kumaradhara",
+      "name": "Kumaradhara",
+      "section": "coffee",
+      "kind": "Coffee & cafés",
+      "area": "FC Rd",
+      "line": "Sells the Sawai blend brewed at Sawai Gandharva festival.",
+      "dish": "Sawai blend filter coffee",
+      "flag": null,
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "Urbanly: 6 spots for coffee beans",
+          "url": "https://www.urbanly.in/pune/top-6-spots-in-pune-to-get-your-coffee-bean-stash/"
+        }
+      ]
+    },
+    {
+      "id": "kayani-bakery",
+      "name": "Kayani Bakery",
+      "section": "sweet",
+      "kind": "Bakery & desserts",
+      "area": "East Street, Camp",
+      "line": "Est. 1955 Camp bakery.",
+      "dish": "Shrewsbury biscuits, mawa cake, nankhatai",
+      "flag": null,
+      "address": "6, East St, Hulshur, Camp, Pune, Maharashtra 411001",
+      "mapsUrl": "https://www.google.com/maps/place/Kayani+Bakery/data=!4m7!3m6!1s0x3bc2c04f2a978d45:0x386bee1e06d701ac!8m2!3d18.5148369!4d73.8799832!16s%2Fg%2F1tltktq9!19sChIJRY2XKk_AwjsRrAHXBh7uazg",
+      "lat": 18.5148369,
+      "lng": 73.8799832,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "ELLE Gourmet: Pune's oldest cafés & eateries (6 Apr 2026)",
+          "url": "https://ellegourmet.in/travel/punes-oldest-caf%C3%A9s-bakeries-and-eateries-that-locals-still-swear-by-11457469"
+        },
+        {
+          "title": "LBB: 24 legendary restaurants in Pune",
+          "url": "https://lbb.in/pune/iconic-restaurants-in-pune/"
+        },
+        {
+          "title": "Kayani Bakery official",
+          "url": "https://www.kayanibakerypune.com/about-us"
+        }
+      ]
+    },
+    {
+      "id": "gujar-cold-drink-house",
+      "name": "Gujar Cold Drink House",
+      "section": "sweet",
+      "kind": "Mastani & mithai",
+      "area": "Budhwar Peth",
+      "line": "Since 1923; credited with creating the mastani.",
+      "dish": "Mastani",
+      "flag": null,
+      "address": "1056, Saind Path, Budhwar Peth, Pune, Maharashtra 411002",
+      "mapsUrl": "https://www.google.com/maps/place/Gujar+Cold+Drink+House/@18.5149076,73.8569236,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c06ef819e2db:0xd06fd015fd29cd3a!8m2!3d18.5149076!4d73.8569236!16s%2Fg%2F11bbwr968f",
+      "lat": 18.5149076,
+      "lng": 73.8569236,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "Indian Express: Gujar Cold Drink House and the mastani",
+          "url": "https://indianexpress.com/article/cities/pune/mastani-gujar-cold-drink-house-9307244/"
+        }
+      ]
+    },
+    {
+      "id": "sujata-mastani",
+      "name": "Sujata Mastani",
+      "section": "sweet",
+      "kind": "Mastani & mithai",
+      "area": "Nimbalkar Talim Chowk, Sadashiv Peth",
+      "line": "Since 1967; 30+ mastani flavours.",
+      "dish": "Mango mastani",
+      "flag": null,
+      "address": "1259, Rajivmama Kondhalkar Path, Near Nimbalkar Talim Chowk, Sadashiv Peth, Pune, Maharashtra 411030",
+      "mapsUrl": "https://www.google.com/maps/place/Sujata+Mastani+%28Sadashiv+Peth%29/data=!4m7!3m6!1s0x3bc2c071715bac79:0xb91fbfdbadc89283!8m2!3d18.511755!4d73.8520311!16s%2Fg%2F1hm65gqyv!19sChIJeaxbcXHAwjsRg5LIrdu_H7k",
+      "lat": 18.511755,
+      "lng": 73.8520311,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "LBB: 24 legendary restaurants in Pune",
+          "url": "https://lbb.in/pune/iconic-restaurants-in-pune/"
+        },
+        {
+          "title": "Sujata Mastani outlets",
+          "url": "https://sujatamastani.com/outlets/"
+        }
+      ]
+    },
+    {
+      "id": "german-bakery",
+      "name": "German Bakery",
+      "section": "sweet",
+      "kind": "Bakery & desserts",
+      "area": "North Main Rd, Koregaon Park",
+      "line": "Est. 1988; heart of KP café culture.",
+      "dish": "Mango cheesecake, apple pie, banoffee",
+      "flag": null,
+      "address": "292, N Main Rd, Ragvilas Society, Koregaon Park, Pune, Maharashtra 411001",
+      "mapsUrl": "https://www.google.com/maps/place/German+Bakery/data=!4m7!3m6!1s0x3bc2c0fdea86eacb:0x9f90341022aa9851!8m2!3d18.5396337!4d73.887395!16s%2Fg%2F1vn9mjrx!19sChIJy-qG6v3AwjsRUZiqIhA0kJ8",
+      "lat": 18.5396337,
+      "lng": 73.887395,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "ELLE Gourmet: Pune's oldest cafés & eateries (6 Apr 2026)",
+          "url": "https://ellegourmet.in/travel/punes-oldest-caf%C3%A9s-bakeries-and-eateries-that-locals-still-swear-by-11457469"
+        },
+        {
+          "title": "District: bakeries & patisseries (20 Sep 2026)",
+          "url": "https://www.district.in/blog/bakeries-patisseries-pune"
+        }
+      ]
+    },
+    {
+      "id": "kaka-halwai-sweet-centre",
+      "name": "Kaka Halwai Sweet Centre",
+      "section": "sweet",
+      "kind": "Mastani & mithai",
+      "area": "Tilak Rd (+ branches)",
+      "line": "Founded 1892; Tilak Rd centre from 1977.",
+      "dish": null,
+      "flag": null,
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "Kaka Halwai official: about us",
+          "url": "https://www.kakahalwai.com/pages/about-us"
+        }
+      ]
+    },
+    {
+      "id": "rihla-bakehouse",
+      "name": "Rihla Bakehouse",
+      "section": "sweet",
+      "kind": "Bakery & desserts",
+      "area": "Baner",
+      "line": "Chef-led; in-house gelato; Pune Mirror new-openings pick.",
+      "dish": "In-house gelato, sorbets, seasonal desserts",
+      "flag": null,
+      "address": "opp. reliance digital, Lalit Estate, Baner, Pune, Maharashtra 411069",
+      "mapsUrl": "https://www.google.com/maps/place/Rihla+-+Bake+House/@18.563196,73.7769183,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2bf9109b7e15f:0x3859333b11ac118a!8m2!3d18.563196!4d73.7769183!16s%2Fg%2F11vl8hqgf9",
+      "lat": 18.563196,
+      "lng": 73.7769183,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "LBB: 12 ice cream spots",
+          "url": "https://lbb.in/pune/best-ice-creams-in-pune/"
+        },
+        {
+          "title": "Pune Times Mirror: top 10 new restaurants (Nov 2025)",
+          "url": "https://punemirror.com/lifestyle/food/new-restaurants-to-check-out-in-pune/"
+        }
+      ]
+    },
+    {
+      "id": "toit-pune",
+      "name": "Toit Pune",
+      "section": "pints",
+      "kind": "Bars, pubs & beer",
+      "area": "Kalyani Nagar",
+      "line": "Since 2019 on old stables under a banyan; six house beers.",
+      "dish": "House beers",
+      "flag": null,
+      "address": "Metro Compound Complex, East Ave, beside Bishops Co Ed School, Kalyani Nagar, Pune, Maharashtra 411006",
+      "mapsUrl": "https://www.google.com/maps/place/Toit+Pune/data=!4m7!3m6!1s0x3bc2c1f9e095acd5:0x7cef804cdc77897a!8m2!3d18.553466!4d73.9058825!16s%2Fg%2F11h2pkqz8x!19sChIJ1ayV4PnBwjsReol33EyA73w",
+      "lat": 18.553466,
+      "lng": 73.9058825,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "Beer Asia: Pune craft beer guide (Dec 2025)",
+          "url": "https://beerasia.net/craft-beer-guides/craft-beer-in-pune-city-guide/"
+        },
+        {
+          "title": "Toit Pune official",
+          "url": "https://toit.in/restaurant/toit-pune/"
+        },
+        {
+          "title": "District: cocktail bars (16 Sep 2026)",
+          "url": "https://www.district.in/blog/cocktail-bars-pune"
+        }
+      ]
+    },
+    {
+      "id": "effingut",
+      "name": "Effingut",
+      "section": "pints",
+      "kind": "Bars, pubs & beer",
+      "area": "Lane 6, Koregaon Park",
+      "line": "Brewpub since 2014; 20 beers/ciders/meads.",
+      "dish": "Hefeweizen, Kölsch, mango cider",
+      "flag": null,
+      "address": "Plot No. 389, Serene Bay, No. 21/A, Lane No. 6, Ashok Chakra Society, Meera Nagar, Koregaon Park, Pune, Maharashtra 411001",
+      "mapsUrl": "https://www.google.com/maps/place/Effingut+Koregaon+Park+-+Pune%27s+most+loved+craft+brew+pub/data=!4m7!3m6!1s0x3bc2c1078578e3d7:0x638bb527eef67b65!8m2!3d18.5339952!4d73.8984822!16s%2Fg%2F1wz514yk!19sChIJ1-N4hQfBwjsRZXv27ie1i2M",
+      "lat": 18.5339952,
+      "lng": 73.8984822,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "Beer Asia: Pune craft beer guide (Dec 2025)",
+          "url": "https://beerasia.net/craft-beer-guides/craft-beer-in-pune-city-guide/"
+        },
+        {
+          "title": "Effingut KP brewpub official",
+          "url": "https://effingut.com/kp-brewpub-pune/"
+        },
+        {
+          "title": "District: cocktail bars (16 Sep 2026)",
+          "url": "https://www.district.in/blog/cocktail-bars-pune"
+        }
+      ]
+    },
+    {
+      "id": "doolally-taproom",
+      "name": "Doolally Taproom",
+      "section": "pints",
+      "kind": "Bars, pubs & beer",
+      "area": "KOPA Mall, Koregaon Park Annexe",
+      "line": "Maharashtra's first microbrewery; Pune taproom since 2009.",
+      "dish": "Craft beers, ciders, meads",
+      "flag": null,
+      "address": "2nd Floor, KOPA Mall, Village, Mundhwa Rd, Koregaon Park Annexe, Ghorpadi, Pune, Maharashtra 411036",
+      "mapsUrl": "https://www.google.com/maps/place/Doolally+Taproom+-+Koregaon+Park/@18.5385685,73.9078691,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c1182d4afbcd:0x183bf40dc0f18831!8m2!3d18.5385685!4d73.9078691!16s%2Fg%2F11vkn7wk0s",
+      "lat": 18.5385685,
+      "lng": 73.9078691,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "Beer Asia: Pune craft beer guide (Dec 2025)",
+          "url": "https://beerasia.net/craft-beer-guides/craft-beer-in-pune-city-guide/"
+        }
+      ]
+    },
+    {
+      "id": "independence-brewing-co",
+      "name": "Independence Brewing Co.",
+      "section": "pints",
+      "kind": "Bars, pubs & beer",
+      "area": "Wadgaon Sheri Rd, Kalyani Nagar",
+      "line": "Pioneer since 2011; 200+ beers released; original Mundhwa site closed.",
+      "dish": "Oryza rice lager",
+      "flag": "Kalyani Nagar. The original Mundhwa room is closed.",
+      "address": "16/1, Mulik Palace, Wadgaon Sheri Main Rd, opposite Trump Towers, Kalyani Nagar, Pune, Maharashtra 411014",
+      "mapsUrl": "https://www.google.com/maps/place/Independence+Brewing+Company+-+Kalyani+Nagar/@18.5495545,73.906435,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c19f6c0385cd:0x8e19949e990e7b08!8m2!3d18.5495545!4d73.906435!16s%2Fg%2F1pxq4ww2s",
+      "lat": 18.5495545,
+      "lng": 73.906435,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "Beer Asia: Pune craft beer guide (Dec 2025)",
+          "url": "https://beerasia.net/craft-beer-guides/craft-beer-in-pune-city-guide/"
+        },
+        {
+          "title": "District: cocktail bars (16 Sep 2026)",
+          "url": "https://www.district.in/blog/cocktail-bars-pune"
+        }
+      ]
+    },
+    {
+      "id": "elephant-and-co",
+      "name": "Elephant & Co.",
+      "section": "pints",
+      "kind": "Bars, pubs & beer",
+      "area": "Kalyani Nagar",
+      "line": "Reopened in 8,000 sq ft space; 30BBI People's Choice for Pune outposts 2021–23.",
+      "dish": null,
+      "flag": null,
+      "address": "Pushpak Society, Metro Traders Compound Complex, Plot no. 88, Kalyani Nagar, Pune, Maharashtra 411006",
+      "mapsUrl": "https://www.google.com/maps/place/Elephant+and+Co.+Kalyani+Nagar/@18.553516,73.9057615,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c11192133e4d:0xc6e841537a56b15d!8m2!3d18.553516!4d73.9057615!16s%2Fg%2F11c6v70571",
+      "lat": 18.553516,
+      "lng": 73.9057615,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "CNT India: 11 best outdoor restaurants in Pune (18 Oct 2026)",
+          "url": "https://www.cntraveller.in/story/10-gorgeous-restaurants-for-outdoor-dining-in-pune/"
+        },
+        {
+          "title": "Hotelier India: Elephant & Co. and Cobbler & Crew at 30BBI 2025",
+          "url": "https://www.hotelierindia.com/operations/elephant-co-and-cobbler-crew-shine-at-30-best-bars-india-2025-awards"
+        }
+      ]
+    },
+    {
+      "id": "1000-oaks",
+      "name": "1000 Oaks",
+      "section": "pints",
+      "kind": "Bars, pubs & beer",
+      "area": "East Street, Camp",
+      "line": "Since 1994; one of Pune's oldest pubs.",
+      "dish": "Tandoori mushrooms, cheese croquettes",
+      "flag": null,
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "LBB: 24 legendary restaurants in Pune",
+          "url": "https://lbb.in/pune/iconic-restaurants-in-pune/"
+        }
+      ]
+    },
+    {
+      "id": "cobbler-and-crew",
+      "name": "Cobbler & Crew",
+      "section": "dates",
+      "kind": "Cocktail & rooftop bars",
+      "area": "Barons Club, Kalyani Nagar",
+      "line": "Only Pune bar in 30 Best Bars India 2025 (#19); bartender award.",
+      "dish": null,
+      "flag": null,
+      "address": "Ground floor, Barons Club, North Ave, opposite Jogger's Park, Kalyani Nagar, Pune, Maharashtra 411006",
+      "mapsUrl": "https://www.google.com/maps/place/Cobbler+%26+Crew/data=!4m7!3m6!1s0x3bc2c19c267763e3:0x643c726b5700ef8c!8m2!3d18.5494971!4d73.9026573!16s%2Fg%2F11s63cv4_5!19sChIJ42N3JpzBwjsRjO8AV2tyPGQ",
+      "lat": 18.5494971,
+      "lng": 73.9026573,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "The Hindu: 30 Best Bars India 2025 list",
+          "url": "https://www.thehindu.com/food/features/bengalurus-bar-spirit-forward-wins-the-best-bar-in-india-here-is-list-of-the-30-best-bars-india-2025/article70477123.ece"
+        },
+        {
+          "title": "30 Best Bars India: Cobbler & Crew",
+          "url": "https://www.30bestbarsindia.in/bar/cobbler-crew/"
+        },
+        {
+          "title": "District: cocktail bars (16 Sep 2026)",
+          "url": "https://www.district.in/blog/cocktail-bars-pune"
+        },
+        {
+          "title": "District: date night spots (26 Oct 2026)",
+          "url": "https://www.district.in/blog/date-night-spots-pune"
+        }
+      ]
+    },
+    {
+      "id": "pu-la-deshpande-udyan",
+      "name": "Pu La Deshpande Udyan",
+      "section": "dates",
+      "kind": "Parks, hills & walks",
+      "area": "Sinhagad Rd",
+      "line": "Japanese-style Okayama friendship garden.",
+      "dish": null,
+      "flag": null,
+      "address": "Pune Okayama Friendship Garden, Dattawadi, Pune, Maharashtra 411030",
+      "mapsUrl": "https://www.google.com/maps/place/P+L+Deshpande+Garden/data=!4m7!3m6!1s0x3bc2bff990000001:0x3291e3e36f9ad234!8m2!3d18.4923958!4d73.8361478!16s%2Fm%2F0kf_2nb!19sChIJAQAAkPm_wjsRNNKab-PjkTI",
+      "lat": 18.4923958,
+      "lng": 73.8361478,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "Wikipedia: Pune-Okayama Friendship Garden",
+          "url": "https://en.wikipedia.org/wiki/Pune-Okayama_Friendship_Garden"
+        }
+      ]
+    },
+    {
+      "id": "al-di-la",
+      "name": "Al Di La",
+      "section": "dates",
+      "kind": "Cocktail & rooftop bars",
+      "area": "Bund Garden Rd",
+      "line": "Conrad rooftop on CNT outdoor, District cocktail and date lists.",
+      "dish": "(cocktails)",
+      "flag": null,
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "District: cocktail bars (16 Sep 2026)",
+          "url": "https://www.district.in/blog/cocktail-bars-pune"
+        },
+        {
+          "title": "District: date night spots (26 Oct 2026)",
+          "url": "https://www.district.in/blog/date-night-spots-pune"
+        }
+      ]
+    },
+    {
+      "id": "grandmamas-cafe",
+      "name": "Grandmama's Cafe",
+      "section": "dates",
+      "kind": "Cocktail & rooftop bars",
+      "area": "Koregaon Park",
+      "line": "On District date list.",
+      "dish": null,
+      "flag": null,
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "District: date night spots (26 Oct 2026)",
+          "url": "https://www.district.in/blog/date-night-spots-pune"
+        }
+      ]
+    },
+    {
+      "id": "aasmana",
+      "name": "Aasmana",
+      "section": "dates",
+      "kind": "Cocktail & rooftop bars",
+      "area": "Yerawada",
+      "line": "Ritz-Carlton rooftop on District date and CNT outdoor lists.",
+      "dish": null,
+      "flag": null,
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "District: date night spots (26 Oct 2026)",
+          "url": "https://www.district.in/blog/date-night-spots-pune"
+        },
+        {
+          "title": "CNT India: 11 best outdoor restaurants in Pune (18 Oct 2026)",
+          "url": "https://www.cntraveller.in/story/10-gorgeous-restaurants-for-outdoor-dining-in-pune/"
+        }
+      ]
+    },
+    {
+      "id": "raja-dinkar-kelkar-museum",
+      "name": "Raja Dinkar Kelkar Museum",
+      "section": "things",
+      "kind": "Museums, heritage & attractions",
+      "area": "Shukrawar Peth",
+      "line": "Major private collection museum.",
+      "dish": null,
+      "flag": null,
+      "address": "No. 1377/78, Kamal Kunj, Bajirao Rd, Natu Baag, Shukrawar Peth, Pune, Maharashtra 411002",
+      "mapsUrl": "https://www.google.com/maps/place/Raja+Dinkar+Kelkar+Museum/data=!4m7!3m6!1s0x3bc2c073c7e01df5:0x45cf6b0362946df3!8m2!3d18.5106855!4d73.8544307!16zL20vMGd6MDE1!19sChIJ9R3gx3PAwjsR822UYgNrz0U",
+      "lat": 18.5106855,
+      "lng": 73.8544307,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "Raja Dinkar Kelkar Museum official",
+          "url": "https://www.rajakelkarmuseum.org/"
+        },
+        {
+          "title": "LBB: 13 museums in Pune",
+          "url": "https://lbb.in/pune/museums-in-pune/"
+        }
+      ]
+    },
+    {
+      "id": "aga-khan-palace",
+      "name": "Aga Khan Palace",
+      "section": "things",
+      "kind": "Museums, heritage & attractions",
+      "area": "Nagar Rd",
+      "line": "Gandhi memorial; listed in museum guides.",
+      "dish": null,
+      "flag": null,
+      "address": "HW32+2JM, Palace View Society, Kalyani Nagar, Pune, Maharashtra 411006",
+      "mapsUrl": "https://www.google.com/maps/place/Aga+Khan+Palace/@18.5525887,73.9015388,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c1004ffe815b:0x9dcb9b9409cc7bde!8m2!3d18.5525887!4d73.9015388!16zL20vMGI4MTFj",
+      "lat": 18.5525887,
+      "lng": 73.9015388,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "LBB: 13 museums in Pune",
+          "url": "https://lbb.in/pune/museums-in-pune/"
+        }
+      ]
+    },
+    {
+      "id": "katraj-zoo",
+      "name": "Katraj Zoo",
+      "section": "things",
+      "kind": "Museums, heritage & attractions",
+      "area": "Katraj",
+      "line": "PMC zoo.",
+      "dish": null,
+      "flag": null,
+      "address": "Pune - Satara Rd, opp. Katraj Dairy, Katraj, Pune, Maharashtra 411046",
+      "mapsUrl": "https://www.google.com/maps/place/Rajiv+Gandhi+Zoological+Park+%26+Wildlife+Research+Center/@18.4542537,73.8598486,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2eac307f7a82f:0x3ac431343224b00b!8m2!3d18.4542537!4d73.8598486!16s%2Fm%2F0479krv",
+      "lat": 18.4542537,
+      "lng": 73.8598486,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "Pune Zoo (PMC) official",
+          "url": "https://punezoo.in/"
+        }
+      ]
+    },
+    {
+      "id": "joshis-miniature-railways",
+      "name": "Joshi's Miniature Railways",
+      "section": "things",
+      "kind": "Museums, heritage & attractions",
+      "area": "Kothrud",
+      "line": "Miniature railway museum.",
+      "dish": null,
+      "flag": null,
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "Joshi's Museum of Miniature Railways official",
+          "url": "https://minirailways.com/"
+        },
+        {
+          "title": "LBB: 13 museums in Pune",
+          "url": "https://lbb.in/pune/museums-in-pune/"
+        }
+      ]
+    },
+    {
+      "id": "pimpri-chinchwad-science-park",
+      "name": "Pimpri Chinchwad Science Park",
+      "section": "things",
+      "kind": "Museums, heritage & attractions",
+      "area": "Chinchwad",
+      "line": "Official science park.",
+      "dish": null,
+      "flag": null,
+      "address": "Science Park Marg, Indira Nagar, Anna Sahib Nagar, Chinchwad, Pimpri-Chinchwad, Pune, Maharashtra 411019",
+      "mapsUrl": "https://www.google.com/maps/place/Pimpri+Chinchwad+Science+Park/@18.6400776,73.8000732,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2b84a081e64b5:0xde6ec85b024d2437!8m2!3d18.6400776!4d73.8000732!16s%2Fg%2F1262jgjly",
+      "lat": 18.6400776,
+      "lng": 73.8000732,
+      "pin": "maps-place-geometry",
+      "sources": [
+        {
+          "title": "Pimpri Chinchwad Science Park official",
+          "url": "https://www.pcsciencepark.org/"
+        }
+      ]
+    },
+    {
+      "id": "pmc-heritage-walk",
+      "name": "PMC Heritage Walk",
+      "section": "things",
+      "kind": "Museums, heritage & attractions",
+      "area": "Starts Delhi Darwaja, Shaniwar Wada",
+      "line": "Official weekend walk through old-city wadas.",
+      "dish": null,
+      "flag": "A scheduled walk, not a shop. Confirm the next date on the PMC page.",
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "PMC Heritage Walk official",
+          "url": "https://heritagewalk.pmc.gov.in/"
+        },
+        {
+          "title": "Free Press Journal: PMC heritage walks",
+          "url": "https://www.freepressjournal.in/pune/pmc-announces-heritage-walks-to-showcase-punes-historic-landmarks-all-you-need-to-know"
+        }
+      ]
+    },
+    {
+      "id": "shaniwar-wada",
+      "name": "Shaniwar Wada",
+      "section": "things",
+      "kind": "Museums, heritage & attractions",
+      "area": "Shaniwar Peth",
+      "line": "Peshwa seat.",
+      "dish": null,
+      "flag": "No pin. The light-and-sound show is a separate, unreliable plan.",
+      "address": null,
+      "mapsUrl": null,
+      "lat": null,
+      "lng": null,
+      "pin": null,
+      "sources": [
+        {
+          "title": "Times of India: Shaniwarwada light & sound show unreliable",
+          "url": "https://timesofindia.indiatimes.com/city/pune/shaniwarwada-light-and-sound-show-falls-to-operators-whims-and-fancies/articleshow/121683928.cms"
+        }
+      ]
+    }
+  ]
+}
