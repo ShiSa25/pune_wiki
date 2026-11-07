@@ -93,7 +93,8 @@
         "Ferguson College Road",
         "FC Road"
       ],
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Irani café from 1935, for brun maska, chai, and a morning plate."
     },
     {
       "id": "vohuman-cafe",
@@ -126,7 +127,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/9967066414",
       "coordTitle": "OpenStreetMap node 9967066414: Vohuman Cafe",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Boisterous breakfast room since 1978, with a queue most mornings."
     },
     {
       "id": "dorabjee-and-sons",
@@ -171,7 +173,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/13408367219",
       "coordTitle": "OpenStreetMap node 13408367219: Dorabjee & Sons Restaurant",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Pune's oldest Parsi restaurant, from 1878, on a menu that has barely changed."
     },
     {
       "id": "george-restaurant",
@@ -204,7 +207,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/789630715",
       "coordTitle": "OpenStreetMap node 789630715: restaurant named George in Camp",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": "The dot is the restaurant node named George. It has no street tag; East Street is within 60 metres."
+      "pinNote": "The dot is the restaurant node named George. It has no street tag; East Street is within 60 metres.",
+      "summary": "Biryani room from 1936, still cooking the 1940s recipe."
     },
     {
       "id": "marz-o-rin",
@@ -243,7 +247,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/671455417",
       "coordTitle": "OpenStreetMap node 671455417: Marz-O-Rin",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Sandwiches, rolls, and cold coffee in a heritage building, since 1965."
     },
     {
       "id": "vaishali",
@@ -282,7 +287,8 @@
         "Ferguson College Road",
         "FC Road"
       ],
-      "pinNote": null
+      "pinNote": null,
+      "summary": "A rite-of-passage breakfast room since 1954, with long weekend queues."
     },
     {
       "id": "roopali",
@@ -320,7 +326,8 @@
         "Ferguson College Road",
         "FC Road"
       ],
-      "pinNote": null
+      "pinNote": null,
+      "summary": "College-crowd breakfast of buttered idli and filter coffee."
     },
     {
       "id": "bedekar-tea-stall",
@@ -369,7 +376,8 @@
         "मिसळ",
         "Bedekar Misal"
       ],
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Sweet-tangy Puneri misal, served since the 1950s."
     },
     {
       "id": "vaidya-upahar-gruha",
@@ -405,7 +413,8 @@
       "aliases": [
         "मिसळ"
       ],
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Green misal, served here since 1957."
     },
     {
       "id": "bangalore-canteen",
@@ -432,7 +441,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/14091375701",
       "coordTitle": "OpenStreetMap node 14091375701: Bangalore canteen karve nagar",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Bengaluru tiffin and a filter-coffee soft serve."
     },
     {
       "id": "malaka-spice",
@@ -471,7 +481,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/1796901377",
       "coordTitle": "OpenStreetMap node 1796901377: Malaka Spice",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Farm-to-table Southeast Asian room, open since 1997."
     },
     {
       "id": "savya-rasa",
@@ -504,7 +515,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/10550777909",
       "coordTitle": "OpenStreetMap node 10550777909: Savya Rasa",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Regional South Indian cooking from Chettinad, Malabar, and Mangaluru."
     },
     {
       "id": "le-plaisir",
@@ -543,7 +555,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/3488367794",
       "coordTitle": "OpenStreetMap node 3488367794: Le Plaisir",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Dining room from a Le Cordon Bleu-trained chef, open since 2012."
     },
     {
       "id": "donna-cucina",
@@ -570,7 +583,8 @@
       "coordUrl": "https://www.donnacucina.com/",
       "coordTitle": "Donna Cucina schema.org GeoCoordinates on the venue site",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Italian room on Lane 6 in Kalyani Nagar, for pasta and pizza."
     },
     {
       "id": "729-grams-coffee-roasters",
@@ -578,7 +592,7 @@
       "section": "coffee",
       "kind": "Coffee & cafés",
       "area": "Lane 5, Koregaon Park",
-      "line": "Roaster/café praised in a coffee-crawl thread and bean lists.",
+      "line": "Coffee roastery with a café attached.",
       "dish": null,
       "flag": null,
       "address": null,
@@ -615,7 +629,8 @@
       "coordUrl": "https://www.729grams.coffee/",
       "coordTitle": "729 Grams site, published business location",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Coffee roastery with a café attached."
     },
     {
       "id": "grey-soul-coffee-roasters",
@@ -654,7 +669,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/10158935918",
       "coordTitle": "OpenStreetMap node 10158935918: Grey Soul",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Specialty coffee roastery with its own café."
     },
     {
       "id": "pagdandi-books-chai-cafe",
@@ -681,7 +697,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/11832252036",
       "coordTitle": "OpenStreetMap node 11832252036: Pagdandi Books Chai Cafe",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Book café on the Baner–Pashan link road, with shelves as well as the coffee."
     },
     {
       "id": "kayani-bakery",
@@ -720,7 +737,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/789695547",
       "coordTitle": "OpenStreetMap node 789695547: Kayani Bakery",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Camp bakery from 1955."
     },
     {
       "id": "sujata-mastani",
@@ -753,7 +771,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/2858176025",
       "coordTitle": "OpenStreetMap node 2858176025: Sujata Mastani",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Mastani shop since 1967, with more than 30 flavours."
     },
     {
       "id": "german-bakery",
@@ -786,7 +805,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/313785040",
       "coordTitle": "OpenStreetMap node 313785040: German Bakery",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "A centre of Koregaon Park café life since 1988."
     },
     {
       "id": "kaka-halwai-sweet-centre",
@@ -813,7 +833,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/5832547682",
       "coordTitle": "OpenStreetMap node 5832547682: Kaka Halwai confectionery beside Lokmanya Tilak Marg",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": "The dot is the confectionery node beside Lokmanya Tilak Marg. The element has no door number."
+      "pinNote": "The dot is the confectionery node beside Lokmanya Tilak Marg. The element has no door number.",
+      "summary": "Sweet shop founded in 1892, with the Tilak Road centre from 1977."
     },
     {
       "id": "rihla-bakehouse",
@@ -846,7 +867,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/13920500458",
       "coordTitle": "OpenStreetMap node 13920500458: Rihla",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Chef-led bakehouse with gelato made in house."
     },
     {
       "id": "toit-pune",
@@ -885,7 +907,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/831251526",
       "coordTitle": "OpenStreetMap node 831251526: Toit brewery and Resturant",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Brewpub in old stables under a banyan, with six house beers, since 2019."
     },
     {
       "id": "effingut",
@@ -924,7 +947,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/11744761288",
       "coordTitle": "OpenStreetMap node 11744761288: Effingut Koregaon Park",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Brewpub since 2014, with about 20 beers, ciders, and meads."
     },
     {
       "id": "doolally-taproom",
@@ -951,7 +975,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/13955832747",
       "coordTitle": "OpenStreetMap node 13955832747: The KOPA mall, the building of the Koregaon Park taproom",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": "The dot is The KOPA mall node, the building of this taproom. OSM has no separate Doolally doorway."
+      "pinNote": "The dot is The KOPA mall node, the building of this taproom. OSM has no separate Doolally doorway.",
+      "summary": "Maharashtra's first microbrewery, with a Pune taproom since 2009."
     },
     {
       "id": "independence-brewing-co",
@@ -984,7 +1009,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/3559226168",
       "coordTitle": "OpenStreetMap node 3559226168: Mulik Palace, the Kalyani Nagar building in the brewery address",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": "The dot is the Mulik Palace building named in the address, not a separate brewery doorway."
+      "pinNote": "The dot is the Mulik Palace building named in the address, not a separate brewery doorway.",
+      "summary": "Brewery pioneer since 2011. The Kalyani Nagar room is the one still open."
     },
     {
       "id": "1000-oaks",
@@ -1011,7 +1037,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/671445777",
       "coordTitle": "OpenStreetMap node 671445777: Thousand Oaks",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "One of Pune's older pubs, open since 1994."
     },
     {
       "id": "cobbler-and-crew",
@@ -1056,7 +1083,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/13930909038",
       "coordTitle": "OpenStreetMap node 13930909038: Cobbler & Crew",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Cocktail bar placed 19th on the 30 Best Bars India 2025 list."
     },
     {
       "id": "pu-la-deshpande-udyan",
@@ -1083,7 +1111,8 @@
       "coordUrl": "https://www.openstreetmap.org/way/197954185",
       "coordTitle": "OpenStreetMap way 197954185 center: P L Deshpande Garden, Wikipedia-tagged Pune-Okayama Friendship Garden",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": "The dot is the centre of the park polygon, not an entrance."
+      "pinNote": "The dot is the centre of the park polygon, not an entrance.",
+      "summary": "Japanese-style Okayama friendship garden."
     },
     {
       "id": "al-di-la",
@@ -1116,7 +1145,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/4304526698",
       "coordTitle": "OpenStreetMap node 4304526698: Conrad Pune, 7 Mangaldas Road, the hotel of this rooftop",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": "The dot is the Conrad Pune hotel at 7 Mangaldas Road. The bar is inside that building."
+      "pinNote": "The dot is the Conrad Pune hotel at 7 Mangaldas Road. The bar is inside that building.",
+      "summary": "Rooftop bar in the Conrad on Mangaldas Road."
     },
     {
       "id": "grandmamas-cafe",
@@ -1143,7 +1173,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/11726905574",
       "coordTitle": "OpenStreetMap node 11726905574: Grandmama's Cafe",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Continental café in Koregaon Park, with white brick, swings, and a pastel room."
     },
     {
       "id": "aasmana",
@@ -1182,7 +1213,8 @@
       "coordUrl": "https://www.ritzcarlton.com/en/hotels/pnqrz-the-ritz-carlton-pune/overview/",
       "coordTitle": "Ritz-Carlton Pune schema.org GeoCoordinates; Aasmana is the level-18 bar in that hotel",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": "The dot is the Ritz-Carlton's published hotel point. The bar is on level 18 of that building."
+      "pinNote": "The dot is the Ritz-Carlton's published hotel point. The bar is on level 18 of that building.",
+      "summary": "Rooftop bar on level 18 of the Ritz-Carlton in Yerawada."
     },
     {
       "id": "raja-dinkar-kelkar-museum",
@@ -1215,7 +1247,8 @@
       "coordUrl": "https://www.openstreetmap.org/way/264281528",
       "coordTitle": "OpenStreetMap way 264281528: Raja Dinkar Kelkar Museum",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "A private museum of everyday Indian objects, in Shukrawar Peth."
     },
     {
       "id": "aga-khan-palace",
@@ -1242,7 +1275,8 @@
       "coordUrl": "https://www.openstreetmap.org/way/215998826",
       "coordTitle": "OpenStreetMap way 215998826: Aga Khan Palace",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "The Nagar Road palace associated with Gandhi's 1942 imprisonment."
     },
     {
       "id": "katraj-zoo",
@@ -1275,7 +1309,8 @@
       "coordUrl": "https://en.wikipedia.org/wiki/Rajiv_Gandhi_Zoological_Park",
       "coordTitle": "Wikipedia coordinates for Rajiv Gandhi Zoological Park",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "The municipal zoo at Katraj."
     },
     {
       "id": "joshis-miniature-railways",
@@ -1308,7 +1343,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/2455119457",
       "coordTitle": "OpenStreetMap node 2455119457: Joshi's Museum of Miniature Railways",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "A museum of miniature railways."
     },
     {
       "id": "pimpri-chinchwad-science-park",
@@ -1316,7 +1352,7 @@
       "section": "things",
       "kind": "Museums, heritage & attractions",
       "area": "Chinchwad",
-      "line": "Official science park.",
+      "line": "Science park in Pimpri-Chinchwad.",
       "dish": null,
       "flag": null,
       "address": null,
@@ -1335,7 +1371,8 @@
       "coordUrl": "https://www.openstreetmap.org/way/359533933",
       "coordTitle": "OpenStreetMap way 359533933: Pimpri Chinchwad Science Park",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": null
+      "pinNote": null,
+      "summary": "Science park in Pimpri-Chinchwad."
     },
     {
       "id": "pmc-heritage-walk",
@@ -1343,7 +1380,7 @@
       "section": "things",
       "kind": "Museums, heritage & attractions",
       "area": "Starts Delhi Darwaja, Shaniwar Wada",
-      "line": "Weekend walk from Delhi Darwaja at Shaniwar Wada. The pin is that gate, not the route.",
+      "line": "Weekend walk that starts at Delhi Darwaja, Shaniwar Wada.",
       "dish": null,
       "flag": "A scheduled walk, not a shop. Confirm the next date on the PMC page.",
       "address": "Delhi Darwaja, Shaniwar Wada",
@@ -1368,7 +1405,8 @@
       "coordUrl": "https://www.openstreetmap.org/node/10696603208",
       "coordTitle": "OpenStreetMap node 10696603208: Delhi Darwaja, the city gate where the PMC walk assembles",
       "coordCheckedOn": "2026-11-07",
-      "pinNote": "The dot is Delhi Darwaja, the gate where the walk starts, not the whole route."
+      "pinNote": "The dot is Delhi Darwaja, the gate where the walk starts, not the whole route.",
+      "summary": "Weekend walk that starts at Delhi Darwaja, Shaniwar Wada."
     },
     {
       "id": "shaniwar-wada",
@@ -1399,7 +1437,8 @@
         "शनिवार",
         "शनिवार वाडा"
       ],
-      "pinNote": null
+      "pinNote": null,
+      "summary": "The Peshwa seat in Shaniwar Peth."
     },
     {
       "dish": "Mutton biryani, kebabs",
@@ -1432,7 +1471,8 @@
         }
       ],
       "coordUrl": "https://www.openstreetmap.org/node/789623167",
-      "coordTitle": "OpenStreetMap node 789623167: Blue Nile"
+      "coordTitle": "OpenStreetMap node 789623167: Blue Nile",
+      "summary": "Irani room for mutton biryani and kebabs, from the early 1970s."
     },
     {
       "dish": "Sajuk toop dum biryani",
@@ -1465,7 +1505,8 @@
         }
       ],
       "coordUrl": "https://www.openstreetmap.org/node/5832548489",
-      "coordTitle": "OpenStreetMap node 5832548489: SP's Biryani"
+      "coordTitle": "OpenStreetMap node 5832548489: SP's Biryani",
+      "summary": "Old-city biryani house, known for sajuk toop dum biryani."
     },
     {
       "dish": "Usal, amti, kharvas, shrikhand",
@@ -1492,7 +1533,8 @@
         }
       ],
       "coordUrl": "https://www.openstreetmap.org/node/12475129605",
-      "coordTitle": "OpenStreetMap node 12475129605: Asha Dining Hall, first floor"
+      "coordTitle": "OpenStreetMap node 12475129605: Asha Dining Hall, first floor",
+      "summary": "Vegetarian Maharashtrian thali in Deccan."
     },
     {
       "dish": "Aamras in summer, thalipeeth, dahi vada",
@@ -1525,7 +1567,8 @@
         }
       ],
       "coordUrl": "https://www.openstreetmap.org/node/11370975969",
-      "coordTitle": "OpenStreetMap node 11370975969: Durvankur Dining Hall, Lokmanya Tilak Marg"
+      "coordTitle": "OpenStreetMap node 11370975969: Durvankur Dining Hall, Lokmanya Tilak Marg",
+      "summary": "Unlimited Maharashtrian thali on Tilak Road, with aamras in season."
     },
     {
       "dish": "Chicken kasturi kebab, tandoori chicken",
@@ -1552,7 +1595,8 @@
         }
       ],
       "coordUrl": "https://www.openstreetmap.org/node/11274029562",
-      "coordTitle": "OpenStreetMap node 11274029562: Prem's, Koregaon Park"
+      "coordTitle": "OpenStreetMap node 11274029562: Prem's, Koregaon Park",
+      "summary": "Long-running Koregaon Park dining room, open since 1990."
     },
     {
       "dish": "Pav bhaji, chole bhature, South Indian",
@@ -1567,7 +1611,7 @@
       "section": "misal",
       "kind": "South Indian",
       "area": "FC Rd, Deccan",
-      "line": "Deccan breakfast room for South Indian plates and snacks. This pin is the FC Road node.",
+      "line": "Deccan breakfast room for South Indian plates, pav bhaji, and snacks.",
       "lat": 18.5184279,
       "lng": 73.8416116,
       "aliases": [
@@ -1582,10 +1626,11 @@
         }
       ],
       "coordUrl": "https://www.openstreetmap.org/node/2266979720",
-      "coordTitle": "OpenStreetMap node 2266979720: Wadeshwar, Deccan"
+      "coordTitle": "OpenStreetMap node 2266979720: Wadeshwar, Deccan",
+      "summary": "Deccan breakfast room for South Indian plates, pav bhaji, and snacks."
     },
     {
-      "dish": null,
+      "dish": "Ragi pizza, bajra risotto, turmeric hummus, cold-pressed juices",
       "flag": "Koregaon Park node. Not the Baner way of the same name.",
       "address": null,
       "mapsUrl": null,
@@ -1597,7 +1642,7 @@
       "section": "gourmet",
       "kind": "Dining",
       "area": "Koregaon Park",
-      "line": "Spa-style restaurant in Koregaon Park, named on a local outdoor-dining list.",
+      "line": "Vegetarian restaurant built around spa cooking, with vegan and gluten-free plates, ragi pizza, bajra risotto, and cold-pressed juices, in a garden with mist fans.",
       "lat": 18.5333049,
       "lng": 73.88742,
       "sources": [
@@ -1609,7 +1654,8 @@
         }
       ],
       "coordUrl": "https://www.openstreetmap.org/node/7194929645",
-      "coordTitle": "OpenStreetMap node 7194929645: Sante Spa Cuisine, Koregaon Park"
+      "coordTitle": "OpenStreetMap node 7194929645: Sante Spa Cuisine, Koregaon Park",
+      "summary": "Vegetarian spa cooking in a Koregaon Park garden, with ragi pizza and cold-pressed juice."
     },
     {
       "dish": null,
@@ -1624,7 +1670,7 @@
       "section": "coffee",
       "kind": "Coffee & cafés",
       "area": "Ghole Road",
-      "line": "Specialty coffee. This pin is the Ghole Road café, not the other Pune branches.",
+      "line": "Specialty coffee on Ghole Road.",
       "lat": 18.5241167,
       "lng": 73.8437345,
       "sources": [
@@ -1636,7 +1682,8 @@
         }
       ],
       "coordUrl": "https://www.openstreetmap.org/node/12801991326",
-      "coordTitle": "OpenStreetMap node 12801991326: Blue Tokai Coffee Roasters, Ghole Road"
+      "coordTitle": "OpenStreetMap node 12801991326: Blue Tokai Coffee Roasters, Ghole Road",
+      "summary": "Specialty coffee on Ghole Road."
     },
     {
       "dish": "Bakarwadi",
@@ -1651,7 +1698,7 @@
       "section": "sweet",
       "kind": "Mastani & mithai",
       "area": "Bajirao Road",
-      "line": "The bakarwadi shop. This pin is the Bajirao Road confectionery, not Sevasadan.",
+      "line": "Bakarwadi shop on Bajirao Road.",
       "lat": 18.5135592,
       "lng": 73.8536522,
       "aliases": [
@@ -1666,10 +1713,11 @@
         }
       ],
       "coordUrl": "https://www.openstreetmap.org/node/2270799490",
-      "coordTitle": "OpenStreetMap node 2270799490: Chitale Bandhu Mithaiwale, beside Bajirao Road"
+      "coordTitle": "OpenStreetMap node 2270799490: Chitale Bandhu Mithaiwale, beside Bajirao Road",
+      "summary": "Bakarwadi shop on Bajirao Road."
     },
     {
-      "dish": null,
+      "dish": "Peanut butter croissant, banana Nutella pancake",
       "flag": null,
       "address": null,
       "mapsUrl": null,
@@ -1681,7 +1729,7 @@
       "section": "sweet",
       "kind": "Bakery & desserts",
       "area": "Koregaon Park",
-      "line": "Patisserie in Koregaon Park, named on a local bakery list.",
+      "line": "Garden seating and a French country room. Plates include a peanut-butter croissant and a banana Nutella pancake.",
       "lat": 18.5376129,
       "lng": 73.8979395,
       "sources": [
@@ -1693,10 +1741,11 @@
         }
       ],
       "coordUrl": "https://www.openstreetmap.org/node/11681074026",
-      "coordTitle": "OpenStreetMap node 11681074026: The French Window Patisserie"
+      "coordTitle": "OpenStreetMap node 11681074026: The French Window Patisserie",
+      "summary": "Garden patisserie with a French country room."
     },
     {
-      "dish": null,
+      "dish": "Passion of Pandan, veg pizza",
       "flag": null,
       "address": null,
       "mapsUrl": null,
@@ -1708,7 +1757,7 @@
       "section": "pints",
       "kind": "Bars, pubs & beer",
       "area": "Koregaon Park",
-      "line": "Live-music café in Koregaon Park, named on local cocktail and date lists.",
+      "line": "Shaded outdoor seats, string lights, and painted walls, with a short Italian menu.",
       "lat": 18.5393901,
       "lng": 73.9052966,
       "sources": [
@@ -1726,7 +1775,8 @@
         }
       ],
       "coordUrl": "https://www.openstreetmap.org/node/521318983",
-      "coordTitle": "OpenStreetMap node 521318983: High Spirits"
+      "coordTitle": "OpenStreetMap node 521318983: High Spirits",
+      "summary": "Shaded outdoor café with string lights, and a short Italian menu."
     }
   ]
 }

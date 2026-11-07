@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
-import { cardLine, places, placesIn, sections } from "../lib/guide";
+import { places, placesIn, sections } from "../lib/guide";
+import { evidenceLink, onwardLink } from "../lib/outward";
 ---
 
 <Base
@@ -68,20 +69,20 @@ import { cardLine, places, placesIn, sections } from "../lib/guide";
                         <span class="dot" style={`background:${section.color}`} />
                         {place.kind} · {place.area}
                       </span>
-                      <span class="card-line">{cardLine(place.line)}</span>
+                      <span class="card-line">{place.summary}</span>
                     </button>
                     <p class="card-actions">
-                      {place.mapsUrl && <a href={place.mapsUrl} rel="noreferrer">Google Maps</a>}
+                      <a href={onwardLink(place).href} rel="noreferrer">{onwardLink(place).label}</a>
                       {!place.pin && <span>No verified pin</span>}
                     </p>
                     <details class="notes">
                       <summary>Notes</summary>
-                      {cardLine(place.line) !== place.line && <p>{place.line}</p>}
+                      {place.line !== place.summary && <p>{place.line}</p>}
                       {place.dish && <p>{place.dish}</p>}
                       {place.flag && <p>{place.flag}</p>}
                       {place.pinNote && <p>{place.pinNote}</p>}
                       {place.address && <p>{place.address}</p>}
-                      {place.coordTitle && <p>{place.coordTitle}. Checked {place.coordCheckedOn}.</p>}
+                      {place.coordUrl && <p><a href={evidenceLink(place.coordUrl).href} rel="noreferrer">{evidenceLink(place.coordUrl).label}</a>. {place.coordTitle}. Checked {place.coordCheckedOn}.</p>}
                       <ul>
                         {place.sources.map((source) => (
                           <li>

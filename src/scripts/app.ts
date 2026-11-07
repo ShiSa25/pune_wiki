@@ -4,6 +4,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { cameraForSelection, filterPlaces, filterStateFromParams, paramsFromFilter, type FilterState } from "../lib/browse";
 import { MAP_STYLE, places, type Place } from "../lib/guide";
 import { visibleLabelIds, type LabelBox } from "../lib/labels";
+import { evidenceLink, onwardLink } from "../lib/outward";
 
 maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
@@ -169,19 +170,26 @@ if (root) {
     const title = document.createElement("strong");
     title.textContent = place.name;
     const line = document.createElement("p");
-    line.textContent = place.line;
+    line.textContent = place.summary;
     wrap.append(title, line);
     if (place.pinNote) {
       const note = document.createElement("p");
       note.textContent = place.pinNote;
       wrap.append(note);
     }
-    if (place.mapsUrl) {
-      const link = document.createElement("a");
-      link.href = place.mapsUrl;
-      link.rel = "noreferrer";
-      link.textContent = "Open in Google Maps";
-      wrap.append(link);
+    const onward = onwardLink(place);
+    const go = document.createElement("a");
+    go.href = onward.href;
+    go.rel = "noreferrer";
+    go.textContent = onward.label;
+    wrap.append(go);
+    if (place.coordUrl) {
+      const evidence = evidenceLink(place.coordUrl);
+      const source = document.createElement("a");
+      source.href = evidence.href;
+      source.rel = "noreferrer";
+      source.textContent = evidence.label;
+      wrap.append(source);
     }
     return wrap;
   }

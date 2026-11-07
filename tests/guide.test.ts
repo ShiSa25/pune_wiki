@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { cameraForSelection, filterPlaces, filterStateFromParams, paramsFromFilter } from "../src/lib/browse";
 import { inPuneBox, placeGeometry } from "../src/lib/coords";
-import { cardLine, MAP_STYLE, placeSchema, TILE_HOST, places, sections } from "../src/lib/guide";
+import { MAP_STYLE, placeSchema, TILE_HOST, places, sections } from "../src/lib/guide";
+import { evidenceLink, onwardLink } from "../src/lib/outward";
 import { visibleLabelIds, type LabelBox } from "../src/lib/labels";
 
 const excludedNames = ["garden vada", "vetal tekdi", "sevasadan", "gather", "ground up", "kowloon", "shreyas", "gatti anna"];
@@ -125,17 +126,35 @@ describe("filters", () => {
   });
 });
 
-describe("card line", () => {
-  it("keeps a short line and does not treat Est. as a sentence", () => {
-    expect(cardLine("Est. 1955 Camp bakery.")).toBe("Est. 1955 Camp bakery.");
-    const vohuman = places.find((place) => place.id === "vohuman-cafe");
-    expect(vohuman?.line.startsWith("Est. 1978;")).toBe(true);
-    expect(cardLine(vohuman?.line ?? "")).toBe("Est. 1978; boisterous breakfast institution.");
-    expect(
-      cardLine(
-        "First sentence is plenty. The rest is provenance that belongs in notes and should not sit on the card face where it makes the card tall.",
-      ),
-    ).toBe("First sentence is plenty.");
+describe("card summary and outward links", () => {
+  it("keeps method wording off every summary and gives every place a safe link", () => {
+    const leak = /\b(osm|lbb|elle|schema\.org|wikidata)\b|this pin|city search|named on|first-party|official site|node records|\bper\s+[a-z]/i;
+    expect(places).toHaveLength(50);
+    for (const place of places) {
+      expect(place.summary).not.toMatch(leak);
+      expect(place.summary.length).toBeGreaterThan(12);
+      const onward = onwardLink(place);
+      const evidence = evidenceLink(place.coordUrl!);
+      expect(evidence.href).toBe(place.coordUrl);
+      expect(onward.href.startsWith("https://")).toBe(true);
+      expect(onward.href).not.toMatch(/javascript:|data:/);
+      if (place.mapsUrl) {
+        expect(onward).toEqual({ href: place.mapsUrl, label: "Google Maps" });
+        continue;
+      }
+      const url = new URL(onward.href);
+      expect(onward.label).toBe("Search Google Maps");
+      expect(url.origin).toBe("https://www.google.com");
+      expect(url.pathname).toBe("/maps/search/");
+      expect(url.searchParams.get("api")).toBe("1");
+      expect(url.searchParams.get("query")).toBe(`${place.name}, ${place.area}, Pune`);
+      expect(onward.href).not.toMatch(/place_id|!8m2|ChIJ/);
+    }
+    expect(places.find((place) => place.id === "vohuman-cafe")?.summary).toBe(
+      "Boisterous breakfast room since 1978, with a queue most mornings.",
+    );
+    expect(places.find((place) => place.id === "blue-nile")?.summary).toMatch(/biryani/);
+    expect(onwardLink({ name: "A & B", area: "Lane 1", mapsUrl: null }).href).not.toContain(" ");
   });
 });
 

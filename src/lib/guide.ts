@@ -35,6 +35,7 @@ export const placeSchema = z
     kind: z.string().min(2),
     area: z.string().min(2),
     line: z.string().min(8),
+    summary: z.string().min(12).max(140),
     dish: z.string().min(2).nullable(),
     flag: z.string().min(8).nullable(),
     address: z.string().min(8).nullable(),
@@ -79,6 +80,9 @@ export const placeSchema = z
     if (place.pin === "venue" && (host === "www.google.com" || host === "maps.google.com" || host.endsWith("googleusercontent.com"))) {
       context.addIssue({ code: "custom", message: `${place.id} venue pin cannot cite Google` });
     }
+    if (/\b(osm|lbb|elle|schema\.org|wikidata)\b|this pin|city search|named on|first-party|official site|node records|\bper\s+[a-z]/i.test(place.summary)) {
+      context.addIssue({ code: "custom", message: `${place.id} summary leaks research method` });
+    }
   });
 
 export const guideSchema = z
@@ -116,40 +120,4 @@ export const TILE_HOST = "tiles.openfreemap.org";
 
 export function placesIn(sectionId: string): Place[] {
   return places.filter((place) => place.section === sectionId);
-}
-
-const ABBREVIATIONS = new Set(["est", "st", "rd", "dr", "mr", "mrs", "ms", "no", "jr", "sr", "etc", "inc", "ltd", "vs"]);
-
-/** Index just after a full stop that is not an abbreviation such as "Est." */
-function sentenceEnd(text: string): number {
-  for (let i = 0; i < text.length - 1; i += 1) {
-    if (text[i] !== "." || text[i + 1] !== " ") continue;
-    const word = /([A-Za-z]+)$/.exec(text.slice(0, i))?.[1]?.toLowerCase() ?? "";
-    if (ABBREVIATIONS.has(word)) continue;
-    return i + 1;
-  }
-  return -1;
-}
-
-/**
- * Card face summary. A short line is kept whole. A long line keeps the first
- * clause, and the next one too when the first is only an "Est." date, instead
- * of treating that abbreviation as its own sentence.
- */
-export function cardLine(line: string): string {
-  const trimmed = line.trim().replace(/\s+/g, " ");
-  if (trimmed.length <= 96) return trimmed;
-  const clauses = trimmed.split(/;\s+/);
-  let summary = clauses[0] ?? trimmed;
-  if (/^(est\.?|since)\b/i.test(summary) && clauses[1]) summary = `${clauses[0]}; ${clauses[1]}`;
-  if (summary.length > 96) {
-    const end = sentenceEnd(summary);
-    if (end >= 12 && end <= 96) summary = summary.slice(0, end);
-    else {
-      const slice = summary.slice(0, 96);
-      const space = slice.lastIndexOf(" ");
-      summary = (space > 40 ? slice.slice(0, space) : slice).replace(/[;,]\s*$/, "");
-    }
-  }
-  return /[.!?]$/.test(summary) ? summary : `${summary}.`;
 }

@@ -406,8 +406,13 @@ body[data-view="map"] .map-pane {
   font-family: Inter, sans-serif;
 }
 
-.popup p {
+.popup p,
+.popup a {
   margin: 0;
+}
+
+.popup a {
+  font-weight: 600;
 }
 
 .missing {
