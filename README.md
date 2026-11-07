@@ -18,7 +18,7 @@ npm install
 npm run dev
 ```
 
-Open [http://127.0.0.1:4173](http://127.0.0.1:4173).
+The dev server prints its own local URL. `npm run preview` serves the production build on port 4173.
 
 ```bash
 npm test          # search, filters, reset, content rules

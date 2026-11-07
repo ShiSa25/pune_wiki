@@ -4,7 +4,7 @@ The page uses [MapLibre GL JS](https://maplibre.org/) (open source) with the pub
 
 `https://tiles.openfreemap.org/styles/positron`
 
-OpenFreeMap states that the public instance needs no account, no API key, and no usage cap, and that commercial use is allowed. Attribution has to stay visible. Their wording is “OpenFreeMap © OpenMapTiles Data from OpenStreetMap”. The map control and the line under the map both say that, with links to [openfreemap.org](https://openfreemap.org/), [OpenMapTiles](https://openmaptiles.org/), and the [OpenStreetMap copyright](https://www.openstreetmap.org/copyright) page.
+OpenFreeMap states that the public instance needs no account, no API key, and no usage cap, and that commercial use is allowed. Attribution has to stay visible. Their wording is “OpenFreeMap © OpenMapTiles Data from OpenStreetMap”. That text is the one MapLibre attribution control inside the map. There is no second credit under the map. The links go to [openfreemap.org](https://openfreemap.org/), [OpenMapTiles](https://openmaptiles.org/), and the [OpenStreetMap copyright](https://www.openstreetmap.org/copyright) page.
 
 ## Why not the other familiar options
 
@@ -24,7 +24,7 @@ No Nominatim request is made. Points outside Pune and PCMC are dropped. The map�
 
 - Tiles load for the current view only. There is no offline download and no prefetch of the city.
 - MapLibre asks the browser for `https://tiles.openfreemap.org/…` (style, vector tiles, fonts, sprites). Do not put a page-level `Referrer-Policy: no-referrer` in front of that host. `rel="noreferrer"` on ordinary links does not apply to those tile requests.
-- OpenFreeMap does not offer an SLA. If the style or tiles fail, the page keeps the list and says the tiles did not load.
+- OpenFreeMap does not offer an SLA. If the style or tiles fail, the page keeps the list and says the tiles did not load. If the map cannot start, the list stays and a banner says the map did not start.
 - A host content-security policy needs `connect-src` and `img-src` for `https://tiles.openfreemap.org`, and `worker-src 'self'` because the page sets MapLibre’s worker to the bundled `maplibre-gl-worker` file. This repository does not send a CSP header. The map credit is the one control inside the map, kept in the first screen by sizing the map to the space under the header.
 - Google star ratings and review counts from the research snapshots are not stored in the guide. Republishing scraped Maps metrics is a terms risk. The listing link is the way to see the current number.
 
