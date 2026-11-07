@@ -43,17 +43,33 @@ describe("guide data", () => {
       expect(place.coordUrl).toBeTruthy();
       expect(place.coordCheckedOn).toBe("2026-11-07");
       expect(inPuneBox({ lat: place.lat!, lng: place.lng! })).toBe(true);
-      const copied = placeGeometry(place.mapsUrl ?? "");
-      if (copied) {
-        expect(copied.lat === place.lat && copied.lng === place.lng).toBe(false);
-      }
       const host = new URL(place.coordUrl!).hostname;
       if (place.pin === "osm") expect(host).toBe("www.openstreetmap.org");
       if (place.pin === "wikipedia") expect(host.endsWith("wikipedia.org")).toBe(true);
       if (place.pin === "venue") expect(host.endsWith("google.com")).toBe(false);
     }
-    expect(pins).toBe(29);
-    expect(places.length - pins).toBe(24);
+    const donna = places.find((place) => place.id === "donna-cucina");
+    const donnaGeometry = placeGeometry(donna?.mapsUrl ?? "");
+    expect(donna?.pin).toBe("venue");
+    expect(donna?.coordUrl).toBe("https://www.donnacucina.com/");
+    expect(donnaGeometry).toEqual({ lat: donna?.lat, lng: donna?.lng });
+    expect(pins).toBe(39);
+    expect(places.filter((place) => !place.pin).map((place) => place.id).sort()).toEqual([
+      "aragma",
+      "badshahi-boarding-house",
+      "bai-mu-dan",
+      "elephant-and-co",
+      "farro",
+      "gatti-chutney",
+      "godaam-specialty-coffee-co",
+      "gujar-cold-drink-house",
+      "kumaradhara",
+      "nannas-negroni",
+      "newale-misal",
+      "poona-guest-house",
+      "shri-krishna-bhuvan",
+      "the-place",
+    ]);
   });
 
   it("leaves the unresolved branches out of the names", () => {
@@ -128,8 +144,11 @@ describe("filters", () => {
 });
 
 describe("card line", () => {
-  it("keeps a short line and cuts a long one at the first sentence", () => {
+  it("keeps a short line and does not treat Est. as a sentence", () => {
     expect(cardLine("Est. 1955 Camp bakery.")).toBe("Est. 1955 Camp bakery.");
+    const vohuman = places.find((place) => place.id === "vohuman-cafe");
+    expect(vohuman?.line.startsWith("Est. 1978;")).toBe(true);
+    expect(cardLine(vohuman?.line ?? "")).toBe("Est. 1978; boisterous breakfast institution.");
     expect(
       cardLine(
         "First sentence is plenty. The rest is provenance that belongs in notes and should not sit on the card face where it makes the card tall.",

@@ -376,7 +376,21 @@ body[data-view="map"] .map-pane {
   cursor: pointer;
 }
 
+.pill-marker .dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  box-shadow: 0 0 0 1px #fff;
+}
+
 .pill-marker.is-culled {
+  gap: 0;
+  padding: 0;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.pill-marker.is-culled .pill-name {
   display: none;
 }
 
@@ -414,7 +428,7 @@ body[data-view="map"] .map-pane {
 
   .app {
     display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(22rem, 0.8fr);
+    grid-template-columns: minmax(0, 0.92fr) minmax(18rem, 1fr);
     align-items: start;
     gap: 0.35rem;
     padding-right: 0.6rem;

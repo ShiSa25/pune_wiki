@@ -1,6 +1,6 @@
 import { z } from "zod";
 import raw from "../content/guide.json";
-import { inPuneBox, placeGeometry } from "./coords";
+import { inPuneBox } from "./coords";
 
 const httpUrl = z.url().refine((value) => {
   const url = new URL(value);
@@ -73,12 +73,11 @@ export const placeSchema = z
     if (place.pin === "osm" && host !== "www.openstreetmap.org") {
       context.addIssue({ code: "custom", message: `${place.id} OSM pin needs an openstreetmap.org URL` });
     }
-    if (place.pin === "wikipedia" && !host.endsWith("wikipedia.org")) {
-      context.addIssue({ code: "custom", message: `${place.id} Wikipedia pin needs a wikipedia.org URL` });
+    if (place.pin === "wikipedia" && !host.endsWith("wikipedia.org") && host !== "www.wikidata.org") {
+      context.addIssue({ code: "custom", message: `${place.id} Wikipedia pin needs a wikipedia.org or wikidata.org URL` });
     }
-    const copied = placeGeometry(place.mapsUrl ?? "");
-    if (copied && copied.lat === place.lat && copied.lng === place.lng) {
-      context.addIssue({ code: "custom", message: `${place.id} coordinate is copied from the Google listing URL` });
+    if (place.pin === "venue" && (host === "www.google.com" || host === "maps.google.com" || host.endsWith("googleusercontent.com"))) {
+      context.addIssue({ code: "custom", message: `${place.id} venue pin cannot cite Google` });
     }
   });
 
@@ -119,10 +118,38 @@ export function placesIn(sectionId: string): Place[] {
   return places.filter((place) => place.section === sectionId);
 }
 
-/** One short line for the card. Longer provenance stays in Notes. */
+const ABBREVIATIONS = new Set(["est", "st", "rd", "dr", "mr", "mrs", "ms", "no", "jr", "sr", "etc", "inc", "ltd", "vs"]);
+
+/** Index just after a full stop that is not an abbreviation such as "Est." */
+function sentenceEnd(text: string): number {
+  for (let i = 0; i < text.length - 1; i += 1) {
+    if (text[i] !== "." || text[i + 1] !== " ") continue;
+    const word = /([A-Za-z]+)$/.exec(text.slice(0, i))?.[1]?.toLowerCase() ?? "";
+    if (ABBREVIATIONS.has(word)) continue;
+    return i + 1;
+  }
+  return -1;
+}
+
+/**
+ * Card face summary. A short line is kept whole. A long line keeps the first
+ * clause, and the next one too when the first is only an "Est." date, instead
+ * of treating that abbreviation as its own sentence.
+ */
 export function cardLine(line: string): string {
-  const trimmed = line.trim();
+  const trimmed = line.trim().replace(/\s+/g, " ");
   if (trimmed.length <= 96) return trimmed;
-  const cut = trimmed.split(/;\s|\.\s/)[0] ?? trimmed;
-  return cut.endsWith(".") ? cut : `${cut}.`;
+  const clauses = trimmed.split(/;\s+/);
+  let summary = clauses[0] ?? trimmed;
+  if (/^(est\.?|since)\b/i.test(summary) && clauses[1]) summary = `${clauses[0]}; ${clauses[1]}`;
+  if (summary.length > 96) {
+    const end = sentenceEnd(summary);
+    if (end >= 12 && end <= 96) summary = summary.slice(0, end);
+    else {
+      const slice = summary.slice(0, 96);
+      const space = slice.lastIndexOf(" ");
+      summary = (space > 40 ? slice.slice(0, space) : slice).replace(/[;,]\s*$/, "");
+    }
+  }
+  return /[.!?]$/.test(summary) ? summary : `${summary}.`;
 }

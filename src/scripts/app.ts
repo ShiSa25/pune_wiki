@@ -190,8 +190,10 @@ if (root) {
     dot.className = "dot";
     dot.style.background = colorFor(place.section);
     const label = document.createElement("span");
+    label.className = "pill-name";
     label.textContent = place.name;
     button.append(dot, label);
+    button.title = place.name;
     const choose = (event: Event) => {
       event.stopPropagation();
       selectPlace(place.id, true);

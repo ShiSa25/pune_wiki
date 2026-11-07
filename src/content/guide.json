@@ -60,11 +60,11 @@
       "line": "90-year-old Irani café (est. 1935); brun maska, chai, morning ritual.",
       "dish": "Brun maska, bun omelette, kheema, berry pulao, caramel custard",
       "flag": "Reopened 25 July 2025 after a short FDA stop.",
-      "address": null,
+      "address": "Good Luck Chowk, Pune 411004",
       "mapsUrl": "https://www.google.com/maps/place/Cafe+Goodluck/data=!4m7!3m6!1s0x3bc2bf87fad7cce1:0x782ac3a113379b17!8m2!3d18.5173131!4d73.8414923!16s%2Fm%2F0vpx53c!19sChIJ4czX-oe_wjsRF5s3E6HDKng",
-      "lat": null,
-      "lng": null,
-      "pin": null,
+      "lat": 18.5172995,
+      "lng": 73.8414591,
+      "pin": "osm",
       "sources": [
         {
           "title": "ELLE Gourmet: Pune's oldest cafés & eateries (6 Apr 2026)",
@@ -85,9 +85,9 @@
           "checkedOn": "2026-11-07"
         }
       ],
-      "coordUrl": null,
-      "coordTitle": null,
-      "coordCheckedOn": null,
+      "coordUrl": "https://www.openstreetmap.org/node/1534457948",
+      "coordTitle": "OpenStreetMap node 1534457948: Cafe Good Luck, Good Luck Chowk",
+      "coordCheckedOn": "2026-11-07",
       "aliases": [
         "Fergusson College Road",
         "Ferguson College Road",
@@ -181,9 +181,9 @@
       "flag": null,
       "address": null,
       "mapsUrl": null,
-      "lat": null,
-      "lng": null,
-      "pin": null,
+      "lat": 18.5173226,
+      "lng": 73.8794126,
+      "pin": "osm",
       "sources": [
         {
           "title": "ELLE Gourmet: Pune's oldest cafés & eateries (6 Apr 2026)",
@@ -198,9 +198,9 @@
           "checkedOn": "2026-11-07"
         }
       ],
-      "coordUrl": null,
-      "coordTitle": null,
-      "coordCheckedOn": null
+      "coordUrl": "https://www.openstreetmap.org/node/789630715",
+      "coordTitle": "OpenStreetMap node 789630715: restaurant named George in Camp",
+      "coordCheckedOn": "2026-11-07"
     },
     {
       "id": "marz-o-rin",
@@ -845,9 +845,9 @@
       "flag": null,
       "address": "Lane 6, Kalyani Nagar, Pune",
       "mapsUrl": "https://www.google.com/maps/place/Donna+Cucina/@18.5472291,73.9036257,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2bece90000001:0xbdc6e7515d9a9ea6!8m2!3d18.5472291!4d73.9036257!16s%2Fg%2F11rs0sn7n0",
-      "lat": null,
-      "lng": null,
-      "pin": null,
+      "lat": 18.5472291,
+      "lng": 73.9036257,
+      "pin": "venue",
       "sources": [
         {
           "title": "Donna Cucina official",
@@ -856,9 +856,9 @@
           "checkedOn": "2026-11-07"
         }
       ],
-      "coordUrl": null,
-      "coordTitle": null,
-      "coordCheckedOn": null
+      "coordUrl": "https://www.donnacucina.com/",
+      "coordTitle": "Donna Cucina schema.org GeoCoordinates on the venue site",
+      "coordCheckedOn": "2026-11-07"
     },
     {
       "id": "729-grams-coffee-roasters",
@@ -1182,12 +1182,12 @@
       "area": "Tilak Rd (+ branches)",
       "line": "Founded 1892; Tilak Rd centre from 1977.",
       "dish": null,
-      "flag": null,
+      "flag": "The pin is the confectionery node beside Lokmanya Tilak Marg. Other Kaka Halwai nodes are different branches.",
       "address": null,
       "mapsUrl": null,
-      "lat": null,
-      "lng": null,
-      "pin": null,
+      "lat": 18.5059644,
+      "lng": 73.8527202,
+      "pin": "osm",
       "sources": [
         {
           "title": "Kaka Halwai official: about us",
@@ -1196,9 +1196,9 @@
           "checkedOn": "2026-11-07"
         }
       ],
-      "coordUrl": null,
-      "coordTitle": null,
-      "coordCheckedOn": null
+      "coordUrl": "https://www.openstreetmap.org/node/5832547682",
+      "coordTitle": "OpenStreetMap node 5832547682: Kaka Halwai confectionery beside Lokmanya Tilak Marg",
+      "coordCheckedOn": "2026-11-07"
     },
     {
       "id": "rihla-bakehouse",
@@ -1316,12 +1316,12 @@
       "area": "KOPA Mall, Koregaon Park Annexe",
       "line": "Maharashtra's first microbrewery; Pune taproom since 2009.",
       "dish": "Craft beers, ciders, meads",
-      "flag": null,
-      "address": null,
+      "flag": "The pin is The KOPA mall, the building of this taproom. OSM has no separate Doolally node.",
+      "address": "The KOPA, Koregaon Park Annexe",
       "mapsUrl": "https://www.google.com/maps/place/Doolally+Taproom+-+Koregaon+Park/@18.5385685,73.9078691,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c1182d4afbcd:0x183bf40dc0f18831!8m2!3d18.5385685!4d73.9078691!16s%2Fg%2F11vkn7wk0s",
-      "lat": null,
-      "lng": null,
-      "pin": null,
+      "lat": 18.5383826,
+      "lng": 73.90772,
+      "pin": "osm",
       "sources": [
         {
           "title": "Beer Asia: Pune craft beer guide (Dec 2025)",
@@ -1330,9 +1330,9 @@
           "checkedOn": "2026-11-07"
         }
       ],
-      "coordUrl": null,
-      "coordTitle": null,
-      "coordCheckedOn": null
+      "coordUrl": "https://www.openstreetmap.org/node/13955832747",
+      "coordTitle": "OpenStreetMap node 13955832747: The KOPA mall, the building of the Koregaon Park taproom",
+      "coordCheckedOn": "2026-11-07"
     },
     {
       "id": "independence-brewing-co",
@@ -1342,12 +1342,12 @@
       "area": "Wadgaon Sheri Rd, Kalyani Nagar",
       "line": "Pioneer since 2011; 200+ beers released; original Mundhwa site closed.",
       "dish": "Oryza rice lager",
-      "flag": "Kalyani Nagar. The original Mundhwa room is closed.",
-      "address": null,
+      "flag": "Kalyani Nagar. The original Mundhwa room is closed. The pin is the Mulik Palace building named in the address, not a separate brewery node.",
+      "address": "Mulik Palace, Kalyani Nagar",
       "mapsUrl": "https://www.google.com/maps/place/Independence+Brewing+Company+-+Kalyani+Nagar/@18.5495545,73.906435,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c19f6c0385cd:0x8e19949e990e7b08!8m2!3d18.5495545!4d73.906435!16s%2Fg%2F1pxq4ww2s",
-      "lat": null,
-      "lng": null,
-      "pin": null,
+      "lat": 18.5487138,
+      "lng": 73.9063196,
+      "pin": "osm",
       "sources": [
         {
           "title": "Beer Asia: Pune craft beer guide (Dec 2025)",
@@ -1362,9 +1362,9 @@
           "checkedOn": "2026-11-07"
         }
       ],
-      "coordUrl": null,
-      "coordTitle": null,
-      "coordCheckedOn": null
+      "coordUrl": "https://www.openstreetmap.org/node/3559226168",
+      "coordTitle": "OpenStreetMap node 3559226168: Mulik Palace, the Kalyani Nagar building in the brewery address",
+      "coordCheckedOn": "2026-11-07"
     },
     {
       "id": "elephant-and-co",
@@ -1477,11 +1477,11 @@
       "line": "Japanese-style Okayama friendship garden.",
       "dish": null,
       "flag": null,
-      "address": null,
+      "address": "Sinhagad Road, Pune",
       "mapsUrl": "https://www.google.com/maps/place/P+L+Deshpande+Garden/data=!4m7!3m6!1s0x3bc2bff990000001:0x3291e3e36f9ad234!8m2!3d18.4923958!4d73.8361478!16s%2Fm%2F0kf_2nb!19sChIJAQAAkPm_wjsRNNKab-PjkTI",
-      "lat": null,
-      "lng": null,
-      "pin": null,
+      "lat": 18.4926759,
+      "lng": 73.8370038,
+      "pin": "osm",
       "sources": [
         {
           "title": "Wikipedia: Pune-Okayama Friendship Garden",
@@ -1490,9 +1490,9 @@
           "checkedOn": "2026-11-07"
         }
       ],
-      "coordUrl": null,
-      "coordTitle": null,
-      "coordCheckedOn": null
+      "coordUrl": "https://www.openstreetmap.org/way/197954185",
+      "coordTitle": "OpenStreetMap way 197954185 center: P L Deshpande Garden, Wikipedia-tagged Pune-Okayama Friendship Garden",
+      "coordCheckedOn": "2026-11-07"
     },
     {
       "id": "al-di-la",
@@ -1500,14 +1500,14 @@
       "section": "dates",
       "kind": "Cocktail & rooftop bars",
       "area": "Bund Garden Rd",
-      "line": "Conrad rooftop on CNT outdoor, District cocktail and date lists.",
+      "line": "Rooftop bar in the Conrad on Mangaldas Road.",
       "dish": null,
-      "flag": null,
-      "address": null,
+      "flag": "The pin is the Conrad Pune hotel node. OSM has no separate bar node.",
+      "address": "7 Mangaldas Road, Pune 411001",
       "mapsUrl": null,
-      "lat": null,
-      "lng": null,
-      "pin": null,
+      "lat": 18.5351646,
+      "lng": 73.8831426,
+      "pin": "osm",
       "sources": [
         {
           "title": "District: cocktail bars (16 Sep 2026)",
@@ -1522,9 +1522,9 @@
           "checkedOn": "2026-11-07"
         }
       ],
-      "coordUrl": null,
-      "coordTitle": null,
-      "coordCheckedOn": null
+      "coordUrl": "https://www.openstreetmap.org/node/4304526698",
+      "coordTitle": "OpenStreetMap node 4304526698: Conrad Pune, 7 Mangaldas Road, the hotel of this rooftop",
+      "coordCheckedOn": "2026-11-07"
     },
     {
       "id": "grandmamas-cafe",
@@ -1558,14 +1558,14 @@
       "section": "dates",
       "kind": "Cocktail & rooftop bars",
       "area": "Yerawada",
-      "line": "Ritz-Carlton rooftop on District date and CNT outdoor lists.",
+      "line": "Rooftop bar on level 18 of the Ritz-Carlton, Yerawada.",
       "dish": null,
-      "flag": null,
-      "address": null,
+      "flag": "The pin is the hotel's own published point. The bar is in that building.",
+      "address": "Golf Course Square, Airport Road, Yerawada",
       "mapsUrl": null,
-      "lat": null,
-      "lng": null,
-      "pin": null,
+      "lat": 18.552467770010395,
+      "lng": 73.8909979065693,
+      "pin": "venue",
       "sources": [
         {
           "title": "District: date night spots (26 Oct 2026)",
@@ -1578,11 +1578,17 @@
           "url": "https://www.cntraveller.in/story/10-gorgeous-restaurants-for-outdoor-dining-in-pune/",
           "type": "editorial",
           "checkedOn": "2026-11-07"
+        },
+        {
+          "title": "The Ritz-Carlton, Pune: dining",
+          "url": "https://www.ritzcarlton.com/en/hotels/pnqrz-the-ritz-carlton-pune/dining/",
+          "type": "official",
+          "checkedOn": "2026-11-07"
         }
       ],
-      "coordUrl": null,
-      "coordTitle": null,
-      "coordCheckedOn": null
+      "coordUrl": "https://www.ritzcarlton.com/en/hotels/pnqrz-the-ritz-carlton-pune/overview/",
+      "coordTitle": "Ritz-Carlton Pune schema.org GeoCoordinates; Aasmana is the level-18 bar in that hotel",
+      "coordCheckedOn": "2026-11-07"
     },
     {
       "id": "raja-dinkar-kelkar-museum",
@@ -1738,14 +1744,14 @@
       "section": "things",
       "kind": "Museums, heritage & attractions",
       "area": "Starts Delhi Darwaja, Shaniwar Wada",
-      "line": "Official weekend walk through old-city wadas.",
+      "line": "Weekend walk from Delhi Darwaja at Shaniwar Wada. The pin is that gate, not the route.",
       "dish": null,
       "flag": "A scheduled walk, not a shop. Confirm the next date on the PMC page.",
-      "address": null,
+      "address": "Delhi Darwaja, Shaniwar Wada",
       "mapsUrl": null,
-      "lat": null,
-      "lng": null,
-      "pin": null,
+      "lat": 18.5200699,
+      "lng": 73.8553009,
+      "pin": "osm",
       "sources": [
         {
           "title": "PMC Heritage Walk official",
@@ -1760,9 +1766,9 @@
           "checkedOn": "2026-11-07"
         }
       ],
-      "coordUrl": null,
-      "coordTitle": null,
-      "coordCheckedOn": null
+      "coordUrl": "https://www.openstreetmap.org/node/10696603208",
+      "coordTitle": "OpenStreetMap node 10696603208: Delhi Darwaja, the city gate where the PMC walk assembles",
+      "coordCheckedOn": "2026-11-07"
     },
     {
       "id": "shaniwar-wada",

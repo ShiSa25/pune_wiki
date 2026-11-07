@@ -11,6 +11,7 @@
     "build": "astro build",
     "preview": "astro preview --host 127.0.0.1 --port 4173",
     "test": "vitest run",
+    "test:browser": "playwright test",
     "check": "astro check",
     "lint": "eslint src tests"
   },
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
     "@eslint/js": "^9.39.1",
+    "@playwright/test": "^1.65.0",
     "eslint": "^9.39.1",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.3",
