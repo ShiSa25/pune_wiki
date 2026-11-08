@@ -89,15 +89,9 @@ a {
 }
 
 .mark {
-  width: 1.7rem;
-  height: 1.7rem;
-  border-radius: 0.45rem;
-  background: #1c1917;
-  color: white;
-  display: grid;
-  place-items: center;
-  font-size: 0.68rem;
-  font-weight: 600;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: block;
   flex: none;
 }
 
