@@ -5,49 +5,49 @@
       "id": "og",
       "label": "OG Spots",
       "dek": "The institutions. Eating here is still a rite of passage.",
-      "color": "#c2410c"
+      "color": "#bf525a"
     },
     {
       "id": "misal",
       "label": "Misal & Breakfast",
       "dek": "Misal, tiffin, and the counters that open early.",
-      "color": "#b45309"
+      "color": "#b36300"
     },
     {
       "id": "gourmet",
       "label": "Gourmet",
       "dek": "Smaller rooms and chefs with a point of view.",
-      "color": "#7c3aed"
+      "color": "#8166c3"
     },
     {
       "id": "coffee",
       "label": "Coffee",
       "dek": "Roasters, and a few cups people cross town for.",
-      "color": "#0f766e"
+      "color": "#008fa8"
     },
     {
       "id": "sweet",
       "label": "Sweet Tooth",
       "dek": "Bakeries, mastani, and an old mithai counter.",
-      "color": "#be185d"
+      "color": "#af5594"
     },
     {
       "id": "pints",
       "label": "Pints",
       "dek": "Brewpubs, and one pub that has been on East Street since the 90s.",
-      "color": "#1d4ed8"
+      "color": "#3a7bcb"
     },
     {
       "id": "dates",
       "label": "Date Plans",
       "dek": "A bar, a garden, a rooftop. Not an itinerary.",
-      "color": "#be123c"
+      "color": "#009365"
     },
     {
       "id": "things",
       "label": "Things to Do",
       "dek": "Museums, a zoo, a walk, and the wada. Read the limit first.",
-      "color": "#15803d"
+      "color": "#798300"
     }
   ],
   "places": [

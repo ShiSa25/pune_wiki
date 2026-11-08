@@ -4,7 +4,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { cameraForSelection, filterPlaces, filterStateFromParams, paramsFromFilter, type FilterState } from "../lib/browse";
 import { MAP_STYLE, places, type Place } from "../lib/guide";
 import { visibleLabelIds, type LabelBox } from "../lib/labels";
-import { evidenceLink, onwardLink } from "../lib/outward";
+import { evidenceLink, EXTERNAL_ICON_PATH, onwardLink } from "../lib/outward";
 
 maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
@@ -164,6 +164,25 @@ if (root) {
     focusSelection();
   }
 
+  function externalIcon(): SVGSVGElement {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "ext");
+    svg.setAttribute("viewBox", "0 0 16 16");
+    svg.setAttribute("width", "14");
+    svg.setAttribute("height", "14");
+    svg.setAttribute("aria-hidden", "true");
+    svg.setAttribute("focusable", "false");
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("fill", "none");
+    path.setAttribute("stroke", "currentColor");
+    path.setAttribute("stroke-width", "1.6");
+    path.setAttribute("stroke-linecap", "round");
+    path.setAttribute("stroke-linejoin", "round");
+    path.setAttribute("d", EXTERNAL_ICON_PATH);
+    svg.append(path);
+    return svg;
+  }
+
   function popupNode(place: Place): HTMLElement {
     const wrap = document.createElement("div");
     wrap.className = "popup";
@@ -179,9 +198,10 @@ if (root) {
     }
     const onward = onwardLink(place);
     const go = document.createElement("a");
+    go.className = "outward";
     go.href = onward.href;
     go.rel = "noreferrer";
-    go.textContent = onward.label;
+    go.append(document.createTextNode(onward.label), externalIcon());
     wrap.append(go);
     if (place.coordUrl) {
       const evidence = evidenceLink(place.coordUrl);
@@ -198,6 +218,7 @@ if (root) {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "pill-marker";
+    button.dataset.place = place.id;
     button.setAttribute("aria-label", place.name);
     const dot = document.createElement("span");
     dot.className = "dot";

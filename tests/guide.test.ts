@@ -7,11 +7,48 @@ import { visibleLabelIds, type LabelBox } from "../src/lib/labels";
 
 const excludedNames = ["garden vada", "vetal tekdi", "sevasadan", "gather", "ground up", "kowloon", "shreyas", "gatti anna"];
 
+function channel(hex: string, index: number): number {
+  const value = Number.parseInt(hex.slice(1 + index * 2, 3 + index * 2), 16) / 255;
+  return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+}
+
+function contrast(hex: string, against: string): number {
+  const luminance = (color: string) =>
+    0.2126 * channel(color, 0) + 0.7152 * channel(color, 1) + 0.0722 * channel(color, 2);
+  const left = luminance(hex);
+  const right = luminance(against);
+  return (Math.max(left, right) + 0.05) / (Math.min(left, right) + 0.05);
+}
+
+function oklchHue(hex: string): number {
+  const [r, g, b] = [0, 1, 2].map((index) => channel(hex, index));
+  const l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b;
+  const m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b;
+  const s = 0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b;
+  const lp = Math.cbrt(l);
+  const mp = Math.cbrt(m);
+  const sp = Math.cbrt(s);
+  const a = 1.9779984951 * lp - 2.428592205 * mp + 0.4505937099 * sp;
+  const b2 = 0.0259040371 * lp + 0.7827717662 * mp - 0.808675766 * sp;
+  return (Math.atan2(b2, a) * 180) / Math.PI;
+}
+
 describe("guide data", () => {
   it("stays between 50 and 60 places in eight sections", () => {
     expect(places.length).toBeGreaterThanOrEqual(50);
     expect(places.length).toBeLessThanOrEqual(60);
     expect(sections).toHaveLength(8);
+    expect(new Set(sections.map((section) => section.color)).size).toBe(8);
+    const hues = sections.map((section) => oklchHue(section.color));
+    for (let i = 0; i < hues.length; i += 1) {
+      for (let j = i + 1; j < hues.length; j += 1) {
+        const turn = Math.abs(hues[i] - hues[j]) % 360;
+        expect(Math.min(turn, 360 - turn)).toBeGreaterThan(32);
+      }
+      expect(contrast(sections[i].color, "#ffffff")).toBeGreaterThan(3);
+      expect(contrast(sections[i].color, "#fbf7f1")).toBeGreaterThan(3);
+      expect(contrast(sections[i].color, "#1c1917")).toBeGreaterThan(3);
+    }
     expect(new Set(places.map((place) => place.id)).size).toBe(places.length);
     for (const section of sections) {
       expect(places.filter((place) => place.section === section.id).length).toBeGreaterThan(0);

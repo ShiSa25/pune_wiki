@@ -1,20 +1,20 @@
 ---
 import Base from "../layouts/Base.astro";
 import { places, placesIn, sections } from "../lib/guide";
-import { evidenceLink, onwardLink } from "../lib/outward";
+import { EXTERNAL_ICON_PATH, onwardLink } from "../lib/outward";
 ---
 
 <Base
   title="pune"
-  description="A local list of Pune places: old rooms, misal, coffee, a few bars, and things to do. One page, with a map of the pins that were checked."
+  description="A local’s guide to falling in love with Pune."
 >
   <a class="skip" href="#content">Skip to content</a>
   <header class="top">
     <div class="brand">
-      <span class="mark" aria-hidden="true">pu</span>
+      <img class="mark" src="/favicon.svg" alt="" width="28" height="28" />
       <div class="brand-text">
         <h1>pune</h1>
-        <p>a local list for eating, drinking, and a day out.</p>
+        <p>A local’s guide to falling in love with Pune.</p>
       </div>
     </div>
     <form class="search" id="filters" role="search">
@@ -72,26 +72,13 @@ import { evidenceLink, onwardLink } from "../lib/outward";
                       <span class="card-line">{place.summary}</span>
                     </button>
                     <p class="card-actions">
-                      <a href={onwardLink(place).href} rel="noreferrer">{onwardLink(place).label}</a>
-                      {!place.pin && <span>No verified pin</span>}
+                      <a href={onwardLink(place).href} rel="noreferrer">
+                        {onwardLink(place).label}
+                        <svg class="ext" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">
+                          <path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d={EXTERNAL_ICON_PATH} />
+                        </svg>
+                      </a>
                     </p>
-                    <details class="notes">
-                      <summary>Notes</summary>
-                      {place.line !== place.summary && <p>{place.line}</p>}
-                      {place.dish && <p>{place.dish}</p>}
-                      {place.flag && <p>{place.flag}</p>}
-                      {place.pinNote && <p>{place.pinNote}</p>}
-                      {place.address && <p>{place.address}</p>}
-                      {place.coordUrl && <p><a href={evidenceLink(place.coordUrl).href} rel="noreferrer">{evidenceLink(place.coordUrl).label}</a>. {place.coordTitle}. Checked {place.coordCheckedOn}.</p>}
-                      <ul>
-                        {place.sources.map((source) => (
-                          <li>
-                            <a href={source.url} rel="noreferrer">{source.title}</a>
-                            <span> · {source.type} · {source.checkedOn}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </details>
                   </article>
                 ))}
               </div>
@@ -100,9 +87,7 @@ import { evidenceLink, onwardLink } from "../lib/outward";
         }
       </main>
       <footer class="colophon">
-        <p>Source notes were checked on 7 November 2026. Hours and a live “open” line are not copied here.</p>
-        <p>Google’s star ratings are not reprinted. Open the listing if you want the current number.</p>
-        <p>This page asks search engines not to index it. Who can open the link is decided by the host, not by this page.</p>
+        <p>Made with love by Shivanshu Sahu</p>
       </footer>
     </div>
     <aside class="map-pane">
