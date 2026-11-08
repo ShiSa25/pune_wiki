@@ -28,6 +28,17 @@ body {
   line-height: 1.4;
 }
 
+body {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
 button,
 input {
   font: inherit;
@@ -202,7 +213,9 @@ a {
 }
 
 .list-pane {
-  padding: 0.35rem 0.85rem 2rem;
+  padding: 0.35rem 0.85rem 0.8rem;
+  overflow: auto;
+  min-height: 0;
 }
 
 .group {
@@ -328,9 +341,12 @@ a {
 }
 
 .colophon {
-  margin-top: 1.4rem;
+  flex: none;
+  padding: 0.7rem 1rem 0.85rem;
+  border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 0.92rem;
+  background: var(--bg);
 }
 
 .colophon p {
@@ -458,12 +474,18 @@ body[data-view="map"] .map-pane {
     display: none;
   }
 
+  body {
+    height: 100svh;
+    overflow: hidden;
+  }
+
   .app {
     display: grid;
     grid-template-columns: minmax(0, 0.92fr) minmax(18rem, 1fr);
-    align-items: start;
+    align-items: stretch;
     gap: 0.35rem;
     padding-right: 0.6rem;
+    overflow: hidden;
   }
 
   .cards {
@@ -471,19 +493,27 @@ body[data-view="map"] .map-pane {
   }
 
   .map-pane {
-    display: block;
-    position: sticky;
-    top: 0.45rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    position: relative;
+    top: auto;
     padding: 0.45rem 0 0;
   }
 
-  body[data-view="map"] .list-pane,
-  body[data-view="list"] .map-pane {
+  body[data-view="map"] .list-pane {
     display: block;
   }
 
+  body[data-view="list"] .map-pane {
+    display: flex;
+    flex-direction: column;
+  }
+
   #map {
-    height: calc(100vh - 13.2rem);
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
   }
 
   .search {
@@ -492,6 +522,27 @@ body[data-view="map"] .map-pane {
 }
 
 @media (max-width: 959px) {
+  body[data-view="list"] {
+    height: 100svh;
+    overflow: hidden;
+  }
+
+  body[data-view="list"] .app,
+  body[data-view="list"] .list-pane {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  body[data-view="list"] .list-pane {
+    overflow: auto;
+  }
+
+  body[data-view="map"] .colophon {
+    display: none;
+  }
+
   body[data-view="map"] {
     height: 100svh;
     max-height: 100svh;

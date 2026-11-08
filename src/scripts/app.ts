@@ -4,7 +4,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { cameraForSelection, filterPlaces, filterStateFromParams, paramsFromFilter, type FilterState } from "../lib/browse";
 import { MAP_STYLE, places, type Place } from "../lib/guide";
 import { visibleLabelIds, type LabelBox } from "../lib/labels";
-import { evidenceLink, EXTERNAL_ICON_PATH, onwardLink } from "../lib/outward";
+import { evidenceLink, EXTERNAL_ICON_PATH } from "../lib/outward";
 
 maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
@@ -239,13 +239,14 @@ if (root) {
       note.textContent = place.pinNote;
       wrap.append(note);
     }
-    const onward = onwardLink(place);
-    const go = document.createElement("a");
-    go.className = "outward";
-    go.href = onward.href;
-    go.rel = "noreferrer";
-    go.append(document.createTextNode(onward.label), externalIcon());
-    wrap.append(go);
+    if (place.mapsUrl) {
+      const go = document.createElement("a");
+      go.className = "outward";
+      go.href = place.mapsUrl;
+      go.rel = "noreferrer";
+      go.append(document.createTextNode("Google Maps"), externalIcon());
+      wrap.append(go);
+    }
     if (place.coordUrl) {
       const evidence = evidenceLink(place.coordUrl);
       const source = document.createElement("a");

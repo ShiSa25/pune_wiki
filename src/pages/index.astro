@@ -1,7 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import { places, placesIn, sections } from "../lib/guide";
-import { EXTERNAL_ICON_PATH, onwardLink } from "../lib/outward";
+import { EXTERNAL_ICON_PATH } from "../lib/outward";
 ---
 
 <Base
@@ -71,14 +71,18 @@ import { EXTERNAL_ICON_PATH, onwardLink } from "../lib/outward";
                       </span>
                       <span class="card-line">{place.summary}</span>
                     </button>
-                    <p class="card-actions">
-                      <a href={onwardLink(place).href} rel="noreferrer">
-                        {onwardLink(place).label}
-                        <svg class="ext" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">
-                          <path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d={EXTERNAL_ICON_PATH} />
-                        </svg>
-                      </a>
-                    </p>
+                    {
+                      place.mapsUrl ? (
+                        <p class="card-actions">
+                          <a href={place.mapsUrl} rel="noreferrer">
+                            Google Maps
+                            <svg class="ext" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">
+                              <path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d={EXTERNAL_ICON_PATH} />
+                            </svg>
+                          </a>
+                        </p>
+                      ) : null
+                    }
                   </article>
                 ))}
               </div>
@@ -86,9 +90,6 @@ import { EXTERNAL_ICON_PATH, onwardLink } from "../lib/outward";
           ))
         }
       </main>
-      <footer class="colophon">
-        <p>Made with love by Shivanshu Sahu</p>
-      </footer>
     </div>
     <aside class="map-pane">
       <p id="map-note" class="map-banner" hidden>No verified pins match this filter.</p>
@@ -96,6 +97,9 @@ import { EXTERNAL_ICON_PATH, onwardLink } from "../lib/outward";
       <div id="map" role="region" aria-label="Map of places with a verified pin"></div>
     </aside>
   </div>
+  <footer class="colophon">
+    <p>Made with love by Shivanshu Sahu</p>
+  </footer>
   <script>
     import "../scripts/app.ts";
   </script>

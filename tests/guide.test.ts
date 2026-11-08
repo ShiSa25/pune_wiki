@@ -20,7 +20,7 @@ function contrast(hex: string, against: string): number {
   return (Math.max(left, right) + 0.05) / (Math.min(left, right) + 0.05);
 }
 
-function oklab(hex: string): [number, number] {
+function oklab(hex: string): [number, number, number] {
   const [r, g, b] = [0, 1, 2].map((index) => channel(hex, index));
   const l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b;
   const m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b;
@@ -28,18 +28,19 @@ function oklab(hex: string): [number, number] {
   const lp = Math.cbrt(l);
   const mp = Math.cbrt(m);
   const sp = Math.cbrt(s);
+  const L = 0.2104542553 * lp + 0.793617785 * mp - 0.0040720468 * sp;
   const a = 1.9779984951 * lp - 2.428592205 * mp + 0.4505937099 * sp;
   const b2 = 0.0259040371 * lp + 0.7827717662 * mp - 0.808675766 * sp;
-  return [a, b2];
+  return [L, a, b2];
 }
 
 function oklchHue(hex: string): number {
-  const [a, b2] = oklab(hex);
+  const [, a, b2] = oklab(hex);
   return (Math.atan2(b2, a) * 180) / Math.PI;
 }
 
 function oklchChroma(hex: string): number {
-  const [a, b2] = oklab(hex);
+  const [, a, b2] = oklab(hex);
   return Math.hypot(a, b2);
 }
 
@@ -62,8 +63,9 @@ describe("guide data", () => {
     }
     const coffee = sections.find((section) => section.id === "coffee");
     const pints = sections.find((section) => section.id === "pints");
-    const coolGap = Math.abs(oklchHue(coffee?.color ?? "") - oklchHue(pints?.color ?? "")) % 360;
-    expect(Math.min(coolGap, 360 - coolGap)).toBeGreaterThan(80);
+    const [cL, cA, cB] = oklab(coffee?.color ?? "#000000");
+    const [pL, pA, pB] = oklab(pints?.color ?? "#000000");
+    expect(Math.hypot(cL - pL, cA - pA, cB - pB)).toBeGreaterThan(0.1);
     expect(new Set(places.map((place) => place.id)).size).toBe(places.length);
     for (const section of sections) {
       expect(places.filter((place) => place.section === section.id).length).toBeGreaterThan(0);
@@ -208,6 +210,26 @@ describe("card summary and outward links", () => {
     );
     expect(places.find((place) => place.id === "blue-nile")?.summary).toMatch(/biryani/);
     expect(onwardLink({ name: "A & B", area: "Lane 1", mapsUrl: null }).href).not.toContain(" ");
+  });
+
+  it("gives every place a direct Maps destination and keeps the two recovered links on the right spot", () => {
+    expect(places.every((place) => place.mapsUrl?.startsWith("https://www.google.com/maps/place/"))).toBe(true);
+    expect(places.some((place) => place.mapsUrl?.includes("/maps/search/"))).toBe(false);
+    const nile = places.find((place) => place.id === "blue-nile");
+    expect(nile?.lat).toBe(18.5217526);
+    expect(nile?.lng).toBe(73.8774667);
+    expect(nile?.mapsUrl).toContain("1s0x3bc2c05074135b17:0xa422fee8ff1347dd");
+    const listed = placeGeometry(nile?.mapsUrl ?? "");
+    expect(listed).toEqual({ lat: 18.5218633, lng: 73.8774587 });
+    expect(Math.hypot((listed!.lat - nile!.lat!) * 111_320, (listed!.lng - nile!.lng!) * 105_400)).toBeLessThan(20);
+    const walk = places.find((place) => place.id === "pmc-heritage-walk");
+    expect(walk?.lat).toBe(18.5200699);
+    expect(walk?.lng).toBe(73.8553009);
+    expect(walk?.mapsUrl).toBe(
+      "https://www.google.com/maps/place/18.5200699,73.8553009/@18.5200699,73.8553009,17z/data=!4m4!3m3!8m2!3d18.5200699!4d73.8553009",
+    );
+    expect(walk?.mapsUrl).not.toMatch(/!1s|0x3bc/);
+    expect(placeGeometry(walk?.mapsUrl ?? "")).toEqual({ lat: walk?.lat, lng: walk?.lng });
   });
 });
 
