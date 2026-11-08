@@ -505,13 +505,13 @@ test("the masthead stays a compact row and leaves the other type alone", async (
   expect(wide!.mark.bottom).toBeLessThanOrEqual(wide!.headerBottom + 1);
   expect(wide!.tag.right).toBeLessThanOrEqual(1440);
   expect(wide!.overflow).toBeLessThanOrEqual(1);
-  expect(wide!.h1.text).toBe("pune");
+  expect(wide!.h1.text).toBe("Pune");
   expect(wide!.tag.text).toBe(tagline);
-  expect(wide!.h1.family).toBe('Inter, "Segoe UI", sans-serif');
-  expect(wide!.tag.family).toBe(wide!.h1.family);
-  expect(wide!.h1.weight).toBe("600");
+  expect(wide!.h1.family).toContain("Instrument Serif");
+  expect(wide!.tag.family).toBe('Inter, "Segoe UI", sans-serif');
+  expect(wide!.h1.weight).toBe("400");
   expect(wide!.tag.weight).toBe("400");
-  expect(wide!.h1.size).toBe("36.25px");
+  expect(wide!.h1.size).toBe("26.825px");
   expect(wide!.tag.size).toBe("14.21px");
   expect(wide!.pill.size).toBe("15.225px");
   expect(wide!.card.size).toBe("14.5px");
@@ -559,8 +559,47 @@ test("removed places stay off the list, and a stale address still opens the guid
   await page.goto("/#asha-dining-hall");
   await expect(page.locator("#asha-dining-hall")).toHaveCount(0);
   await expect(page.locator("article.card")).toHaveCount(52);
-  await expect(page.locator("h1")).toHaveText("pune");
+  await expect(page.locator("h1")).toHaveText("Pune");
   await expect(page.locator(".brand p")).toHaveText("A local’s guide to falling in love with Pune");
+});
+
+test("a phone map stays tall after the window widens to the desktop", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  const list = page.locator(".list-pane");
+  await page.locator("#sinhagad-fort .card-hit").click();
+  const scrolled = await list.evaluate((node) => node.scrollTop);
+  expect(scrolled).toBeGreaterThan(40);
+  await page.getByRole("button", { name: "Show map" }).click();
+  await expect(page.locator(".maplibregl-popup")).toContainText("Sinhagad");
+  expect((await page.locator("#map").boundingBox())?.height ?? 0).toBeGreaterThan(200);
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await expect(page.locator(".maplibregl-canvas")).toBeVisible();
+  const desktop = await page.locator("#map").boundingBox();
+  expect(desktop?.height ?? 0).toBeGreaterThan(400);
+  await expect(page.locator('.pill-marker[data-place="sinhagad-fort"]')).toBeVisible();
+  await expect(page.locator('[data-section=""]')).toHaveAttribute("aria-pressed", "true");
+  expect(await list.evaluate((node) => node.scrollTop)).toBeGreaterThan(40);
+  await expect(page.locator(".maplibregl-popup")).toContainText("Google Maps");
+  await expect(page.locator(".maplibregl-ctrl-attrib-inner")).toContainText("OpenMapTiles");
+  await expect(page.locator(".maplibregl-ctrl-attrib-inner")).toContainText("Data from OpenStreetMap");
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator("body")).toHaveAttribute("data-view", "map");
+  expect((await page.locator("#map").boundingBox())?.height ?? 0).toBeGreaterThan(200);
+  const fab = await page.getByRole("button", { name: "Show list" }).boundingBox();
+  const credit = await page.locator(".maplibregl-ctrl-attrib").boundingBox();
+  const popup = await page.locator(".maplibregl-popup").boundingBox();
+  expect(fab?.height ?? 0).toBeGreaterThanOrEqual(44);
+  const overlaps = (a: { x: number; y: number; width: number; height: number } | null, b: { x: number; y: number; width: number; height: number } | null) =>
+    Boolean(a && b && a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y);
+  expect(overlaps(fab, credit)).toBe(false);
+  expect(overlaps(fab, popup)).toBe(false);
+  await page.getByRole("button", { name: "Show list" }).click();
+  await expect(page.locator("body")).toHaveAttribute("data-view", "list");
+  await expect(page.locator('[data-section=""]')).toHaveAttribute("aria-pressed", "true");
+  expect(await list.evaluate((node) => node.scrollTop)).toBeGreaterThan(40);
 });
 
 test("the mobile map button opens the map and returns to the same list", async ({ page }) => {
@@ -596,7 +635,7 @@ test("a maps link and a source link open a new tab and leave the guide open", as
   await expect(maps).toHaveAttribute("rel", "noopener noreferrer");
   const [cardPage] = await Promise.all([page.waitForEvent("popup"), maps.click()]);
   await expect(cardPage).toHaveURL(/google\.com\/maps\/place\//);
-  await expect(page.locator("h1")).toHaveText("pune");
+  await expect(page.locator("h1")).toHaveText("Pune");
   await expect(page.locator("#kayani-bakery")).toBeVisible();
   await cardPage.close();
 

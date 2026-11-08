@@ -417,6 +417,7 @@ if (root) {
     layoutLabels();
     containPopup();
     updateChipHint();
+    map?.resize();
   });
 
   apply(filterStateFromParams(new URLSearchParams(location.search)), "replace");

@@ -16,6 +16,7 @@
     "lint": "eslint src tests"
   },
   "dependencies": {
+    "@fontsource/instrument-serif": "^5.2.8",
     "@fontsource/inter": "^5.2.8",
     "astro": "^7.4.7",
     "maplibre-gl": "^6.16.0",
