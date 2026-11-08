@@ -41,9 +41,34 @@ The other listings were opened in a browser from a name-and-area search. A resul
 | Sinhagad Fort | Place page, about 140 m from the fort node |
 | Khadakwasla Dam | Place page for the dam, about 280 m from the dam-wall pin |
 
-## Unresolved
+## Resolved on a second pass
 
-These stay without a Maps link. A search URL is not labelled “Google Maps”.
+These two had no link after the first pass. Both now have a direct destination. Neither pin was moved, and neither URL is a `/maps/search/` query.
 
-- **Blue Nile.** The public Maps results that came up were the Bund Garden Road room, about 2.2 km from the Camp pin. That is a different branch.
-- **PMC Heritage Walk.** Searches for the walk and for Delhi Darwaja landed on Shaniwar Wada or on other gates (Narayan, Mastani, Ganesh), not on a listing for this walk or for Delhi Darwaja itself.
+### Blue Nile
+
+Opened 8 November 2026. A search for “Blue Nile Pune” lands on one place page, not a list of branches:
+
+`https://www.google.com/maps/place/Blue+Nile/@18.5218633,73.8774587,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c05074135b17:0xa422fee8ff1347dd!8m2!3d18.5218633!4d73.8774587!16s%2Fg%2F1w0j2n91`
+
+The page is titled Blue Nile, a biryani restaurant, at 102, Bund Garden Rd, Agarkar Nagar, Pune, Maharashtra 411001, phone +91 20 2612 5238. That phone and the Bund Garden Road, opposite Poona Club, Camp address are the same restaurant on the restaurant’s Facebook page and on Justdial (Justdial writes the door as Survey No 4/102). Sahapedia describes the same room: opposite Poona Club on Bund Garden Road in Camp. Zomato and Swiggy print the door as 4, Bund Garden Road.
+
+The listing geometry inside the URL is 18.5218633, 73.8774587. OpenStreetMap node 789623167 stays at 18.5217526, 73.8774667, about 12 metres away. Nominatim’s reverse lookup of that node is Bund Garden Road, way 215804387, whose nearby point is about 11 metres from the node. The node still has no street tag. An earlier note that the nearest named road was Vinod Pathak Path is out of date: that road’s OSM way is about 510 metres west. The Google coordinate is not copied onto our pin.
+
+The first pass called a Bund Garden result “another branch, 2.2 km away”. This place page is the Camp room, and it sits on the existing pin. No second Blue Nile page came up.
+
+### PMC Heritage Walk
+
+The walk is a scheduled route. The PMC page says the starting point and the assembly point are Delhi Darwaja, Shaniwar Wada (`https://heritagewalk.pmc.gov.in/`). Our pin is already that gate: OpenStreetMap node 10696603208, Delhi Darwaja, 18.5200699, 73.8553009.
+
+Searches on 8 November 2026 did not open a place page for this walk or for Delhi Darwaja in Pune.
+
+- “Dilli Darwaza Shaniwar Wada” opened the Shaniwar Wada listing, whose geometry is 18.5195841, 73.8554208, about 55 metres from the gate node. That page is the fort, and the guide already links it from the Shaniwar Wada card.
+- “Delhi Darwaja Pune” also listed Ganesh Darwaja and Narayan Darwaja Gate, other gates about 160 metres away, and a Delhi Darwaja whose geometry is 23.0377924, 72.5879413 on Mirzapur Road. That gate is in Ahmedabad.
+- “PMC Heritage Walk Pune” listed private tours (The Western Routes, and a cultural walking tour). Those are not the PMC walk.
+
+There is no named listing to attach. The card links to a coordinate pin for the gate we already verified, which Google opens as a dropped pin titled with that coordinate and plus code GVC4+24F. The URL has no place id:
+
+`https://www.google.com/maps/place/18.5200699,73.8553009/@18.5200699,73.8553009,17z/data=!4m4!3m3!8m2!3d18.5200699!4d73.8553009`
+
+The label on the card and the popup stays “Google Maps”. The `!8m2` pair is the same OpenStreetMap coordinate, written so the destination is that point rather than a camera over a search.

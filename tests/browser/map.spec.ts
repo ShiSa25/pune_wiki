@@ -22,7 +22,7 @@ test("a pill click and Enter leave the popup open", async ({ page }) => {
   await expect(popup).toContainText("mutton biryani");
   await expect(popup).not.toContainText("city search");
   await expect(popup.getByRole("link", { name: "Search Google Maps" })).toHaveCount(0);
-  await expect(popup.getByRole("link", { name: "Google Maps" })).toHaveCount(0);
+  await expect(popup.getByRole("link", { name: "Google Maps" })).toHaveAttribute("href", /1s0x3bc2c05074135b17/);
   await expect(popup.getByRole("link", { name: "OpenStreetMap" })).toBeVisible();
 });
 
@@ -77,18 +77,21 @@ test("every card links outward, and search, reset, back, and a narrow screen hol
   await page.goto("/?section=nope");
   await expect(page.locator("[data-section='']")).toHaveAttribute("aria-pressed", "true");
   await page.goto("/");
-  await expect(page.locator("#blue-nile .card-actions a")).toHaveCount(0);
-  await expect(page.locator("#pmc-heritage-walk .card-actions a")).toHaveCount(0);
+  await expect(page.locator("#blue-nile .card-actions a")).toHaveAttribute("href", /1s0x3bc2c05074135b17:0xa422fee8ff1347dd/);
+  await expect(page.locator("#pmc-heritage-walk .card-actions a")).toHaveAttribute(
+    "href",
+    "https://www.google.com/maps/place/18.5200699,73.8553009/@18.5200699,73.8553009,17z/data=!4m4!3m3!8m2!3d18.5200699!4d73.8553009",
+  );
   const mapsLinks = page.locator("article.card .card-actions a");
-  await expect(mapsLinks).toHaveCount((await page.locator("article.card").count()) - 2);
+  await expect(mapsLinks).toHaveCount(await page.locator("article.card").count());
   await expect(mapsLinks).toHaveText(Array(await mapsLinks.count()).fill("Google Maps"));
   const hrefs = await mapsLinks.evaluateAll((links) => links.map((link) => (link as HTMLAnchorElement).href));
   expect(hrefs.every((href) => href.startsWith("https://www.google.com/maps/place/"))).toBe(true);
   expect(hrefs.some((href) => href.includes("/maps/search/"))).toBe(false);
   await expect(page.locator("details.notes")).toHaveCount(0);
-  await expect(page.locator("#blue-nile .card-actions .ext")).toHaveCount(0);
+  await expect(page.locator("#blue-nile .card-actions .ext")).toHaveCount(1);
   await page.locator("#blue-nile .card-hit").click();
-  await expect(page.locator(".maplibregl-popup a.outward")).toHaveCount(0);
+  await expect(page.locator(".maplibregl-popup a.outward")).toHaveAttribute("href", /1s0x3bc2c05074135b17/);
   await expect(page.locator(".maplibregl-popup").getByRole("link", { name: "OpenStreetMap" })).toHaveAttribute(
     "href",
     /openstreetmap\.org/,

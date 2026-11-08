@@ -211,6 +211,26 @@ describe("card summary and outward links", () => {
     expect(places.find((place) => place.id === "blue-nile")?.summary).toMatch(/biryani/);
     expect(onwardLink({ name: "A & B", area: "Lane 1", mapsUrl: null }).href).not.toContain(" ");
   });
+
+  it("gives every place a direct Maps destination and keeps the two recovered links on the right spot", () => {
+    expect(places.every((place) => place.mapsUrl?.startsWith("https://www.google.com/maps/place/"))).toBe(true);
+    expect(places.some((place) => place.mapsUrl?.includes("/maps/search/"))).toBe(false);
+    const nile = places.find((place) => place.id === "blue-nile");
+    expect(nile?.lat).toBe(18.5217526);
+    expect(nile?.lng).toBe(73.8774667);
+    expect(nile?.mapsUrl).toContain("1s0x3bc2c05074135b17:0xa422fee8ff1347dd");
+    const listed = placeGeometry(nile?.mapsUrl ?? "");
+    expect(listed).toEqual({ lat: 18.5218633, lng: 73.8774587 });
+    expect(Math.hypot((listed!.lat - nile!.lat!) * 111_320, (listed!.lng - nile!.lng!) * 105_400)).toBeLessThan(20);
+    const walk = places.find((place) => place.id === "pmc-heritage-walk");
+    expect(walk?.lat).toBe(18.5200699);
+    expect(walk?.lng).toBe(73.8553009);
+    expect(walk?.mapsUrl).toBe(
+      "https://www.google.com/maps/place/18.5200699,73.8553009/@18.5200699,73.8553009,17z/data=!4m4!3m3!8m2!3d18.5200699!4d73.8553009",
+    );
+    expect(walk?.mapsUrl).not.toMatch(/!1s|0x3bc/);
+    expect(placeGeometry(walk?.mapsUrl ?? "")).toEqual({ lat: walk?.lat, lng: walk?.lng });
+  });
 });
 
 describe("map labels", () => {
