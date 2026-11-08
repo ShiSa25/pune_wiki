@@ -518,8 +518,9 @@ test("the masthead stays a compact row and leaves the other type alone", async (
   expect(wide!.card.weight).toBe("600");
 
   for (const viewport of [
-    { width: 390, height: 844, limit: 110 },
-    { width: 320, height: 700, limit: 125 },
+    { width: 430, height: 900, limit: 90 },
+    { width: 390, height: 844, limit: 90 },
+    { width: 320, height: 700, limit: 100 },
   ]) {
     await page.setViewportSize(viewport);
     await page.goto("/");
@@ -527,6 +528,9 @@ test("the masthead stays a compact row and leaves the other type alone", async (
     expect(narrow).not.toBeNull();
     expect(narrow!.headerHeight).toBeLessThan(viewport.limit);
     expect(narrow!.overflow).toBeLessThanOrEqual(1);
+    expect(narrow!.mark.h).toBeGreaterThan(wide!.mark.h);
+    expect(narrow!.mark.h).toBeGreaterThan(46);
+    expect(narrow!.mark.h).toBeLessThan(50);
     expect(narrow!.mark.x).toBeLessThan(narrow!.h1.x);
     expect(narrow!.tag.x).toBeGreaterThan(narrow!.h1.x + narrow!.h1.w - 2);
     expect(narrow!.tag.y).toBeLessThan(narrow!.h1.y + narrow!.h1.h - 2);
@@ -534,7 +538,8 @@ test("the masthead stays a compact row and leaves the other type alone", async (
     expect(narrow!.tag.right).toBeLessThanOrEqual(viewport.width + 1);
     expect(narrow!.h1.family).toBe(wide!.h1.family);
     expect(narrow!.tag.family).toBe(wide!.tag.family);
-    expect(narrow!.h1.size).toBe(wide!.h1.size);
+    expect(narrow!.h1.size).toBe("18px");
+    expect(narrow!.h1.weight).toBe("400");
     expect(narrow!.tag.size).toBe(wide!.tag.size);
     expect(narrow!.pill.size).toBe(wide!.pill.size);
     expect(narrow!.card.size).toBe(wide!.card.size);
@@ -600,6 +605,27 @@ test("a phone map stays tall after the window widens to the desktop", async ({ p
   await expect(page.locator("body")).toHaveAttribute("data-view", "list");
   await expect(page.locator('[data-section=""]')).toHaveAttribute("aria-pressed", "true");
   expect(await list.evaluate((node) => node.scrollTop)).toBeGreaterThan(40);
+});
+
+test("a desktop map stays tall when the window narrows and widens", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+  await page.locator("#sinhagad-fort .card-hit").click();
+  expect((await page.locator("#map").boundingBox())?.height ?? 0).toBeGreaterThan(400);
+
+  for (const width of [430, 390, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.getByRole("button", { name: "Show map" }).click();
+    expect((await page.locator("#map").boundingBox())?.height ?? 0).toBeGreaterThan(200);
+    const fab = await page.getByRole("button", { name: "Show list" }).boundingBox();
+    expect(fab?.height ?? 0).toBeGreaterThanOrEqual(44);
+    await page.getByRole("button", { name: "Show list" }).click();
+  }
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  expect((await page.locator("#map").boundingBox())?.height ?? 0).toBeGreaterThan(400);
+  await expect(page.locator(".maplibregl-canvas")).toBeVisible();
+  await expect(page.locator(".view-fab")).toBeHidden();
 });
 
 test("the mobile map button opens the map and returns to the same list", async ({ page }) => {

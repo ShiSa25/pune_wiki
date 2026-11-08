@@ -507,6 +507,27 @@ a {
 }
 
 @media (max-width: 959px) {
+  .brand {
+    gap: 8px;
+    align-items: center;
+  }
+
+  .mark {
+    width: 48px;
+    height: 48px;
+  }
+
+  .brand-text {
+    align-items: center;
+    column-gap: 10px;
+  }
+
+  .brand h1 {
+    font-size: 18px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
   .view-fab {
     display: inline-flex;
     position: fixed;
