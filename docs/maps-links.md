@@ -72,3 +72,15 @@ There is no named listing to attach. The card links to a coordinate pin for the 
 `https://www.google.com/maps/place/18.5200699,73.8553009/@18.5200699,73.8553009,17z/data=!4m4!3m3!8m2!3d18.5200699!4d73.8553009`
 
 The label on the card and the popup stays “Google Maps”. The `!8m2` pair is the same OpenStreetMap coordinate, written so the destination is that point rather than a camera over a search.
+
+## Nightlife, 8 November 2026
+
+Five new cards. Each outward link is the place page opened that day. The research note is `docs/nightlife.md`. The pin coordinates below are the OpenStreetMap ones, not the point encoded in the Maps URL.
+
+| Place | Place id on the page | Page identity |
+| --- | --- | --- |
+| Ballr | `0x3bc2c1d21df8f8a1:0x92b7539c49c3c500` | Ballr - Pune, Mulik capital, opp. Trump Towers, Kalyani Nagar |
+| Toy Room | `0x3bc2c16c3d9734d9:0x5b8a05b9f0105ac2` | TOYROOM CLUB PUNE, disco club, inside Sheraton Grand, Raja Bahadur Motilal Road |
+| 2BHK Diner & Key Club | `0x3bc2c12f212fa8f3:0xfc8dc927cc331f63` | Unit 7, The Mills, behind Sheraton Grand |
+| Millers The Luxury Club | `0x3bc2c1fe823b0ef3:0xa2169562d69ef196` | Millers The Luxury Club, beside Social, Sangamvadi, site millersluxuryclub.co.in |
+| The Soundtrack Cafe | `0x3bc2b97f3d267e2f:0x124e7b5863c91db8` | The Soundtrack Cafe, Neco SkyPark, New DP Road, Vishal Nagar |

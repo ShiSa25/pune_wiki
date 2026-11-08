@@ -38,6 +38,12 @@
       "color": "#3a7bcb"
     },
     {
+      "id": "nightlife",
+      "label": "Nightlife",
+      "dek": "Dance floors and late rooms. The bill changes, so check the night.",
+      "color": "#d242fc"
+    },
+    {
       "id": "dates",
       "label": "Date Plans",
       "dek": "A bar, a garden, a rooftop. Not an itinerary.",
@@ -53,7 +59,7 @@
       "id": "getaways",
       "label": "Weekend Getaways",
       "dek": "A dam and a hill fort still inside this map. Road times are typical, not a promise.",
-      "color": "#4e4eff"
+      "color": "#f95000"
     }
   ],
   "places": [
@@ -1863,6 +1869,170 @@
       ],
       "coordUrl": "https://www.openstreetmap.org/way/214776276",
       "coordTitle": "OpenStreetMap way 214776276: Khadakwasla Dam",
+      "coordCheckedOn": "2026-11-08"
+    },
+    {
+      "id": "ballr",
+      "name": "Ballr",
+      "section": "nightlife",
+      "kind": "Nightclub",
+      "area": "Kalyani Nagar",
+      "summary": "Dance floor opposite Trump Towers. The DJ bill changes from week to week.",
+      "line": "Dance room in Mulik Capital, opposite Trump Towers. A DJ night was on the books for later this month.",
+      "dish": null,
+      "flag": "The DJ bill and the door rules change. Check the venue before you go.",
+      "address": "Mulik Capital, opposite Trump Towers, Kalyani Nagar",
+      "mapsUrl": "https://www.google.com/maps/place/Ballr+-+Pune/@18.54935,73.9073205,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c1d21df8f8a1:0x92b7539c49c3c500!8m2!3d18.54935!4d73.9073205!16s%2Fg%2F11y350w7vy",
+      "lat": 18.5489244,
+      "lng": 73.9068773,
+      "pin": "osm",
+      "pinNote": "The dot is the centre of the OpenStreetMap parcel named Mulik Capital. Ballr publishes that building, opposite Trump Towers, as its address. The parcel is wider than a doorway.",
+      "sources": [
+        {
+          "title": "BookMyShow: Ballr Pune venue",
+          "url": "https://in.bookmyshow.com/explore/c/venues/ballr-pune/mgkn",
+          "type": "ticketing",
+          "checkedOn": "2026-11-08"
+        },
+        {
+          "title": "AllEvents: Smirnoff Experience at Ballr, 27 Nov 2026",
+          "url": "https://allevents.in/pune/smirnoff-experience-club-nights-pune/200030958068012",
+          "type": "event listing",
+          "checkedOn": "2026-11-08"
+        }
+      ],
+      "coordUrl": "https://www.openstreetmap.org/way/1410058049",
+      "coordTitle": "OpenStreetMap way 1410058049: Mulik Capital",
+      "coordCheckedOn": "2026-11-08"
+    },
+    {
+      "id": "toy-room",
+      "name": "Toy Room",
+      "section": "nightlife",
+      "kind": "Nightclub",
+      "area": "Bund Garden",
+      "summary": "Disco club inside the Sheraton Grand at Bund Garden. The night changes.",
+      "line": "The club's own page places the dance floor inside the Sheraton Grand on Raja Bahadur Motilal Road.",
+      "dish": null,
+      "flag": "The DJ bill and the door rules change. Check the venue before you go.",
+      "address": "Sheraton Grand Pune Bund Garden Hotel, Raja Bahadur Motilal Road",
+      "mapsUrl": "https://www.google.com/maps/place/TOYROOM+CLUB+PUNE/@18.5299359,73.871218,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c16c3d9734d9:0x5b8a05b9f0105ac2!8m2!3d18.5299359!4d73.871218!16s%2Fg%2F11ln2xjhyp",
+      "lat": 18.5300799,
+      "lng": 73.8713386,
+      "pin": "osm",
+      "pinNote": "The dot is the centre of the Sheraton Grand building. Toy Room's own page places the club inside that hotel, not in a separate mapped room.",
+      "sources": [
+        {
+          "title": "Toy Room Pune official",
+          "url": "https://www.toyroom.co.in/",
+          "type": "official",
+          "checkedOn": "2026-11-08"
+        }
+      ],
+      "coordUrl": "https://www.openstreetmap.org/way/52881227",
+      "coordTitle": "OpenStreetMap way 52881227: Sheraton Grand Pune",
+      "coordCheckedOn": "2026-11-08"
+    },
+    {
+      "id": "twobhk-diner-key-club",
+      "name": "2BHK Diner & Key Club",
+      "section": "nightlife",
+      "kind": "Nightclub",
+      "area": "The Mills, Bund Garden",
+      "summary": "Diner by day and a dance floor at The Mills. Check which night is on.",
+      "line": "Unit 7 at The Mills, behind the Sheraton Grand. A ticketed dance night ran here on 6 November 2026.",
+      "dish": null,
+      "flag": "The DJ bill and the door rules change. Check the venue before you go.",
+      "address": "Unit 7, Raja Bahadur Mill Marg, The Mills",
+      "mapsUrl": "https://www.google.com/maps/place/2BHK+Diner+%26+Key+Club/@18.5320614,73.8708819,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c12f212fa8f3:0xfc8dc927cc331f63!8m2!3d18.5320614!4d73.8708819!16s%2Fg%2F11h6xwcymn",
+      "lat": 18.5324407,
+      "lng": 73.870762,
+      "pin": "osm",
+      "pinNote": "The dot is the bar node named 2BHK Diner & Key Club, tagged at Unit 7 on Raja Bahadur Mill Marg.",
+      "sources": [
+        {
+          "title": "District: 2BHK Diner & Key Club",
+          "url": "https://www.district.in/dining/pune/2bhk-diner-key-club-bund-garden",
+          "type": "platform editorial",
+          "checkedOn": "2026-11-08"
+        },
+        {
+          "title": "District: Pataka Sessions at 2BHK, 6 Nov 2026",
+          "url": "https://www.district.in/events/pataka-sessions-boiler-room-edition-nov6-2026-buy-tickets",
+          "type": "event listing",
+          "checkedOn": "2026-11-08"
+        }
+      ],
+      "coordUrl": "https://www.openstreetmap.org/node/11680872748",
+      "coordTitle": "OpenStreetMap node 11680872748: 2BHK Diner & Key Club",
+      "coordCheckedOn": "2026-11-08"
+    },
+    {
+      "id": "millers-luxury-club",
+      "name": "Millers The Luxury Club",
+      "section": "nightlife",
+      "kind": "Nightclub",
+      "area": "The Mills, Bund Garden",
+      "summary": "Nightclub at The Mills, behind the Sheraton Grand. The floor and the bill change.",
+      "line": "The club's own page calls this a dance floor at The Mills, behind the Sheraton Grand.",
+      "dish": null,
+      "flag": "The DJ bill and the door rules change. Check the venue before you go.",
+      "address": "The Mills, behind Sheraton Grand, Bund Garden Road",
+      "mapsUrl": "https://www.google.com/maps/place/Millers+The+Luxury+Club/@18.5320128,73.8708149,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c1fe823b0ef3:0xa2169562d69ef196!8m2!3d18.5320128!4d73.8708149!16s%2Fg%2F11h0gls2j5",
+      "lat": 18.5320998,
+      "lng": 73.8705398,
+      "pin": "osm",
+      "pinNote": "The dot is the node named Millers The Luxury Club at The Mills, beside the Sheraton Grand.",
+      "sources": [
+        {
+          "title": "Millers Luxury Club official",
+          "url": "https://millersluxuryclub.co.in/",
+          "type": "official",
+          "checkedOn": "2026-11-08"
+        },
+        {
+          "title": "District: Millers The Luxury Club",
+          "url": "https://www.district.in/dining/pune/millers-the-luxury-club-bund-garden",
+          "type": "platform editorial",
+          "checkedOn": "2026-11-08"
+        }
+      ],
+      "coordUrl": "https://www.openstreetmap.org/node/11680882266",
+      "coordTitle": "OpenStreetMap node 11680882266: Millers The Luxury Club",
+      "coordCheckedOn": "2026-11-08"
+    },
+    {
+      "id": "soundtrack-cafe",
+      "name": "The Soundtrack Cafe",
+      "section": "nightlife",
+      "kind": "Live music cafe",
+      "area": "Vishal Nagar, Pimpri-Chinchwad",
+      "summary": "Indie-music cafe in Vishal Nagar, where artists play rather than a late dance floor.",
+      "line": "The cafe's own page says independent artists take the floor on New DP Road.",
+      "dish": null,
+      "flag": "Artists play here, and the bill is not a fixed weekly clock. It is not a late dance floor.",
+      "address": "Neco Sky Park, New DP Road, Vishal Nagar, Pimple Nilakh",
+      "mapsUrl": "https://www.google.com/maps/place/The+Soundtrack+Cafe/@18.5823768,73.7837174,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2b97f3d267e2f:0x124e7b5863c91db8!8m2!3d18.5823768!4d73.7837174!16s%2Fg%2F11h4zmv3x5",
+      "lat": 18.5823228,
+      "lng": 73.7836778,
+      "pin": "osm",
+      "pinNote": "The dot is the cafe node named Soundtrack Cafe on New DP Road in Vishal Nagar.",
+      "sources": [
+        {
+          "title": "The Soundtrack Cafe official",
+          "url": "https://soundtrack.cafe/",
+          "type": "official",
+          "checkedOn": "2026-11-08"
+        },
+        {
+          "title": "Discography: live music venues in Pune (4 Nov 2026)",
+          "url": "https://discography.in/articles/live-music-venues-pune",
+          "type": "editorial",
+          "checkedOn": "2026-11-08"
+        }
+      ],
+      "coordUrl": "https://www.openstreetmap.org/node/12473454971",
+      "coordTitle": "OpenStreetMap node 12473454971: Soundtrack Cafe",
       "coordCheckedOn": "2026-11-08"
     }
   ]

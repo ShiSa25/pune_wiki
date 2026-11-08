@@ -189,6 +189,41 @@ test("map markers stay in step with the filtered cards", async ({ page }) => {
   ).toBeLessThanOrEqual(1);
 });
 
+test("ten category chips wrap on a phone and keep the map credit usable", async ({ page }) => {
+  for (const viewport of [
+    { width: 320, height: 700 },
+    { width: 390, height: 844 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+    const pills = page.locator(".pill[data-section]");
+    await expect(pills).toHaveCount(11);
+    const box = await page.locator(".pills").evaluate((node) => {
+      const row = node.getBoundingClientRect();
+      const chips = [...node.querySelectorAll(".pill")].map((chip) => {
+        const rect = chip.getBoundingClientRect();
+        const minHeight = Number.parseFloat(getComputedStyle(chip).minHeight);
+        return { top: rect.top, bottom: rect.bottom, left: rect.left, right: rect.right, height: rect.height, minHeight };
+      });
+      return { rowHeight: row.height, chips };
+    });
+    expect(box.chips.length).toBe(11);
+    expect(box.rowHeight).toBeGreaterThan(box.chips[0].height + 4);
+    for (const chip of box.chips) {
+      expect(chip.minHeight).toBeGreaterThanOrEqual(2.75 * 14.5 - 0.5);
+      expect(chip.height).toBeGreaterThanOrEqual(chip.minHeight - 0.5);
+      expect(chip.left).toBeGreaterThanOrEqual(-1);
+      expect(chip.right).toBeLessThanOrEqual(viewport.width + 1);
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
+    await page.locator('[data-section="nightlife"]').click();
+    await page.getByRole("button", { name: "Map", exact: true }).click();
+    await expect(page.locator(".maplibregl-canvas")).toBeVisible();
+    const mapHeight = await page.locator("#map").evaluate((node) => node.getBoundingClientRect().height);
+    expect(mapHeight).toBeGreaterThan(120);
+  }
+});
+
 test("the map credit text stays inside the visible map", async ({ page }) => {
   async function creditBox() {
     return page.evaluate(() => {
@@ -226,8 +261,10 @@ test("the map credit text stays inside the visible map", async ({ page }) => {
 
   for (const { width, height, section } of [
     { width: 320, height: 700, section: "getaways" },
+    { width: 320, height: 700, section: "nightlife" },
     { width: 320, height: 700, section: "" },
     { width: 390, height: 844, section: "getaways" },
+    { width: 390, height: 844, section: "nightlife" },
   ]) {
     await page.setViewportSize({ width, height });
     await page.goto(section ? `/?section=${section}` : "/");
