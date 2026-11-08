@@ -4,7 +4,15 @@ The page uses [MapLibre GL JS](https://maplibre.org/) (open source) with the pub
 
 `https://tiles.openfreemap.org/styles/positron`
 
-OpenFreeMap states that the public instance needs no account, no API key, and no usage cap, and that commercial use is allowed. Attribution has to stay visible. Their wording is “OpenFreeMap © OpenMapTiles Data from OpenStreetMap”. That text is the one MapLibre attribution control inside the map. There is no second credit under the map. The links go to [openfreemap.org](https://openfreemap.org/), [OpenMapTiles](https://openmaptiles.org/), and the [OpenStreetMap copyright](https://www.openstreetmap.org/copyright) page.
+OpenFreeMap states that the public instance needs no account, no API key, and no usage cap, and that commercial use is allowed. The loaded tile source is `https://tiles.openfreemap.org/planet`. On 8 November 2026 its TileJSON `attribution` field was `OpenFreeMap © OpenMapTiles Data from OpenStreetMap`. MapLibre shows that string in the corner. There is no second credit under the map.
+
+Checked the same day, that line cannot be cut down to only “Data from OpenStreetMap”:
+
+- [OpenStreetMap’s attribution guideline](https://osmfoundation.org/wiki/Licence/Attribution_Guidelines) requires a visible credit to OpenStreetMap, with the words linking to [openstreetmap.org/copyright](https://www.openstreetmap.org/copyright). “Data from OpenStreetMap” is the form already in the TileJSON, and it matches that guideline.
+- [OpenMapTiles’ licence](https://github.com/openmaptiles/openmaptiles/blob/master/LICENSE.md) puts the schema’s design under CC BY 4.0 and says a browsable map derived from that schema must credit OpenMapTiles, with a link to openmaptiles.org, in the corner of the map. OpenFreeMap says the schema of these tiles is unmodified OpenMapTiles, so that credit stays.
+- [OpenFreeMap’s own page](https://openfreemap.org/) says attribution is required, gives the full line above for clients that do not add it automatically, and then says: “You do not need to display the OpenFreeMap part, but it is nice if you do.” The OpenFreeMap name is the optional piece. It stays on the map until that choice is made. The OpenMapTiles credit is not optional.
+
+The links go to [openfreemap.org](https://openfreemap.org/), [OpenMapTiles](https://openmaptiles.org/), and the [OpenStreetMap copyright](https://www.openstreetmap.org/copyright) page.
 
 ## Why not the other familiar options
 
@@ -20,7 +28,7 @@ A pin is not taken from a Google Maps listing. A listing link is only a way out 
 
 No Nominatim request is made. Points outside Pune and PCMC are dropped. The map’s opening view is a city camera, not a venue. A place with no allowed coordinate is not shown. Those names are in `docs/backlog.md`. The visible list is 50 places, and every one has coordinate evidence. Counts below are that list, not a quota.
 
-Donna Cucina’s own site publishes a schema.org point that matches its Google listing number. That pin is kept, and the coordinate URL is the venue site. Cafe Goodluck is OpenStreetMap node 1534457948 at Good Luck Chowk, not the road of the same name and not the Baner outlet. The Pu La Deshpande pin is the centre of way 197954185, the park tagged as the Pune-Okayama Friendship Garden. A proposed metro station also named Deshpande Udyan is not used. The heritage-walk pin is Delhi Darwaja, the gate the PMC page names as the assembly point, not the whole route and not the Shaniwar Wada relation.
+Donna Cucina’s own site publishes a schema.org point that matches its Google listing number. That pin is kept, and the coordinate URL is the venue site. Cafe Goodluck is OpenStreetMap node 1534457948 at Good Luck Chowk, not the road of the same name and not the Baner outlet. The Pu La Deshpande pin is the centre of way 197954185, the park tagged as the Pune-Okayama Friendship Garden. A proposed metro station also named Deshpande Udyan is not used. The heritage-walk pin was Delhi Darwaja, the gate the PMC page names as the assembly point, not the whole route and not the Shaniwar Wada relation. That walk left the active list on 8 November 2026. The record of the pin stays in `docs/maps-links.md`.
 
 The visible list stopped at 50. Eleven researched replacements, each an OpenStreetMap node for that branch, took the place of the fourteen names that still had no allowed coordinate. Those fourteen are in `docs/backlog.md`, not on the page. Building, gate, and park-centre dots say so in the popup and in Notes. A restaurant node with no street tag says which road was nearby, or that none was.
 

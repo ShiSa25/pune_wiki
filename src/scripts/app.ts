@@ -4,7 +4,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { cameraForSelection, filterPlaces, filterStateFromParams, paramsFromFilter, type FilterState } from "../lib/browse";
 import { MAP_STYLE, places, type Place } from "../lib/guide";
 import { visibleLabelIds, type LabelBox } from "../lib/labels";
-import { evidenceLink, EXTERNAL_ICON_PATH } from "../lib/outward";
+import { evidenceLink, EXTERNAL_ICON_PATH, markOutward } from "../lib/outward";
 
 maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
@@ -243,7 +243,7 @@ if (root) {
       const go = document.createElement("a");
       go.className = "outward";
       go.href = place.mapsUrl;
-      go.rel = "noreferrer";
+      markOutward(go);
       go.append(document.createTextNode("Google Maps"), externalIcon());
       wrap.append(go);
     }
@@ -251,7 +251,7 @@ if (root) {
       const evidence = evidenceLink(place.coordUrl);
       const source = document.createElement("a");
       source.href = evidence.href;
-      source.rel = "noreferrer";
+      markOutward(source);
       source.textContent = evidence.label;
       wrap.append(source);
     }
@@ -284,6 +284,20 @@ if (root) {
     return button;
   }
 
+  function secureAttributionLinks() {
+    const root = mapElement?.querySelector(".maplibregl-ctrl-attrib");
+    if (!root) return;
+    const apply = () => {
+      for (const anchor of root.querySelectorAll("a")) {
+        const href = anchor.getAttribute("href") ?? "";
+        if (!href.startsWith("http")) continue;
+        markOutward(anchor);
+      }
+    };
+    apply();
+    new MutationObserver(apply).observe(root, { childList: true, subtree: true });
+  }
+
   function ensureMap() {
     if (map || mapFailed || !mapElement || mapElement.clientWidth === 0) return;
     try {
@@ -302,6 +316,7 @@ if (root) {
     }
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
     map.addControl(new maplibregl.AttributionControl({ compact: false }), "bottom-right");
+    secureAttributionLinks();
     map.on("error", () => {
       if (tileNote) tileNote.hidden = false;
     });

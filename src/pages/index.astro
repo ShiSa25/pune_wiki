@@ -6,15 +6,15 @@ import { EXTERNAL_ICON_PATH } from "../lib/outward";
 
 <Base
   title="pune"
-  description="A local’s guide to falling in love with Pune."
+  description="A local’s guide to falling in love with Pune"
 >
   <a class="skip" href="#content">Skip to content</a>
   <header class="top">
     <div class="brand">
-      <img class="mark" src="/favicon.svg" alt="" width="40" height="40" />
+      <img class="mark" src="/favicon.svg" alt="" width="26" height="26" />
       <div class="brand-text">
         <h1>pune</h1>
-        <p>A local’s guide to falling in love with Pune.</p>
+        <p>A local’s guide to falling in love with Pune</p>
       </div>
     </div>
     <form class="search" id="filters" role="search">
@@ -74,7 +74,7 @@ import { EXTERNAL_ICON_PATH } from "../lib/outward";
                     {
                       place.mapsUrl ? (
                         <p class="card-actions">
-                          <a href={place.mapsUrl} rel="noreferrer">
+                          <a href={place.mapsUrl} target="_blank" rel="noopener noreferrer">
                             Google Maps
                             <svg class="ext" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">
                               <path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d={EXTERNAL_ICON_PATH} />

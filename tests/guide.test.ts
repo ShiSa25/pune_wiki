@@ -238,14 +238,13 @@ describe("card summary and outward links", () => {
     const listed = placeGeometry(nile?.mapsUrl ?? "");
     expect(listed).toEqual({ lat: 18.5218633, lng: 73.8774587 });
     expect(Math.hypot((listed!.lat - nile!.lat!) * 111_320, (listed!.lng - nile!.lng!) * 105_400)).toBeLessThan(20);
-    const walk = places.find((place) => place.id === "pmc-heritage-walk");
-    expect(walk?.lat).toBe(18.5200699);
-    expect(walk?.lng).toBe(73.8553009);
-    expect(walk?.mapsUrl).toBe(
-      "https://www.google.com/maps/place/18.5200699,73.8553009/@18.5200699,73.8553009,17z/data=!4m4!3m3!8m2!3d18.5200699!4d73.8553009",
-    );
-    expect(walk?.mapsUrl).not.toMatch(/!1s|0x3bc/);
-    expect(placeGeometry(walk?.mapsUrl ?? "")).toEqual({ lat: walk?.lat, lng: walk?.lng });
+    expect(places).toHaveLength(52);
+    const removed = ["asha-dining-hall", "durvankur-dining-hall", "vaidya-upahar-gruha", "bangalore-canteen", "pmc-heritage-walk"];
+    for (const id of removed) expect(places.find((place) => place.id === id)).toBeUndefined();
+    const names = places.map((place) => place.name);
+    for (const name of ["Asha Dining Hall", "Durvankur Dining Hall", "Vaidya Upahar Gruha", "Bangalore Canteen", "PMC Heritage Walk"]) {
+      expect(names).not.toContain(name);
+    }
     const nightPins: Record<string, { lat: number; lng: number; placeId: string }> = {
       ballr: { lat: 18.5489244, lng: 73.9068773, placeId: "1s0x3bc2c1d21df8f8a1:0x92b7539c49c3c500" },
       "toy-room": { lat: 18.5300799, lng: 73.8713386, placeId: "1s0x3bc2c16c3d9734d9:0x5b8a05b9f0105ac2" },

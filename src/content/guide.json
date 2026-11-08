@@ -392,71 +392,6 @@
       "summary": "Sweet-tangy Puneri misal, served since the 1950s."
     },
     {
-      "id": "vaidya-upahar-gruha",
-      "name": "Vaidya Upahar Gruha",
-      "section": "misal",
-      "kind": "Misal & Maharashtrian snacks",
-      "area": "Budhwar Peth",
-      "line": "Since 1957 per LBB; green misal.",
-      "dish": "Green misal, poha, batata bhaji",
-      "flag": null,
-      "address": "767 Bagade Road, Budhwar Peth, Pune",
-      "mapsUrl": "https://www.google.com/maps/place/Vaidya+Upahar+Gruha/@18.5179655,73.8593641,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c06f5370d2f1:0x95e48b12e6c9f71e!8m2!3d18.5179655!4d73.8593641!16s%2Fg%2F12q4vz2s8",
-      "lat": 18.5179494,
-      "lng": 73.8591757,
-      "pin": "osm",
-      "sources": [
-        {
-          "title": "Condé Nast Traveller India: best misal in Pune",
-          "url": "https://www.cntraveller.in/story/the-best-misal-in-pune-heres-a-list/",
-          "type": "editorial",
-          "checkedOn": "2026-11-07"
-        },
-        {
-          "title": "LBB: 24 legendary restaurants in Pune",
-          "url": "https://lbb.in/pune/iconic-restaurants-in-pune/",
-          "type": "editorial",
-          "checkedOn": "2026-11-07"
-        }
-      ],
-      "coordUrl": "https://www.openstreetmap.org/node/14006139708",
-      "coordTitle": "OpenStreetMap node 14006139708: Vaidya Upahar Gruha",
-      "coordCheckedOn": "2026-11-07",
-      "aliases": [
-        "मिसळ"
-      ],
-      "pinNote": null,
-      "summary": "Green misal, served here since 1957."
-    },
-    {
-      "id": "bangalore-canteen",
-      "name": "Bangalore Canteen",
-      "section": "misal",
-      "kind": "South Indian",
-      "area": "Karve Nagar",
-      "line": "Bengaluru tiffin; filter-coffee soft serve.",
-      "dish": "Ghee podi idli, filter-coffee soft serve",
-      "flag": null,
-      "address": "36/2/1 Samartha Path, Karve Nagar, Pune",
-      "mapsUrl": "https://www.google.com/maps/place/Bangalore+canteen+Karve+Nagar/@18.4930753,73.8251333,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2bf00439fe831:0x86e707b86a5b4e55!8m2!3d18.4930753!4d73.8251333!16s%2Fg%2F11w9433l0n",
-      "lat": 18.4930778,
-      "lng": 73.8251591,
-      "pin": "osm",
-      "sources": [
-        {
-          "title": "Indian Express: Pune's newer South Indian restaurants (21 Nov 2025)",
-          "url": "https://indianexpress.com/article/cities/pune/pune-on-my-plate-south-indian-restaurants-idli-dosa-reimagined-fare-10377840/",
-          "type": "local press",
-          "checkedOn": "2026-11-07"
-        }
-      ],
-      "coordUrl": "https://www.openstreetmap.org/node/14091375701",
-      "coordTitle": "OpenStreetMap node 14091375701: Bangalore canteen karve nagar",
-      "coordCheckedOn": "2026-11-07",
-      "pinNote": null,
-      "summary": "Bengaluru tiffin and a filter-coffee soft serve."
-    },
-    {
       "id": "malaka-spice",
       "name": "Malaka Spice",
       "section": "gourmet",
@@ -1387,40 +1322,6 @@
       "summary": "Science park in Pimpri-Chinchwad."
     },
     {
-      "id": "pmc-heritage-walk",
-      "name": "PMC Heritage Walk",
-      "section": "things",
-      "kind": "Museums, heritage & attractions",
-      "area": "Starts Delhi Darwaja, Shaniwar Wada",
-      "line": "Weekend walk that starts at Delhi Darwaja, Shaniwar Wada.",
-      "dish": null,
-      "flag": "A scheduled walk, not a shop. Confirm the next date on the PMC page.",
-      "address": "Delhi Darwaja, Shaniwar Wada",
-      "mapsUrl": "https://www.google.com/maps/place/18.5200699,73.8553009/@18.5200699,73.8553009,17z/data=!4m4!3m3!8m2!3d18.5200699!4d73.8553009",
-      "lat": 18.5200699,
-      "lng": 73.8553009,
-      "pin": "osm",
-      "sources": [
-        {
-          "title": "PMC Heritage Walk official",
-          "url": "https://heritagewalk.pmc.gov.in/",
-          "type": "official",
-          "checkedOn": "2026-11-07"
-        },
-        {
-          "title": "Free Press Journal: PMC heritage walks",
-          "url": "https://www.freepressjournal.in/pune/pmc-announces-heritage-walks-to-showcase-punes-historic-landmarks-all-you-need-to-know",
-          "type": "local press",
-          "checkedOn": "2026-11-07"
-        }
-      ],
-      "coordUrl": "https://www.openstreetmap.org/node/10696603208",
-      "coordTitle": "OpenStreetMap node 10696603208: Delhi Darwaja, the city gate where the PMC walk assembles",
-      "coordCheckedOn": "2026-11-07",
-      "pinNote": "The dot is Delhi Darwaja, the gate where the walk starts, not the whole route.",
-      "summary": "Weekend walk that starts at Delhi Darwaja, Shaniwar Wada."
-    },
-    {
       "id": "shaniwar-wada",
       "name": "Shaniwar Wada",
       "section": "things",
@@ -1519,68 +1420,6 @@
       "coordUrl": "https://www.openstreetmap.org/node/5832548489",
       "coordTitle": "OpenStreetMap node 5832548489: SP's Biryani",
       "summary": "Old-city biryani house, known for sajuk toop dum biryani."
-    },
-    {
-      "dish": "Usal, amti, kharvas, shrikhand",
-      "flag": null,
-      "address": null,
-      "mapsUrl": "https://www.google.com/maps/place/Asha+Dining+Hall/@18.5200309,73.8430199,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c078f4f7b7a9:0x4d7e08100bab744d!8m2!3d18.5200309!4d73.8430199!16s%2Fg%2F1v_z2srp",
-      "pin": "osm",
-      "pinNote": "The dot is the restaurant node, tagged on the first floor. It has no door number. Apte Path is the nearest named road.",
-      "coordCheckedOn": "2026-11-07",
-      "id": "asha-dining-hall",
-      "name": "Asha Dining Hall",
-      "section": "og",
-      "kind": "Thali",
-      "area": "Apte Path, Deccan",
-      "line": "Vegetarian Maharashtrian thali room. The OSM node records it as established in 1949.",
-      "lat": 18.5198379,
-      "lng": 73.8430094,
-      "sources": [
-        {
-          "title": "Pune Times Mirror: iconic thali spots (29 Apr 2025)",
-          "url": "https://punemirror.com/lifestyle/food/pune-s-iconic-thali-spots-to-savour/",
-          "type": "local press",
-          "checkedOn": "2026-11-07"
-        }
-      ],
-      "coordUrl": "https://www.openstreetmap.org/node/12475129605",
-      "coordTitle": "OpenStreetMap node 12475129605: Asha Dining Hall, first floor",
-      "summary": "Vegetarian Maharashtrian thali in Deccan."
-    },
-    {
-      "dish": "Aamras in summer, thalipeeth, dahi vada",
-      "flag": null,
-      "address": "Lokmanya Tilak Marg, Pune 411030",
-      "mapsUrl": "https://www.google.com/maps/place/Durvankur+Dining+Hall/@18.510734,73.8461745,17z/data=!3m1!4b1!4m6!3m5!1s0x3bc2c0743d25ceed:0x25e8a77a7b7cc853!8m2!3d18.510734!4d73.8461745!16s%2Fg%2F1tjjmtwk",
-      "pin": "osm",
-      "pinNote": "The dot is the dining hall itself, tagged on floor 3 of a building on Lokmanya Tilak Marg.",
-      "coordCheckedOn": "2026-11-07",
-      "id": "durvankur-dining-hall",
-      "name": "Durvankur Dining Hall",
-      "section": "og",
-      "kind": "Thali",
-      "area": "Tilak Rd, Sadashiv Peth",
-      "line": "Unlimited Maharashtrian thali on Tilak Road, with seasonal aamras.",
-      "lat": 18.5106902,
-      "lng": 73.8461159,
-      "sources": [
-        {
-          "title": "Pune Times Mirror: iconic thali spots (29 Apr 2025)",
-          "url": "https://punemirror.com/lifestyle/food/pune-s-iconic-thali-spots-to-savour/",
-          "type": "local press",
-          "checkedOn": "2026-11-07"
-        },
-        {
-          "title": "LBB: 24 legendary restaurants in Pune",
-          "url": "https://lbb.in/pune/iconic-restaurants-in-pune/",
-          "type": "editorial",
-          "checkedOn": "2026-11-07"
-        }
-      ],
-      "coordUrl": "https://www.openstreetmap.org/node/11370975969",
-      "coordTitle": "OpenStreetMap node 11370975969: Durvankur Dining Hall, Lokmanya Tilak Marg",
-      "summary": "Unlimited Maharashtrian thali on Tilak Road, with aamras in season."
     },
     {
       "dish": "Chicken kasturi kebab, tandoori chicken",
