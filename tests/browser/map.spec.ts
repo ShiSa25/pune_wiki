@@ -183,6 +183,60 @@ test("map markers stay in step with the filtered cards", async ({ page }) => {
   ).toBeLessThanOrEqual(1);
 });
 
+test("the map credit text stays inside the visible map", async ({ page }) => {
+  async function creditBox() {
+    return page.evaluate(() => {
+      const map = document.querySelector("#map")?.getBoundingClientRect();
+      const inner = document.querySelector(".maplibregl-ctrl-attrib-inner");
+      if (!map || !inner) return { ok: false, reason: "missing", text: "", lines: 0, textBottom: 0, visibleBottom: 0, mapBottom: 0, mapHeight: 0 };
+      const text = (inner.textContent ?? "").replace(/\s+/g, " ").trim();
+      const range = document.createRange();
+      range.selectNodeContents(inner);
+      const rects = [...range.getClientRects()].filter((rect) => rect.width > 0 && rect.height > 0);
+      const visible = {
+        top: Math.max(map.top, 0),
+        left: Math.max(map.left, 0),
+        right: Math.min(map.right, window.innerWidth),
+        bottom: Math.min(map.bottom, window.innerHeight),
+      };
+      const outside = rects.filter(
+        (rect) =>
+          rect.top < visible.top - 0.5 ||
+          rect.left < visible.left - 0.5 ||
+          rect.right > visible.right + 0.5 ||
+          rect.bottom > visible.bottom - 0.5,
+      );
+      return {
+        ok: text.includes("OpenStreetMap") && text.includes("OpenFreeMap") && rects.length > 0 && outside.length === 0,
+        text,
+        lines: rects.length,
+        textBottom: rects.length ? Math.max(...rects.map((rect) => rect.bottom)) : 0,
+        visibleBottom: visible.bottom,
+        mapBottom: map.bottom,
+        mapHeight: map.height,
+      };
+    });
+  }
+
+  for (const { width, height, section } of [
+    { width: 320, height: 700, section: "getaways" },
+    { width: 320, height: 700, section: "" },
+    { width: 390, height: 844, section: "getaways" },
+  ]) {
+    await page.setViewportSize({ width, height });
+    await page.goto(section ? `/?section=${section}` : "/");
+    await page.getByRole("button", { name: "Map", exact: true }).click();
+    await expect(page.locator(".maplibregl-canvas")).toBeVisible();
+    await expect.poll(async () => (await creditBox()).ok, { timeout: 8_000 }).toBe(true);
+    const credit = await creditBox();
+    expect(credit.ok).toBe(true);
+    expect(credit.text).toContain("Data from OpenStreetMap");
+    expect(credit.textBottom).toBeLessThanOrEqual(credit.visibleBottom + 0.5);
+    expect(credit.mapBottom).toBeLessThanOrEqual(height + 0.5);
+    expect(credit.mapHeight).toBeGreaterThan(120);
+  }
+});
+
 test("the map is the wider column and culled names keep a dot", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator(".maplibregl-canvas")).toBeVisible();

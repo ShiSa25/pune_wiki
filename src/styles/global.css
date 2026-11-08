@@ -493,7 +493,9 @@ body[data-view="map"] .map-pane {
 
 @media (max-width: 959px) {
   body[data-view="map"] {
-    min-height: 100svh;
+    height: 100svh;
+    max-height: 100svh;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
   }
@@ -509,7 +511,7 @@ body[data-view="map"] .map-pane {
   body[data-view="map"] #map {
     flex: 1 1 auto;
     height: auto;
-    min-height: 12rem;
+    min-height: 0;
   }
 }
 
