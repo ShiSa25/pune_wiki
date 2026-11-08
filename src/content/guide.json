@@ -5,49 +5,55 @@
       "id": "og",
       "label": "OG Spots",
       "dek": "The institutions. Eating here is still a rite of passage.",
-      "color": "#c2410c"
+      "color": "#bf525a"
     },
     {
       "id": "misal",
       "label": "Misal & Breakfast",
       "dek": "Misal, tiffin, and the counters that open early.",
-      "color": "#b45309"
+      "color": "#b36300"
     },
     {
       "id": "gourmet",
       "label": "Gourmet",
       "dek": "Smaller rooms and chefs with a point of view.",
-      "color": "#7c3aed"
+      "color": "#8166c3"
     },
     {
       "id": "coffee",
       "label": "Coffee",
       "dek": "Roasters, and a few cups people cross town for.",
-      "color": "#0f766e"
+      "color": "#8d5a3c"
     },
     {
       "id": "sweet",
       "label": "Sweet Tooth",
       "dek": "Bakeries, mastani, and an old mithai counter.",
-      "color": "#be185d"
+      "color": "#af5594"
     },
     {
       "id": "pints",
       "label": "Pints",
       "dek": "Brewpubs, and one pub that has been on East Street since the 90s.",
-      "color": "#1d4ed8"
+      "color": "#3a7bcb"
     },
     {
       "id": "dates",
       "label": "Date Plans",
       "dek": "A bar, a garden, a rooftop. Not an itinerary.",
-      "color": "#be123c"
+      "color": "#009365"
     },
     {
       "id": "things",
       "label": "Things to Do",
       "dek": "Museums, a zoo, a walk, and the wada. Read the limit first.",
-      "color": "#15803d"
+      "color": "#798300"
+    },
+    {
+      "id": "getaways",
+      "label": "Weekend Getaways",
+      "dek": "A dam and a hill fort still inside this map. Road times are typical, not a promise.",
+      "color": "#5f6b74"
     }
   ],
   "places": [
@@ -1777,6 +1783,87 @@
       "coordUrl": "https://www.openstreetmap.org/node/521318983",
       "coordTitle": "OpenStreetMap node 521318983: High Spirits",
       "summary": "Shaded outdoor café with string lights, and a short Italian menu."
+    },
+    {
+      "id": "sinhagad-fort",
+      "name": "Sinhagad Fort",
+      "section": "getaways",
+      "kind": "Hill fort",
+      "area": "Donaje, Haveli",
+      "summary": "Hill fort southwest of the city, with a road that climbs toward the top.",
+      "line": "Maharashtra Tourism puts the fort about 35 km southwest of Pune, the road trip at about an hour and a half, and the road line at 40 km. The district page says 25 km in the introduction and 35–40 km by road, with buses. Its village-route walk is about 2.7 km and 1.5–2 hours on foot, separate from the drive. Weekend traffic can run longer.",
+      "dish": null,
+      "flag": "The drive is not a promise of under two hours. The published village-route walk is extra if you leave the vehicle at the base.",
+      "address": null,
+      "aliases": [
+        "सिंहगड",
+        "Kondhana"
+      ],
+      "mapsUrl": null,
+      "lat": 18.3651456,
+      "lng": 73.7552242,
+      "pin": "osm",
+      "pinNote": "The dot is the mapped fort, not Donaje at the foot. Maharashtra Tourism cites about an hour and a half by road, and a village-route walk of about 2.7 km at 1.5–2 hours on foot. Weekend traffic can take longer.",
+      "sources": [
+        {
+          "title": "Maharashtra Tourism: Sinhagad",
+          "url": "https://maharashtratourism.gov.in/fort/sinhagad/",
+          "type": "official",
+          "checkedOn": "2026-11-08"
+        },
+        {
+          "title": "Pune district: Sinhagad",
+          "url": "https://pune.gov.in/en/tourist-place/sinhagad/",
+          "type": "official",
+          "checkedOn": "2026-11-08"
+        },
+        {
+          "title": "Wikipedia: Sinhagad",
+          "url": "https://en.wikipedia.org/wiki/Sinhagad",
+          "type": "reference",
+          "checkedOn": "2026-11-08"
+        }
+      ],
+      "coordUrl": "https://www.openstreetmap.org/node/2165009895",
+      "coordTitle": "OpenStreetMap node 2165009895: Sinhagad Fort",
+      "coordCheckedOn": "2026-11-08"
+    },
+    {
+      "id": "khadakwasla-dam",
+      "name": "Khadakwasla Dam",
+      "section": "getaways",
+      "kind": "Dam",
+      "area": "Khadakwasla",
+      "summary": "The Mutha dam southwest of the city, with the lake held behind the wall.",
+      "line": "The district page says the dam is 20 km from the city in one sentence and about 15 km by road in another, with buses from Swargate, the station, and Shivajinagar. That distance is usually a short drive from central Pune, and Sinhagad Road traffic can stretch it. The page does not publish a clock time.",
+      "dish": null,
+      "flag": "The district page gives distance, not a clock time. Weekend traffic on the Sinhagad road can stretch the drive.",
+      "address": null,
+      "aliases": [
+        "खडकवासला"
+      ],
+      "mapsUrl": null,
+      "lat": 18.440704,
+      "lng": 73.76914,
+      "pin": "osm",
+      "pinNote": "The dot is the centre of the mapped dam wall, not the reservoir. The district page puts it about 15 km by road and 20 km in the introduction. Neither figure is a weekend-traffic promise.",
+      "sources": [
+        {
+          "title": "Pune district: Khadakwasla Dam",
+          "url": "https://pune.gov.in/en/tourist-place/khadakwasala-dam/",
+          "type": "official",
+          "checkedOn": "2026-11-08"
+        },
+        {
+          "title": "Wikipedia: Khadakwasla Dam",
+          "url": "https://en.wikipedia.org/wiki/Khadakwasla_Dam",
+          "type": "reference",
+          "checkedOn": "2026-11-08"
+        }
+      ],
+      "coordUrl": "https://www.openstreetmap.org/way/214776276",
+      "coordTitle": "OpenStreetMap way 214776276: Khadakwasla Dam",
+      "coordCheckedOn": "2026-11-08"
     }
   ]
 }

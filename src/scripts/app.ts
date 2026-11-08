@@ -4,7 +4,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { cameraForSelection, filterPlaces, filterStateFromParams, paramsFromFilter, type FilterState } from "../lib/browse";
 import { MAP_STYLE, places, type Place } from "../lib/guide";
 import { visibleLabelIds, type LabelBox } from "../lib/labels";
-import { evidenceLink, onwardLink } from "../lib/outward";
+import { evidenceLink, EXTERNAL_ICON_PATH, onwardLink } from "../lib/outward";
 
 maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
@@ -115,10 +115,46 @@ if (root) {
     else history.replaceState(state, "", path);
   }
 
+  function releasePopupLayout() {
+    document.body.classList.remove("popup-open");
+    mapElement?.style.removeProperty("min-height");
+  }
+
+  function containPopup() {
+    const shell = popup?.getElement();
+    const body = shell?.querySelector<HTMLElement>(".popup");
+    if (!shell || !body || !mapElement) return;
+    const narrow = window.innerWidth < 960;
+    shell.classList.toggle("is-contained", narrow);
+    document.body.classList.toggle("popup-open", narrow);
+    if (!narrow) {
+      body.style.maxHeight = "";
+      mapElement.style.removeProperty("min-height");
+      return;
+    }
+    body.style.maxHeight = "none";
+    const zoom = mapElement.querySelector(".maplibregl-ctrl-top-right");
+    const zoomH = zoom instanceof HTMLElement ? Math.ceil(zoom.getBoundingClientRect().height) : 68;
+    const attribH = 64;
+    const needed = Math.ceil(shell.offsetHeight + zoomH + attribH + 16);
+    const nextMin = `${needed}px`;
+    if (mapElement.style.minHeight !== nextMin) {
+      mapElement.style.minHeight = nextMin;
+      map?.resize();
+    }
+    const attrib = mapElement.querySelector(".maplibregl-ctrl-attrib");
+    const attribNow = attrib instanceof HTMLElement ? Math.ceil(attrib.getBoundingClientRect().height) + 28 : attribH;
+    shell.style.bottom = `${attribNow}px`;
+    mapElement.scrollIntoView({ block: "end" });
+  }
+
   function closePopup() {
-    popup?.remove();
+    const current = popup;
     popup = null;
     popupId = "";
+    current?.remove();
+    releasePopupLayout();
+    map?.resize();
   }
 
   function showMapFailure(message: string) {
@@ -138,14 +174,21 @@ if (root) {
       .setLngLat([camera.lng, camera.lat])
       .setDOMContent(popupNode(place))
       .addTo(map);
+    popup.on("close", () => {
+      popup = null;
+      popupId = "";
+      releasePopupLayout();
+      map?.resize();
+    });
+    containPopup();
   }
 
   function focusSelection() {
     const place = places.find((item) => item.id === selected);
     const camera = cameraForSelection(place);
     if (!map || !place || !camera) return;
-    map.easeTo({ center: [camera.lng, camera.lat], zoom: Math.max(map.getZoom(), 14) });
     openPopup(place);
+    map.easeTo({ center: [camera.lng, camera.lat], zoom: Math.max(map.getZoom(), 14) });
     layoutLabels();
   }
 
@@ -164,6 +207,25 @@ if (root) {
     focusSelection();
   }
 
+  function externalIcon(): SVGSVGElement {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "ext");
+    svg.setAttribute("viewBox", "0 0 16 16");
+    svg.setAttribute("width", "14");
+    svg.setAttribute("height", "14");
+    svg.setAttribute("aria-hidden", "true");
+    svg.setAttribute("focusable", "false");
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("fill", "none");
+    path.setAttribute("stroke", "currentColor");
+    path.setAttribute("stroke-width", "1.6");
+    path.setAttribute("stroke-linecap", "round");
+    path.setAttribute("stroke-linejoin", "round");
+    path.setAttribute("d", EXTERNAL_ICON_PATH);
+    svg.append(path);
+    return svg;
+  }
+
   function popupNode(place: Place): HTMLElement {
     const wrap = document.createElement("div");
     wrap.className = "popup";
@@ -179,9 +241,10 @@ if (root) {
     }
     const onward = onwardLink(place);
     const go = document.createElement("a");
+    go.className = "outward";
     go.href = onward.href;
     go.rel = "noreferrer";
-    go.textContent = onward.label;
+    go.append(document.createTextNode(onward.label), externalIcon());
     wrap.append(go);
     if (place.coordUrl) {
       const evidence = evidenceLink(place.coordUrl);
@@ -198,6 +261,7 @@ if (root) {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "pill-marker";
+    button.dataset.place = place.id;
     button.setAttribute("aria-label", place.name);
     const dot = document.createElement("span");
     dot.className = "dot";
@@ -241,6 +305,7 @@ if (root) {
       if (tileNote) tileNote.hidden = false;
     });
     map.on("moveend", () => layoutLabels());
+    map.on("resize", () => containPopup());
     map.on("load", () => layoutLabels());
     for (const place of places) {
       if (!place.pin || place.lat === null || place.lng === null) continue;
@@ -290,7 +355,10 @@ if (root) {
     button.addEventListener("click", () => setView(button.dataset.view === "map" ? "map" : "list"));
   }
   window.addEventListener("popstate", () => apply(filterStateFromParams(new URLSearchParams(location.search)), "replace"));
-  window.addEventListener("resize", () => layoutLabels());
+  window.addEventListener("resize", () => {
+    layoutLabels();
+    containPopup();
+  });
 
   apply(filterStateFromParams(new URLSearchParams(location.search)), "replace");
   setView("list");

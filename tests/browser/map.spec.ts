@@ -26,21 +26,35 @@ test("a pill click and Enter leave the popup open", async ({ page }) => {
 });
 
 test("a phone selection opens the map on that place", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/");
-  await page.locator("#kayani-bakery .card-hit").click();
-  await page.getByRole("button", { name: "Map", exact: true }).click();
-  await expect(page.locator("body")).toHaveAttribute("data-view", "map");
-  const popup = page.locator(".maplibregl-popup");
-  await expect(popup).toContainText("Kayani Bakery");
-  const map = await page.locator("#map").boundingBox();
-  const pill = await page.locator('button[aria-label="Kayani Bakery"]').boundingBox();
-  expect(map).toBeTruthy();
-  expect(pill).toBeTruthy();
-  if (!map || !pill) return;
-  const dx = pill.x + pill.width / 2 - (map.x + map.width / 2);
-  const dy = pill.y + pill.height / 2 - (map.y + map.height / 2);
-  expect(Math.hypot(dx, dy)).toBeLessThan(90);
+  // The popup text is ready before easeTo paints. At the opening zoom Kayani’s
+  // pill centre is about 101px from the map centre, the same miss CI recorded.
+  // The marker anchor is the pill centre, so once the camera settles that
+  // distance is about a pixel. A recenter that never runs stays near 101px.
+  for (const viewport of [
+    { width: 390, height: 844 },
+    { width: 390, height: 844 },
+    { width: 320, height: 700 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+    await page.locator("#kayani-bakery .card-hit").click();
+    await page.getByRole("button", { name: "Map", exact: true }).click();
+    await expect(page.locator("body")).toHaveAttribute("data-view", "map");
+    await expect(page.locator(".maplibregl-popup")).toContainText("Kayani Bakery");
+    await expect
+      .poll(
+        async () => {
+          const map = await page.locator("#map").boundingBox();
+          const pill = await page.locator('button[aria-label="Kayani Bakery"]').boundingBox();
+          if (!map || !pill) return 999;
+          const dx = pill.x + pill.width / 2 - (map.x + map.width / 2);
+          const dy = pill.y + pill.height / 2 - (map.y + map.height / 2);
+          return Math.hypot(dx, dy);
+        },
+        { timeout: 8_000 },
+      )
+      .toBeLessThan(12);
+  }
 });
 
 test("a blocked tile host shows the banner and keeps the list", async ({ page }) => {
@@ -62,12 +76,20 @@ test("every card links outward, and search, reset, back, and a narrow screen hol
   await page.goto("/?section=nope");
   await expect(page.locator("[data-section='']")).toHaveAttribute("aria-pressed", "true");
   await page.goto("/");
-  await expect(page.locator("article.card .card-actions a")).toHaveCount(50);
+  await expect(page.locator("article.card .card-actions a")).toHaveCount(
+    await page.locator("article.card").count(),
+  );
   const hrefs = await page.locator("article.card .card-actions a").evaluateAll((links) => links.map((link) => (link as HTMLAnchorElement).href));
   expect(hrefs.every((href) => href.startsWith("https://"))).toBe(true);
   await expect(page.locator("#blue-nile .card-actions a")).toHaveText("Search Google Maps");
-  await page.locator("#blue-nile summary").click();
-  await expect(page.locator("#blue-nile .notes a", { hasText: "OpenStreetMap" })).toHaveAttribute("href", /openstreetmap\.org/);
+  await expect(page.locator("details.notes")).toHaveCount(0);
+  await expect(page.locator("#blue-nile .card-actions .ext")).toHaveCount(1);
+  await page.locator("#blue-nile .card-hit").click();
+  await expect(page.locator(".maplibregl-popup a.outward .ext")).toHaveCount(1);
+  await expect(page.locator(".maplibregl-popup").getByRole("link", { name: "OpenStreetMap" })).toHaveAttribute(
+    "href",
+    /openstreetmap\.org/,
+  );
   await page.locator("#q").fill("zzz-no-such-place");
   await expect(page.locator("#empty")).toBeVisible();
   await page.locator("#reset").click();
@@ -85,6 +107,210 @@ test("every card links outward, and search, reset, back, and a narrow screen hol
   await page.setViewportSize({ width: 320, height: 700 });
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);
+});
+
+test("map markers stay in step with the filtered cards", async ({ page }) => {
+  async function listedCount() {
+    const text = await page.locator("[data-section='']").innerText();
+    const match = text.match(/\((\d+)\)/);
+    return Number(match?.[1] ?? "0");
+  }
+
+  async function matchingIds() {
+    const { cards, markers } = await page.evaluate(() => {
+      const painted = (element: Element) => {
+        const style = getComputedStyle(element);
+        if (style.display === "none" || style.visibility === "hidden" || Number(style.opacity) === 0) return false;
+        const box = element.getBoundingClientRect();
+        return box.width > 0 && box.height > 0;
+      };
+      const cards = [...document.querySelectorAll("article.card")]
+        .filter((element) => !(element as HTMLElement).hidden)
+        .map((element) => element.id)
+        .sort();
+      const markers = [...document.querySelectorAll(".pill-marker")]
+        .filter(painted)
+        .map((element) => element.getAttribute("data-place") ?? "")
+        .sort();
+      return { cards, markers };
+    });
+    expect(markers).toEqual(cards);
+    return cards;
+  }
+
+  await page.goto("/");
+  const total = await listedCount();
+  await expect(page.locator(".pill-marker")).toHaveCount(total);
+  const sections = await page.locator(".pill[data-section]").evaluateAll((els) =>
+    els.map((element) => element.getAttribute("data-section") ?? ""),
+  );
+  for (const section of sections.filter((section) => section !== "")) {
+    await page.locator(`[data-section="${section}"]`).click();
+    await matchingIds();
+  }
+  await page.locator("[data-section='']").click();
+  await matchingIds();
+  await page.locator("#kayani-bakery .card-hit").click();
+  await expect(page.locator(".maplibregl-popup")).toContainText("Kayani");
+  await page.locator('[data-section="coffee"]').click();
+  await expect(page.locator(".maplibregl-popup")).toHaveCount(0);
+  await matchingIds();
+  await page.locator("#q").fill("Koregaon");
+  const narrowed = await matchingIds();
+  expect(narrowed.length).toBeGreaterThan(0);
+  expect(narrowed.length).toBeLessThan(total);
+  await page.locator("#q").fill("zzz-no-such-place");
+  expect(await matchingIds()).toEqual([]);
+  await page.locator("#reset").click();
+  expect(await matchingIds()).toHaveLength(await listedCount());
+  await page.locator('[data-section="sweet"]').click();
+  await page.locator('[data-section="pints"]').click();
+  await page.goBack();
+  await expect(page.locator('[data-section="sweet"]')).toHaveAttribute("aria-pressed", "true");
+  await matchingIds();
+  await page.goForward();
+  await expect(page.locator('[data-section="pints"]')).toHaveAttribute("aria-pressed", "true");
+  await matchingIds();
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await page.locator('[data-section="dates"]').click();
+  await page.getByRole("button", { name: "Map", exact: true }).click();
+  await expect(page.locator(".maplibregl-canvas")).toBeVisible();
+  await matchingIds();
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth),
+  ).toBeLessThanOrEqual(1);
+});
+
+test("the map credit text stays inside the visible map", async ({ page }) => {
+  async function creditBox() {
+    return page.evaluate(() => {
+      const map = document.querySelector("#map")?.getBoundingClientRect();
+      const inner = document.querySelector(".maplibregl-ctrl-attrib-inner");
+      if (!map || !inner) return { ok: false, reason: "missing", text: "", lines: 0, textBottom: 0, visibleBottom: 0, mapBottom: 0, mapHeight: 0 };
+      const text = (inner.textContent ?? "").replace(/\s+/g, " ").trim();
+      const range = document.createRange();
+      range.selectNodeContents(inner);
+      const rects = [...range.getClientRects()].filter((rect) => rect.width > 0 && rect.height > 0);
+      const visible = {
+        top: Math.max(map.top, 0),
+        left: Math.max(map.left, 0),
+        right: Math.min(map.right, window.innerWidth),
+        bottom: Math.min(map.bottom, window.innerHeight),
+      };
+      const outside = rects.filter(
+        (rect) =>
+          rect.top < visible.top - 0.5 ||
+          rect.left < visible.left - 0.5 ||
+          rect.right > visible.right + 0.5 ||
+          rect.bottom > visible.bottom - 0.5,
+      );
+      return {
+        ok: text.includes("OpenStreetMap") && text.includes("OpenFreeMap") && rects.length > 0 && outside.length === 0,
+        text,
+        lines: rects.length,
+        textBottom: rects.length ? Math.max(...rects.map((rect) => rect.bottom)) : 0,
+        visibleBottom: visible.bottom,
+        mapBottom: map.bottom,
+        mapHeight: map.height,
+      };
+    });
+  }
+
+  for (const { width, height, section } of [
+    { width: 320, height: 700, section: "getaways" },
+    { width: 320, height: 700, section: "" },
+    { width: 390, height: 844, section: "getaways" },
+  ]) {
+    await page.setViewportSize({ width, height });
+    await page.goto(section ? `/?section=${section}` : "/");
+    await page.getByRole("button", { name: "Map", exact: true }).click();
+    await expect(page.locator(".maplibregl-canvas")).toBeVisible();
+    await expect.poll(async () => (await creditBox()).ok, { timeout: 8_000 }).toBe(true);
+    const credit = await creditBox();
+    expect(credit.ok).toBe(true);
+    expect(credit.text).toContain("Data from OpenStreetMap");
+    expect(credit.textBottom).toBeLessThanOrEqual(credit.visibleBottom + 0.5);
+    expect(credit.mapBottom).toBeLessThanOrEqual(height + 0.5);
+    expect(credit.mapHeight).toBeGreaterThan(120);
+  }
+});
+
+test("the longest popup stays reachable on a phone and on the desktop map", async ({ page }) => {
+  async function insideMap(selector: string) {
+    return page.evaluate((target) => {
+      const map = document.querySelector("#map")?.getBoundingClientRect();
+      const node = document.querySelector(target);
+      if (!map || !node) return false;
+      const rect = node.getBoundingClientRect();
+      const credit = document.querySelector(".maplibregl-ctrl-attrib")?.getBoundingClientRect();
+      const top = Math.max(map.top, 0);
+      const left = Math.max(map.left, 0);
+      const right = Math.min(map.right, window.innerWidth);
+      const bottom = Math.min(map.bottom, window.innerHeight, credit ? credit.top : window.innerHeight);
+      return rect.width > 0 && rect.height > 0 && rect.top >= top - 1 && rect.bottom <= bottom + 1 && rect.left >= left - 1 && rect.right <= right + 1;
+    }, selector);
+  }
+
+  async function creditInside() {
+    return page.evaluate(() => {
+      const map = document.querySelector("#map")?.getBoundingClientRect();
+      const inner = document.querySelector(".maplibregl-ctrl-attrib-inner");
+      if (!map || !inner) return false;
+      const text = (inner.textContent ?? "").replace(/\s+/g, " ");
+      if (!text.includes("OpenStreetMap") || !text.includes("OpenFreeMap")) return false;
+      const range = document.createRange();
+      range.selectNodeContents(inner);
+      const rects = [...range.getClientRects()].filter((rect) => rect.width > 0 && rect.height > 0);
+      const top = Math.max(map.top, 0);
+      const left = Math.max(map.left, 0);
+      const right = Math.min(map.right, window.innerWidth);
+      const bottom = Math.min(map.bottom, window.innerHeight);
+      return rects.length > 0 && rects.every((rect) => rect.top >= top - 0.5 && rect.bottom <= bottom + 0.5 && rect.left >= left - 0.5 && rect.right <= right + 0.5);
+    });
+  }
+
+  for (const viewport of [
+    { width: 320, height: 700 },
+    { width: 390, height: 844 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/?section=getaways");
+    await page.locator("#sinhagad-fort .card-hit").click();
+    await page.getByRole("button", { name: "Map", exact: true }).click();
+    await expect(page.locator(".maplibregl-popup")).toContainText("Donaje");
+    await expect.poll(() => insideMap(".maplibregl-popup-close-button")).toBe(true);
+    const note = page.locator(".popup").getByText("village-route");
+    const maps = page.locator(".maplibregl-popup").getByRole("link", { name: "Search Google Maps" });
+    const source = page.locator(".maplibregl-popup").getByRole("link", { name: "OpenStreetMap" });
+    await note.scrollIntoViewIfNeeded();
+    await maps.scrollIntoViewIfNeeded();
+    await source.scrollIntoViewIfNeeded();
+    await expect.poll(() => insideMap(".maplibregl-popup a[href*='openstreetmap.org']")).toBe(true);
+    await expect.poll(() => insideMap(".maplibregl-popup a.outward")).toBe(true);
+    expect(await creditInside()).toBe(true);
+    await page.locator(".maplibregl-popup-close-button").click();
+    await expect(page.locator(".maplibregl-popup")).toHaveCount(0);
+    await page.locator("[data-section='']").click();
+    await expect.poll(creditInside).toBe(true);
+    const sections = await page.locator(".pill[data-section]").evaluateAll((els) =>
+      els.map((element) => element.getAttribute("data-section") ?? "").filter(Boolean),
+    );
+    for (const section of sections) {
+      await page.locator(`[data-section="${section}"]`).click();
+      await expect.poll(creditInside).toBe(true);
+    }
+  }
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/?section=getaways");
+  await page.locator("#sinhagad-fort .card-hit").click();
+  await expect(page.locator(".maplibregl-popup")).toContainText("Donaje");
+  await expect(page.locator(".maplibregl-popup.is-contained")).toHaveCount(0);
+  await expect.poll(() => insideMap(".maplibregl-popup a[href*='openstreetmap.org']")).toBe(true);
+  await expect.poll(() => insideMap(".maplibregl-popup-close-button")).toBe(true);
+  expect(await creditInside()).toBe(true);
 });
 
 test("the map is the wider column and culled names keep a dot", async ({ page }) => {

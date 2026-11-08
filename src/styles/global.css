@@ -72,10 +72,11 @@ a {
 
 .top {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.55rem 1rem;
+  gap: 0.7rem 1rem;
+  padding: 0.75rem 1rem 0.8rem;
   background: white;
   border-bottom: 1px solid var(--line);
 }
@@ -88,38 +89,47 @@ a {
 }
 
 .mark {
-  width: 1.7rem;
-  height: 1.7rem;
-  border-radius: 0.45rem;
-  background: #1c1917;
-  color: white;
-  display: grid;
-  place-items: center;
-  font-size: 0.68rem;
-  font-weight: 600;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: block;
   flex: none;
+}
+
+.brand-text {
+  min-width: 0;
 }
 
 .brand h1 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.55rem;
+  font-weight: 600;
   letter-spacing: -0.03em;
   line-height: 1.1;
 }
 
 .brand p {
-  margin: 0;
+  margin: 0.12rem 0 0;
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: 1.08rem;
+  line-height: 1.3;
+}
+
+.search {
+  flex: 1 1 12rem;
+  margin-left: auto;
 }
 
 .search input {
-  width: 9.5rem;
-  min-height: 2rem;
+  width: 100%;
+  max-width: 16rem;
+  margin-left: auto;
+  display: block;
+  font-size: 1.12rem;
+  min-height: 2.9rem;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: #fff;
-  padding: 0.2rem 0.75rem;
+  padding: 0.35rem 1rem;
 }
 
 .nav-bar {
@@ -141,11 +151,13 @@ a {
   border: 1px solid var(--line);
   background: white;
   border-radius: 999px;
-  min-height: 2rem;
+  min-height: 2.75rem;
 }
 
 .switch button {
+  font-size: 1.08rem;
   font-weight: 600;
+  min-height: 3rem;
 }
 
 .switch button[aria-pressed="true"],
@@ -164,10 +176,15 @@ a {
 .pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.15rem 0.65rem;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
   cursor: pointer;
-  font-size: 0.86rem;
+  font-size: 1.05rem;
+}
+
+.pill .dot {
+  width: 0.55rem;
+  height: 0.55rem;
 }
 
 .dot {
@@ -241,8 +258,7 @@ a {
 
 .card-meta,
 .card-line,
-.card-actions,
-.notes {
+.card-actions {
   color: var(--muted);
   font-size: 0.84rem;
 }
@@ -266,30 +282,28 @@ a {
   margin: 0.28rem 0 0;
 }
 
-.card-actions a {
+.card-actions a,
+.popup a.outward {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  min-height: 2.25rem;
   color: #57534e;
   text-decoration: none;
   font-weight: 500;
+}
+
+.ext {
+  width: 0.9em;
+  height: 0.9em;
+  display: block;
+  flex: none;
 }
 
 .card-actions a:hover {
   text-decoration: underline;
 }
 
-.notes {
-  margin-top: 0.2rem;
-}
-
-.notes p,
-.notes ul {
-  margin: 0.3rem 0 0;
-}
-
-.notes ul {
-  padding-left: 1rem;
-}
-
-.notes a,
 .map-credit {
   overflow-wrap: anywhere;
 }
@@ -314,9 +328,9 @@ a {
 }
 
 .colophon {
-  margin-top: 1.2rem;
+  margin-top: 1.4rem;
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: 0.92rem;
 }
 
 .colophon p {
@@ -337,7 +351,8 @@ body[data-view="map"] .map-pane {
 }
 
 #map {
-  height: min(72vh, 36rem);
+  height: min(70vh, 32rem);
+  min-height: 16rem;
   border-radius: 0.75rem;
   overflow: hidden;
   border: 1px solid var(--line);
@@ -399,6 +414,10 @@ body[data-view="map"] .map-pane {
   box-shadow: 0 0 0 2px #1c1917;
 }
 
+.pill-marker[hidden] {
+  display: none;
+}
+
 .popup {
   display: grid;
   gap: 0.2rem;
@@ -419,6 +438,14 @@ body[data-view="map"] .map-pane {
   max-width: 36rem;
   margin: 0 auto;
   padding: 3rem 1.25rem;
+}
+
+#map .maplibregl-ctrl-attrib {
+  margin: 0 0.7rem 0.55rem 0;
+  max-width: calc(100% - 3rem);
+  background: rgb(251 247 241 / 96%);
+  border-radius: 0.3rem;
+  line-height: 1.35;
 }
 
 .maplibregl-ctrl-attrib,
@@ -456,11 +483,58 @@ body[data-view="map"] .map-pane {
   }
 
   #map {
-    height: calc(100vh - 8.4rem);
+    height: calc(100vh - 13.2rem);
   }
 
-  .search input {
-    width: 11rem;
+  .search {
+    flex: 0 1 16rem;
+  }
+}
+
+@media (max-width: 959px) {
+  body[data-view="map"] {
+    height: 100svh;
+    max-height: 100svh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  body[data-view="map"] .app,
+  body[data-view="map"] .map-pane {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  body[data-view="map"] #map {
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+  }
+
+  body[data-view="map"].popup-open {
+    height: auto;
+    max-height: none;
+    overflow: auto;
+  }
+
+  .maplibregl-popup.is-contained {
+    transform: none !important;
+    top: auto;
+    left: 0.4rem;
+    right: 0.4rem;
+    max-width: none !important;
+  }
+
+  .maplibregl-popup.is-contained .maplibregl-popup-tip {
+    display: none;
+  }
+
+  .maplibregl-popup.is-contained .popup {
+    overflow-y: auto;
+    padding-bottom: 0.35rem;
   }
 }
 
@@ -473,11 +547,12 @@ body[data-view="map"] .map-pane {
     padding-right: 0.65rem;
   }
 
-  .brand p {
-    display: none;
+  .search {
+    flex-basis: 100%;
+    margin-left: 0;
   }
 
   .search input {
-    width: 7.2rem;
+    max-width: none;
   }
 }
