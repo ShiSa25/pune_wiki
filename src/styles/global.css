@@ -513,8 +513,8 @@ a {
   }
 
   .mark {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
   }
 
   .brand-text {
@@ -523,9 +523,11 @@ a {
   }
 
   .brand h1 {
-    font-size: 18px;
+    font-family: Inter, "Segoe UI", sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
     line-height: 1;
-    letter-spacing: -0.02em;
   }
 
   .view-fab {
