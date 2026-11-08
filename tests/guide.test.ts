@@ -66,6 +66,22 @@ describe("guide data", () => {
     const [cL, cA, cB] = oklab(coffee?.color ?? "#000000");
     const [pL, pA, pB] = oklab(pints?.color ?? "#000000");
     expect(Math.hypot(cL - pL, cA - pA, cB - pB)).toBeGreaterThan(0.1);
+    expect(sections.map((section) => section.id)).toContain("nightlife");
+    expect(pints?.color).toBe("#3a7bcb");
+    expect(coffee?.color).toBe("#0c7a8c");
+    expect(sections.find((section) => section.id === "misal")?.color).toBe("#c27800");
+    const getaways = sections.find((section) => section.id === "getaways");
+    const nightlife = sections.find((section) => section.id === "nightlife");
+    expect(getaways?.color).toBe("#f95000");
+    expect(nightlife?.color).toBe("#d242fc");
+    const apart = (left: string, right: string) => {
+      const [aL, aA, aB] = oklab(left);
+      const [bL, bA, bB] = oklab(right);
+      return Math.hypot(aL - bL, aA - bA, aB - bB);
+    };
+    expect(apart(getaways?.color ?? "#000000", pints?.color ?? "#000000")).toBeGreaterThan(0.25);
+    expect(apart(nightlife?.color ?? "#000000", pints?.color ?? "#000000")).toBeGreaterThan(0.2);
+    expect(apart(getaways?.color ?? "#000000", nightlife?.color ?? "#000000")).toBeGreaterThan(0.25);
     expect(new Set(places.map((place) => place.id)).size).toBe(places.length);
     for (const section of sections) {
       expect(places.filter((place) => place.section === section.id).length).toBeGreaterThan(0);
@@ -230,6 +246,23 @@ describe("card summary and outward links", () => {
     );
     expect(walk?.mapsUrl).not.toMatch(/!1s|0x3bc/);
     expect(placeGeometry(walk?.mapsUrl ?? "")).toEqual({ lat: walk?.lat, lng: walk?.lng });
+    const nightPins: Record<string, { lat: number; lng: number; placeId: string }> = {
+      ballr: { lat: 18.5489244, lng: 73.9068773, placeId: "1s0x3bc2c1d21df8f8a1:0x92b7539c49c3c500" },
+      "toy-room": { lat: 18.5300799, lng: 73.8713386, placeId: "1s0x3bc2c16c3d9734d9:0x5b8a05b9f0105ac2" },
+      "twobhk-diner-key-club": { lat: 18.5324407, lng: 73.870762, placeId: "1s0x3bc2c12f212fa8f3:0xfc8dc927cc331f63" },
+      "millers-luxury-club": { lat: 18.5320998, lng: 73.8705398, placeId: "1s0x3bc2c1fe823b0ef3:0xa2169562d69ef196" },
+      "soundtrack-cafe": { lat: 18.5823228, lng: 73.7836778, placeId: "1s0x3bc2b97f3d267e2f:0x124e7b5863c91db8" },
+    };
+    for (const [id, expected] of Object.entries(nightPins)) {
+      const place = places.find((item) => item.id === id);
+      expect(place?.section).toBe("nightlife");
+      expect(place?.lat).toBe(expected.lat);
+      expect(place?.lng).toBe(expected.lng);
+      expect(place?.mapsUrl).toContain(expected.placeId);
+      expect(place?.mapsUrl?.startsWith("https://www.google.com/maps/place/")).toBe(true);
+      expect(place?.pin).toBe("osm");
+    }
+    expect(places.find((place) => place.id === "high-spirits")?.section).toBe("pints");
   });
 });
 
