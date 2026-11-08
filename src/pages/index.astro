@@ -11,18 +11,12 @@ import { EXTERNAL_ICON_PATH } from "../lib/outward";
   <a class="skip" href="#content">Skip to content</a>
   <header class="top">
     <div class="brand">
-      <img class="mark" src="/favicon.svg" alt="" width="26" height="26" />
+      <img class="mark" src="/favicon.svg" alt="" width="36" height="36" />
       <div class="brand-text">
         <h1>pune</h1>
         <p>A local’s guide to falling in love with Pune</p>
       </div>
     </div>
-    <form class="search" id="filters" role="search">
-      <label>
-        <span class="sr">Search</span>
-        <input id="q" type="search" name="q" autocomplete="off" placeholder="Search" />
-      </label>
-    </form>
   </header>
   <div class="nav-bar">
     <div class="switch" role="group" aria-label="List or map">
@@ -44,13 +38,8 @@ import { EXTERNAL_ICON_PATH } from "../lib/outward";
   </div>
   <div class="app" data-app>
     <div class="list-pane">
-      <div id="empty" class="empty" hidden>
-        <h2>No places match</h2>
-        <p>Nothing in this list matches that search. Clear it to see every place.</p>
-        <button type="button" id="reset">Reset</button>
-      </div>
       <noscript>
-        <p class="map-banner">Filters and the map need JavaScript. The full list is on this page.</p>
+        <p class="map-banner">The map needs JavaScript. The full list is on this page.</p>
       </noscript>
       <main id="content">
         {

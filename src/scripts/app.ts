@@ -10,12 +10,11 @@ maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
 const root = document.querySelector<HTMLElement>("[data-app]");
 if (root) {
-  const search = document.querySelector<HTMLInputElement>("#q");
   const chips = [...document.querySelectorAll<HTMLButtonElement>("[data-section]")];
+  const chipRow = document.querySelector<HTMLElement>(".pills");
   const cards = [...document.querySelectorAll<HTMLElement>("[data-place]")];
   const groups = [...document.querySelectorAll<HTMLElement>("[data-group]")];
   const count = document.querySelector<HTMLElement>("#count");
-  const empty = document.querySelector<HTMLElement>("#empty");
   const mapNote = document.querySelector<HTMLElement>("#map-note");
   const tileNote = document.querySelector<HTMLElement>("#tile-note");
   const viewButtons = [...document.querySelectorAll<HTMLButtonElement>("[data-view]")];
@@ -29,16 +28,31 @@ if (root) {
   let popupId = "";
   const markers = new Map<string, maplibregl.Marker>();
 
-  function readState(): FilterState {
-    const pressed = chips.find((chip) => chip.getAttribute("aria-pressed") === "true");
-    return { section: pressed?.dataset.section ?? "", query: search?.value ?? "" };
+  function revealChip(chip: HTMLElement) {
+    if (!chipRow) return;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const chipBox = chip.getBoundingClientRect();
+    const row = chipRow.getBoundingClientRect();
+    const pad = 8;
+    if (chipBox.left < row.left + pad) chipRow.scrollLeft -= row.left + pad - chipBox.left;
+    else if (chipBox.right > row.right - pad) chipRow.scrollLeft += chipBox.right - (row.right - pad);
+    if (window.scrollX !== scrollX || window.scrollY !== scrollY) window.scrollTo(scrollX, scrollY);
+  }
+
+  function updateChipHint() {
+    if (!chipRow) return;
+    const more = chipRow.scrollLeft + chipRow.clientWidth < chipRow.scrollWidth - 2;
+    chipRow.classList.toggle("can-scroll", more);
   }
 
   function writeControls(next: FilterState) {
-    if (search && search.value !== next.query) search.value = next.query;
     for (const chip of chips) {
-      chip.setAttribute("aria-pressed", chip.dataset.section === next.section ? "true" : "false");
+      const pressed = chip.dataset.section === next.section;
+      chip.setAttribute("aria-pressed", pressed ? "true" : "false");
+      if (pressed) revealChip(chip);
     }
+    updateChipHint();
   }
 
   function visible(): Place[] {
@@ -92,7 +106,7 @@ if (root) {
 
   function apply(next: FilterState, historyMode: "push" | "replace") {
     const known = new Set(places.map((place) => place.section));
-    state = { section: known.has(next.section) ? next.section : "", query: next.query };
+    state = { section: known.has(next.section) ? next.section : "", query: "" };
     writeControls(state);
     const allowed = new Set(visible().map((place) => place.id));
     if (selected && !allowed.has(selected)) selected = "";
@@ -103,12 +117,11 @@ if (root) {
     }
     for (const group of groups) group.hidden = !group.querySelector("[data-place]:not([hidden])");
     if (count) {
-      const filtering = Boolean(state.section || state.query.trim());
+      const filtering = Boolean(state.section);
       count.hidden = !filtering;
       const shown = allowed.size;
       count.textContent = filtering ? `${shown} ${shown === 1 ? "place" : "places"}` : "";
     }
-    if (empty) empty.hidden = allowed.size > 0;
     syncMarkers();
     const path = `/${paramsFromFilter(state)}`;
     if (historyMode === "push") history.pushState(state, "", path);
@@ -378,15 +391,11 @@ if (root) {
   for (const chip of chips) {
     chip.addEventListener("click", () => {
       const picked = chip.dataset.section ?? "";
-      apply({ ...readState(), section: state.section === picked ? "" : picked }, "push");
+      apply({ section: state.section === picked ? "" : picked, query: "" }, "push");
     });
+    chip.addEventListener("focus", () => revealChip(chip));
   }
-  search?.addEventListener("input", () => apply(readState(), "replace"));
-  document.querySelector("#reset")?.addEventListener("click", () => {
-    apply({ section: "", query: "" }, "push");
-    search?.focus();
-  });
-  document.querySelector("#filters")?.addEventListener("submit", (event) => event.preventDefault());
+  chipRow?.addEventListener("scroll", updateChipHint);
   for (const card of cards) {
     card.querySelector(".card-hit")?.addEventListener("click", () => selectPlace(card.dataset.place ?? "", false));
   }
@@ -397,6 +406,7 @@ if (root) {
   window.addEventListener("resize", () => {
     layoutLabels();
     containPopup();
+    updateChipHint();
   });
 
   apply(filterStateFromParams(new URLSearchParams(location.search)), "replace");

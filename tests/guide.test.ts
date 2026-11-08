@@ -149,23 +149,13 @@ describe("coordinates", () => {
 });
 
 describe("filters", () => {
-  it("matches case-insensitively and combines section with search", () => {
-    expect(filterPlaces(places, { section: "", query: "KAYANI" }).map((place) => place.id)).toEqual(["kayani-bakery"]);
-    expect(filterPlaces(places, { section: "pints", query: "kayani" })).toEqual([]);
-    expect(filterPlaces(places, { section: "coffee", query: "" }).every((place) => place.section === "coffee")).toBe(
+  it("keeps a category and ignores a leftover search", () => {
+    expect(filterPlaces(places, { section: "", query: "KAYANI" })).toHaveLength(places.length);
+    expect(filterPlaces(places, { section: "coffee", query: "kayani" }).every((place) => place.section === "coffee")).toBe(
       true,
     );
+    expect(filterPlaces(places, { section: "coffee", query: "zzz-no-such-place" }).length).toBeGreaterThan(0);
     expect(filterPlaces(places, { section: "nope", query: "" })).toEqual([]);
-    expect(filterPlaces(places, { section: "", query: "zzz-no-such-place" })).toEqual([]);
-  });
-
-  it("finds Marathi names and the Fergusson College Road spelling", () => {
-    expect(filterPlaces(places, { section: "", query: "वैशाली" }).map((place) => place.id)).toEqual(["vaishali"]);
-    expect(filterPlaces(places, { section: "", query: "मिसळ" }).map((place) => place.id)).toContain("bedekar-tea-stall");
-    expect(filterPlaces(places, { section: "", query: "Ferguson" }).map((place) => place.id)).toEqual(
-      expect.arrayContaining(["vaishali", "cafe-goodluck"]),
-    );
-    expect(filterPlaces(places, { section: "", query: "शनिवार" }).map((place) => place.id)).toEqual(["shaniwar-wada"]);
   });
 
   it("rejects unsafe urls through the place schema", () => {
@@ -189,11 +179,14 @@ describe("filters", () => {
     expect(cameraForSelection(undefined)).toBeNull();
   });
 
-  it("round-trips the query string and drops an unknown section at the edges", () => {
-    const state = { section: "sweet", query: "  Mastani " };
-    const params = new URLSearchParams(paramsFromFilter({ section: "sweet", query: "Mastani" }).slice(1));
-    expect(filterStateFromParams(params)).toEqual({ section: "sweet", query: "Mastani" });
-    expect(filterPlaces(places, { ...state, query: state.query }).length).toBeGreaterThan(0);
+  it("keeps the category in the address and drops a search", () => {
+    expect(paramsFromFilter({ section: "sweet", query: "Mastani" })).toBe("?section=sweet");
+    expect(paramsFromFilter({ section: "", query: "Kayani" })).toBe("");
+    expect(filterStateFromParams(new URLSearchParams("section=sweet&q=Mastani"))).toEqual({ section: "sweet", query: "" });
+    expect(filterStateFromParams(new URLSearchParams("q=Kayani"))).toEqual({ section: "", query: "" });
+    expect(filterPlaces(places, { section: "sweet", query: "Mastani" }).every((place) => place.section === "sweet")).toBe(
+      true,
+    );
   });
 });
 

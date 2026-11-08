@@ -63,14 +63,14 @@ test("a blocked tile host shows the banner and keeps the list", async ({ page })
   await page.goto("/");
   await expect(page.locator("#tile-note")).toBeVisible();
   await expect(page.locator("#tile-note")).toContainText("did not load");
-  await page.locator("#q").fill("Vaishali");
+  await page.locator("[data-section='misal']").click();
   await expect(page.locator("#vaishali")).toBeVisible();
   await expect(page.locator("#kayani-bakery")).toBeHidden();
 });
 
-test("every card links outward, and search, reset, back, and a narrow screen hold", async ({ page }) => {
-  await page.goto("/?q=Kayani");
-  await expect(page.locator("article.card:visible")).toHaveCount(1);
+test("every card links outward, and back and a narrow screen hold", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator("#q")).toHaveCount(0);
   await expect(page.locator("#kayani-bakery .card-actions a")).toHaveText("Google Maps");
   await page.goto("/?section=coffee");
   await expect(page.locator("[data-section='coffee']")).toHaveAttribute("aria-pressed", "true");
@@ -95,20 +95,10 @@ test("every card links outward, and search, reset, back, and a narrow screen hol
     "href",
     /openstreetmap\.org/,
   );
-  await page.locator("#q").fill("zzz-no-such-place");
-  await expect(page.locator("#empty")).toBeVisible();
-  await page.locator("#reset").click();
-  await expect(page.locator("#empty")).toBeHidden();
-  await expect(page.locator("#q")).toHaveValue("");
   await page.locator("[data-section='coffee']").click();
   await expect(page).toHaveURL(/section=coffee/);
   await page.goBack();
   await expect(page.locator("[data-section='']")).toHaveAttribute("aria-pressed", "true");
-  page.on("dialog", () => {
-    throw new Error("search must not open a dialog");
-  });
-  await page.locator("#q").fill("<img src=x onerror=alert(1)>");
-  await expect(page.locator("#empty")).toBeVisible();
   await page.setViewportSize({ width: 320, height: 700 });
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(1);
@@ -160,13 +150,11 @@ test("map markers stay in step with the filtered cards", async ({ page }) => {
   await page.locator('[data-section="coffee"]').click();
   await expect(page.locator(".maplibregl-popup")).toHaveCount(0);
   await matchingIds();
-  await page.locator("#q").fill("Koregaon");
-  const narrowed = await matchingIds();
-  expect(narrowed.length).toBeGreaterThan(0);
-  expect(narrowed.length).toBeLessThan(total);
-  await page.locator("#q").fill("zzz-no-such-place");
-  expect(await matchingIds()).toEqual([]);
-  await page.locator("#reset").click();
+  await page.locator('[data-section="getaways"]').click();
+  const getaways = await matchingIds();
+  expect(getaways.length).toBeGreaterThan(0);
+  expect(getaways.length).toBeLessThan(total);
+  await page.locator("[data-section='']").click();
   expect(await matchingIds()).toHaveLength(await listedCount());
   await page.locator('[data-section="sweet"]').click();
   await page.locator('[data-section="pints"]').click();
@@ -188,10 +176,11 @@ test("map markers stay in step with the filtered cards", async ({ page }) => {
   ).toBeLessThanOrEqual(1);
 });
 
-test("ten category chips wrap on a phone and keep the map credit usable", async ({ page }) => {
+test("category chips stay on one scrolling row and the last one can be selected", async ({ page }) => {
   for (const viewport of [
-    { width: 320, height: 700 },
+    { width: 1440, height: 900 },
     { width: 390, height: 844 },
+    { width: 320, height: 700 },
   ]) {
     await page.setViewportSize(viewport);
     await page.goto("/");
@@ -202,25 +191,60 @@ test("ten category chips wrap on a phone and keep the map credit usable", async 
       const chips = [...node.querySelectorAll(".pill")].map((chip) => {
         const rect = chip.getBoundingClientRect();
         const minHeight = Number.parseFloat(getComputedStyle(chip).minHeight);
-        return { top: rect.top, bottom: rect.bottom, left: rect.left, right: rect.right, height: rect.height, minHeight };
+        return { top: rect.top, height: rect.height, minHeight, text: chip.textContent ?? "" };
       });
-      return { rowHeight: row.height, chips };
+      return { rowHeight: row.height, scrollWidth: node.scrollWidth, clientWidth: node.clientWidth, chips };
     });
     expect(box.chips.length).toBe(11);
-    expect(box.rowHeight).toBeGreaterThan(box.chips[0].height + 4);
+    expect(box.rowHeight).toBeLessThan(box.chips[0].height + 8);
+    const top = box.chips[0].top;
+    expect(box.chips.every((chip) => Math.abs(chip.top - top) < 2)).toBe(true);
     for (const chip of box.chips) {
       expect(chip.minHeight).toBeGreaterThanOrEqual(2.75 * 14.5 - 0.5);
       expect(chip.height).toBeGreaterThanOrEqual(chip.minHeight - 0.5);
-      expect(chip.left).toBeGreaterThanOrEqual(-1);
-      expect(chip.right).toBeLessThanOrEqual(viewport.width + 1);
     }
+    expect(box.scrollWidth).toBeGreaterThan(box.clientWidth);
     expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
-    await page.locator('[data-section="nightlife"]').click();
-    await page.getByRole("button", { name: "Map", exact: true }).click();
-    await expect(page.locator(".maplibregl-canvas")).toBeVisible();
-    const mapHeight = await page.locator("#map").evaluate((node) => node.getBoundingClientRect().height);
-    expect(mapHeight).toBeGreaterThan(120);
+    const before = await page.evaluate(() => window.scrollY);
+    await page.locator(".pills").hover();
+    await page.mouse.wheel(280, 0);
+    await expect.poll(() => page.locator(".pills").evaluate((node) => node.scrollLeft)).toBeGreaterThan(8);
+    expect(await page.evaluate(() => window.scrollY)).toBe(before);
+    await page.locator('[data-section="getaways"]').focus();
+    await page.keyboard.press("Enter");
+    await expect(page.locator('[data-section="getaways"]')).toHaveAttribute("aria-pressed", "true");
+    const visible = await page.locator('[data-section="getaways"]').evaluate((chip) => {
+      const row = chip.parentElement?.getBoundingClientRect();
+      const rect = chip.getBoundingClientRect();
+      return Boolean(row && rect.left >= row.left - 2 && rect.right <= row.right + 2);
+    });
+    expect(visible).toBe(true);
+    await expect(page.locator("#sinhagad-fort")).toBeVisible();
+    await expect(page.locator("#kayani-bakery")).toBeHidden();
+    await page.locator("[data-section='']").click();
+    await expect(page.locator("[data-section='']")).toHaveAttribute("aria-pressed", "true");
+    await expect(page.locator("#kayani-bakery")).toBeVisible();
   }
+  await page.setViewportSize({ width: 320, height: 700 });
+  await page.goto("/");
+  await page.locator('[data-section="getaways"]').focus();
+  await page.keyboard.press("Enter");
+  await page.goBack();
+  await expect(page.locator("[data-section='']")).toHaveAttribute("aria-pressed", "true");
+  await page.goForward();
+  await expect(page.locator('[data-section="getaways"]')).toHaveAttribute("aria-pressed", "true");
+  expect(
+    await page.locator('[data-section="getaways"]').evaluate((chip) => {
+      const row = chip.parentElement?.getBoundingClientRect();
+      const rect = chip.getBoundingClientRect();
+      return Boolean(row && rect.left >= row.left - 2 && rect.right <= row.right + 2);
+    }),
+  ).toBe(true);
+  await page.locator('[data-section="nightlife"]').click();
+  await page.getByRole("button", { name: "Map", exact: true }).click();
+  await expect(page.locator(".maplibregl-canvas")).toBeVisible();
+  const mapHeight = await page.locator("#map").evaluate((node) => node.getBoundingClientRect().height);
+  expect(mapHeight).toBeGreaterThan(120);
 });
 
 test("the map credit text stays inside the visible map", async ({ page }) => {
@@ -406,17 +430,15 @@ test("the maker line is a page footer outside the card list", async ({ page }) =
   expect(footer.fontSize).toBe("13.34px");
   expect(footer.height).toBeGreaterThan(18);
   expect(footer.height).toBeLessThan(36);
-  await page.locator("#q").fill("Kayani");
-  await expect(page.locator("article.card:visible")).toHaveCount(1);
+  await page.locator('[data-section="getaways"]').click();
+  await expect(page.locator("article.card:visible")).toHaveCount(2);
   await expect.poll(footerSitsBelowTheList).toBe(true);
-  await page.locator("#q").fill("zzz-no-such-place");
-  await expect(page.locator("#empty")).toBeVisible();
+  await page.locator("[data-section='']").click();
   await expect.poll(footerSitsBelowTheList).toBe(true);
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.locator("#reset").click();
   await expect.poll(footerSitsBelowTheList).toBe(true);
   await page.setViewportSize({ width: 320, height: 700 });
-  await page.locator("#q").fill("Kayani");
+  await page.locator('[data-section="getaways"]').click();
   await expect.poll(footerSitsBelowTheList).toBe(true);
   await page.getByRole("button", { name: "Map", exact: true }).click();
   await expect(page.locator("footer.colophon")).toBeHidden();
@@ -449,10 +471,9 @@ test("the masthead stays a compact row and leaves the other type alone", async (
       const mark = document.querySelector(".mark")?.getBoundingClientRect();
       const h1 = document.querySelector(".brand h1");
       const tag = document.querySelector(".brand p");
-      const search = document.querySelector(".search input");
       const pill = document.querySelector(".pill");
       const card = document.querySelector(".card-name");
-      if (!header || !mark || !h1 || !tag || !search || !pill || !card) return null;
+      if (!header || !mark || !h1 || !tag || !pill || !card) return null;
       const h1Box = h1.getBoundingClientRect();
       const tagBox = tag.getBoundingClientRect();
       const style = (element: Element) => getComputedStyle(element);
@@ -464,7 +485,6 @@ test("the masthead stays a compact row and leaves the other type alone", async (
         mark: { x: mark.x, y: mark.y, w: mark.width, h: mark.height, right: mark.right, bottom: mark.bottom },
         h1: { x: h1Box.x, y: h1Box.y, w: h1Box.width, h: h1Box.height, right: h1Box.right, text: h1.textContent, family: style(h1).fontFamily, size: style(h1).fontSize, weight: style(h1).fontWeight },
         tag: { x: tagBox.x, y: tagBox.y, w: tagBox.width, h: tagBox.height, right: tagBox.right, bottom: tagBox.bottom, text: tag.textContent, family: style(tag).fontFamily, size: style(tag).fontSize, weight: style(tag).fontWeight },
-        search: { size: style(search).fontSize, minHeight: style(search).minHeight, family: style(search).fontFamily },
         pill: { size: style(pill).fontSize, family: style(pill).fontFamily },
         card: { size: style(card).fontSize, family: style(card).fontFamily, weight: style(card).fontWeight },
       };
@@ -475,10 +495,12 @@ test("the masthead stays a compact row and leaves the other type alone", async (
   await page.goto("/");
   const wide = await measure();
   expect(wide).not.toBeNull();
-  expect(wide!.headerHeight).toBeLessThan(62);
-  expect(wide!.mark.h).toBeLessThan(32);
+  expect(wide!.headerHeight).toBeLessThan(72);
+  expect(wide!.mark.h).toBeGreaterThan(34);
+  expect(wide!.mark.h).toBeLessThan(40);
   expect(wide!.mark.x).toBeLessThan(wide!.h1.x);
-  expect(wide!.h1.right).toBeLessThanOrEqual(wide!.tag.x + 1);
+  expect(wide!.tag.x).toBeGreaterThan(wide!.h1.x + wide!.h1.w - 2);
+  expect(wide!.tag.y).toBeLessThan(wide!.h1.y + wide!.h1.h - 2);
   expect(Math.abs(wide!.h1.y - wide!.tag.y)).toBeLessThan(8);
   expect(wide!.mark.y).toBeGreaterThanOrEqual(wide!.headerTop - 1);
   expect(wide!.mark.bottom).toBeLessThanOrEqual(wide!.headerBottom + 1);
@@ -490,8 +512,8 @@ test("the masthead stays a compact row and leaves the other type alone", async (
   expect(wide!.tag.family).toBe(wide!.h1.family);
   expect(wide!.h1.weight).toBe("600");
   expect(wide!.tag.weight).toBe("400");
-  expect(wide!.search.size).toBe("16.24px");
-  expect(wide!.search.minHeight).toBe("42.05px");
+  expect(wide!.h1.size).toBe("18.56px");
+  expect(wide!.tag.size).toBe("14.21px");
   expect(wide!.pill.size).toBe("15.225px");
   expect(wide!.card.size).toBe("14.5px");
   expect(wide!.card.weight).toBe("600");
@@ -507,11 +529,14 @@ test("the masthead stays a compact row and leaves the other type alone", async (
     expect(narrow!.headerHeight).toBeLessThan(viewport.limit);
     expect(narrow!.overflow).toBeLessThanOrEqual(1);
     expect(narrow!.mark.x).toBeLessThan(narrow!.h1.x);
-    expect(narrow!.tag.x).toBeGreaterThanOrEqual(narrow!.h1.x - 1);
+    expect(narrow!.tag.x).toBeGreaterThan(narrow!.h1.x + narrow!.h1.w - 2);
+    expect(narrow!.tag.y).toBeLessThan(narrow!.h1.y + narrow!.h1.h - 2);
     expect(narrow!.tag.bottom).toBeLessThanOrEqual(narrow!.headerBottom + 1);
+    expect(narrow!.tag.right).toBeLessThanOrEqual(viewport.width + 1);
     expect(narrow!.h1.family).toBe(wide!.h1.family);
     expect(narrow!.tag.family).toBe(wide!.tag.family);
-    expect(narrow!.search.size).toBe(wide!.search.size);
+    expect(narrow!.h1.size).toBe(wide!.h1.size);
+    expect(narrow!.tag.size).toBe(wide!.tag.size);
     expect(narrow!.pill.size).toBe(wide!.pill.size);
     expect(narrow!.card.size).toBe(wide!.card.size);
   }
@@ -523,11 +548,15 @@ test("removed places stay off the list, and a stale address still opens the guid
   for (const id of ["asha-dining-hall", "durvankur-dining-hall", "vaidya-upahar-gruha", "bangalore-canteen", "pmc-heritage-walk"]) {
     await expect(page.locator(`#${id}`)).toHaveCount(0);
   }
-  for (const query of ["Asha Dining", "Durvankur", "Vaidya", "Bangalore Canteen", "Heritage Walk"]) {
-    await page.goto(`/?q=${encodeURIComponent(query)}`);
-    await expect(page.locator("#empty")).toBeVisible();
-    await expect(page.locator("article.card:visible")).toHaveCount(0);
-  }
+  await page.goto("/?q=Kayani");
+  await expect(page.locator("#q")).toHaveCount(0);
+  await expect(page.locator("article.card:visible")).toHaveCount(52);
+  await expect(page).not.toHaveURL(/[?&]q=/);
+  await page.goto("/?section=coffee&q=zzz-no-such-place");
+  await expect(page.locator("[data-section='coffee']")).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator("#kayani-bakery")).toBeHidden();
+  await expect(page.locator("article.card:visible").first()).toBeVisible();
+  await expect(page).not.toHaveURL(/[?&]q=/);
   await page.goto("/#asha-dining-hall");
   await expect(page.locator("#asha-dining-hall")).toHaveCount(0);
   await expect(page.locator("article.card")).toHaveCount(52);
