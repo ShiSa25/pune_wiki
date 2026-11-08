@@ -21,7 +21,8 @@ test("a pill click and Enter leave the popup open", async ({ page }) => {
   await page.locator('button[aria-label="Blue Nile"]').click();
   await expect(popup).toContainText("mutton biryani");
   await expect(popup).not.toContainText("city search");
-  await expect(popup.getByRole("link", { name: "Search Google Maps" })).toBeVisible();
+  await expect(popup.getByRole("link", { name: "Search Google Maps" })).toHaveCount(0);
+  await expect(popup.getByRole("link", { name: "Google Maps" })).toHaveCount(0);
   await expect(popup.getByRole("link", { name: "OpenStreetMap" })).toBeVisible();
 });
 
@@ -76,16 +77,18 @@ test("every card links outward, and search, reset, back, and a narrow screen hol
   await page.goto("/?section=nope");
   await expect(page.locator("[data-section='']")).toHaveAttribute("aria-pressed", "true");
   await page.goto("/");
-  await expect(page.locator("article.card .card-actions a")).toHaveCount(
-    await page.locator("article.card").count(),
-  );
-  const hrefs = await page.locator("article.card .card-actions a").evaluateAll((links) => links.map((link) => (link as HTMLAnchorElement).href));
-  expect(hrefs.every((href) => href.startsWith("https://"))).toBe(true);
-  await expect(page.locator("#blue-nile .card-actions a")).toHaveText("Search Google Maps");
+  await expect(page.locator("#blue-nile .card-actions a")).toHaveCount(0);
+  await expect(page.locator("#pmc-heritage-walk .card-actions a")).toHaveCount(0);
+  const mapsLinks = page.locator("article.card .card-actions a");
+  await expect(mapsLinks).toHaveCount((await page.locator("article.card").count()) - 2);
+  await expect(mapsLinks).toHaveText(Array(await mapsLinks.count()).fill("Google Maps"));
+  const hrefs = await mapsLinks.evaluateAll((links) => links.map((link) => (link as HTMLAnchorElement).href));
+  expect(hrefs.every((href) => href.startsWith("https://www.google.com/maps/place/"))).toBe(true);
+  expect(hrefs.some((href) => href.includes("/maps/search/"))).toBe(false);
   await expect(page.locator("details.notes")).toHaveCount(0);
-  await expect(page.locator("#blue-nile .card-actions .ext")).toHaveCount(1);
+  await expect(page.locator("#blue-nile .card-actions .ext")).toHaveCount(0);
   await page.locator("#blue-nile .card-hit").click();
-  await expect(page.locator(".maplibregl-popup a.outward .ext")).toHaveCount(1);
+  await expect(page.locator(".maplibregl-popup a.outward")).toHaveCount(0);
   await expect(page.locator(".maplibregl-popup").getByRole("link", { name: "OpenStreetMap" })).toHaveAttribute(
     "href",
     /openstreetmap\.org/,
@@ -282,7 +285,7 @@ test("the longest popup stays reachable on a phone and on the desktop map", asyn
     await expect(page.locator(".maplibregl-popup")).toContainText("Donaje");
     await expect.poll(() => insideMap(".maplibregl-popup-close-button")).toBe(true);
     const note = page.locator(".popup").getByText("village-route");
-    const maps = page.locator(".maplibregl-popup").getByRole("link", { name: "Search Google Maps" });
+    const maps = page.locator(".maplibregl-popup").getByRole("link", { name: "Google Maps" });
     const source = page.locator(".maplibregl-popup").getByRole("link", { name: "OpenStreetMap" });
     await note.scrollIntoViewIfNeeded();
     await maps.scrollIntoViewIfNeeded();
@@ -311,6 +314,39 @@ test("the longest popup stays reachable on a phone and on the desktop map", asyn
   await expect.poll(() => insideMap(".maplibregl-popup a[href*='openstreetmap.org']")).toBe(true);
   await expect.poll(() => insideMap(".maplibregl-popup-close-button")).toBe(true);
   expect(await creditInside()).toBe(true);
+});
+
+test("the maker line is a page footer outside the card list", async ({ page }) => {
+  async function footerSitsBelowTheList() {
+    return page.evaluate(() => {
+      const footer = document.querySelector("footer.colophon");
+      const list = document.querySelector(".list-pane");
+      const app = document.querySelector(".app");
+      if (!footer || !list || !app) return false;
+      if (list.contains(footer)) return false;
+      if ((app.compareDocumentPosition(footer) & Node.DOCUMENT_POSITION_FOLLOWING) === 0) return false;
+      const footerBox = footer.getBoundingClientRect();
+      const listBox = list.getBoundingClientRect();
+      const text = footer.textContent ?? "";
+      return text.includes("Made with love by Shivanshu Sahu") && footerBox.top >= listBox.bottom - 2 && footerBox.bottom <= window.innerHeight + 2;
+    });
+  }
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+  await expect.poll(footerSitsBelowTheList).toBe(true);
+  await page.locator("#q").fill("Kayani");
+  await expect(page.locator("article.card:visible")).toHaveCount(1);
+  await expect.poll(footerSitsBelowTheList).toBe(true);
+  await page.locator("#q").fill("zzz-no-such-place");
+  await expect(page.locator("#empty")).toBeVisible();
+  await expect.poll(footerSitsBelowTheList).toBe(true);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator("#reset").click();
+  await expect.poll(footerSitsBelowTheList).toBe(true);
+  await page.setViewportSize({ width: 320, height: 700 });
+  await page.locator("#q").fill("Kayani");
+  await expect.poll(footerSitsBelowTheList).toBe(true);
 });
 
 test("the map is the wider column and culled names keep a dot", async ({ page }) => {
