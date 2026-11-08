@@ -4,15 +4,19 @@ The page uses [MapLibre GL JS](https://maplibre.org/) (open source) with the pub
 
 `https://tiles.openfreemap.org/styles/positron`
 
-OpenFreeMap states that the public instance needs no account, no API key, and no usage cap, and that commercial use is allowed. The loaded tile source is `https://tiles.openfreemap.org/planet`. On 8 November 2026 its TileJSON `attribution` field was `OpenFreeMap © OpenMapTiles Data from OpenStreetMap`. MapLibre shows that string in the corner. There is no second credit under the map.
+OpenFreeMap states that the public instance needs no account, no API key, and no usage cap, and that commercial use is allowed. The loaded tile source is `https://tiles.openfreemap.org/planet`. On 8 November 2026 its TileJSON `attribution` field was exactly:
 
-Checked the same day, that line cannot be cut down to only “Data from OpenStreetMap”:
+`<a href="https://openfreemap.org" target="_blank">OpenFreeMap</a> <a href="https://www.openmaptiles.org/" target="_blank">© OpenMapTiles</a> Data from <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>`
 
-- [OpenStreetMap’s attribution guideline](https://osmfoundation.org/wiki/Licence/Attribution_Guidelines) requires a visible credit to OpenStreetMap, with the words linking to [openstreetmap.org/copyright](https://www.openstreetmap.org/copyright). “Data from OpenStreetMap” is the form already in the TileJSON, and it matches that guideline.
+MapLibre puts that one source string in the single corner control. The style file itself has no separate attribution, and the Natural Earth raster source has none, so nothing else is merged in.
+
+The corner cannot be only “Data from OpenStreetMap”:
+
+- [OpenStreetMap’s attribution guideline](https://osmfoundation.org/wiki/Licence/Attribution_Guidelines) requires a visible credit to OpenStreetMap, with the words linking to [openstreetmap.org/copyright](https://www.openstreetmap.org/copyright). “Data from OpenStreetMap” is the form already in the TileJSON.
 - [OpenMapTiles’ licence](https://github.com/openmaptiles/openmaptiles/blob/master/LICENSE.md) puts the schema’s design under CC BY 4.0 and says a browsable map derived from that schema must credit OpenMapTiles, with a link to openmaptiles.org, in the corner of the map. OpenFreeMap says the schema of these tiles is unmodified OpenMapTiles, so that credit stays.
-- [OpenFreeMap’s own page](https://openfreemap.org/) says attribution is required, gives the full line above for clients that do not add it automatically, and then says: “You do not need to display the OpenFreeMap part, but it is nice if you do.” The OpenFreeMap name is the optional piece. It stays on the map until that choice is made. The OpenMapTiles credit is not optional.
+- [OpenFreeMap’s own page](https://openfreemap.org/) says attribution is required, quotes the full line for clients that do not add it automatically, and then says: “You do not need to display the OpenFreeMap part, but it is nice if you do.”
 
-The links go to [openfreemap.org](https://openfreemap.org/), [OpenMapTiles](https://openmaptiles.org/), and the [OpenStreetMap copyright](https://www.openstreetmap.org/copyright) page.
+The page therefore drops only the OpenFreeMap name from that TileJSON string. The corner that remains is “© OpenMapTiles” linked to openmaptiles.org, then “Data from OpenStreetMap” linked to the copyright page. Tiles still come from the same OpenFreeMap host. There is still one attribution control.
 
 ## Why not the other familiar options
 

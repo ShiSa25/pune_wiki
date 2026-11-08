@@ -284,18 +284,36 @@ if (root) {
     return button;
   }
 
-  function secureAttributionLinks() {
-    const root = mapElement?.querySelector(".maplibregl-ctrl-attrib");
-    if (!root) return;
-    const apply = () => {
-      for (const anchor of root.querySelectorAll("a")) {
+  function keepRequiredCredits() {
+    const root = mapElement?.querySelector(".maplibregl-ctrl-attrib-inner");
+    if (root) {
+      for (const anchor of [...root.querySelectorAll("a")]) {
         const href = anchor.getAttribute("href") ?? "";
-        if (!href.startsWith("http")) continue;
-        markOutward(anchor);
+        let host = "";
+        try {
+          host = new URL(href, window.location.href).hostname;
+        } catch {
+          continue;
+        }
+        if (host === "openfreemap.org" && (anchor.textContent ?? "").replace(/\s+/g, " ").trim() === "OpenFreeMap") {
+          const previous = anchor.previousSibling;
+          anchor.remove();
+          if (previous?.nodeType === Node.TEXT_NODE && !(previous.textContent ?? "").trim()) previous.remove();
+          continue;
+        }
+        if (href.startsWith("http")) markOutward(anchor);
       }
-    };
-    apply();
-    new MutationObserver(apply).observe(root, { childList: true, subtree: true });
+      while (root.firstChild?.nodeType === Node.TEXT_NODE && !(root.firstChild.textContent ?? "").trim()) {
+        root.firstChild.remove();
+      }
+    }
+    const source = map?.getSource("openmaptiles") as { attribution?: string } | undefined;
+    if (source?.attribution?.includes("openfreemap.org")) {
+      source.attribution = source.attribution.replace(
+        /<a\b[^>]*href="https:\/\/openfreemap\.org"[^>]*>\s*OpenFreeMap\s*<\/a>\s*/i,
+        "",
+      );
+    }
   }
 
   function ensureMap() {
@@ -316,7 +334,12 @@ if (root) {
     }
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
     map.addControl(new maplibregl.AttributionControl({ compact: false }), "bottom-right");
-    secureAttributionLinks();
+    const credit = mapElement?.querySelector(".maplibregl-ctrl-attrib");
+    if (credit) new MutationObserver(keepRequiredCredits).observe(credit, { childList: true, subtree: true });
+    map.on("sourcedata", (event) => {
+      if (event.sourceId === "openmaptiles" && event.sourceDataType === "metadata") keepRequiredCredits();
+    });
+    keepRequiredCredits();
     map.on("error", () => {
       if (tileNote) tileNote.hidden = false;
     });

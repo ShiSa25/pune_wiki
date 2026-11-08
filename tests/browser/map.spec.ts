@@ -247,7 +247,12 @@ test("the map credit text stays inside the visible map", async ({ page }) => {
           rect.bottom > visible.bottom - 0.5,
       );
       return {
-        ok: text.includes("OpenStreetMap") && text.includes("OpenMapTiles") && text.includes("OpenFreeMap") && rects.length > 0 && outside.length === 0,
+        ok:
+          text.includes("Data from OpenStreetMap") &&
+          text.includes("OpenMapTiles") &&
+          !text.includes("OpenFreeMap") &&
+          rects.length > 0 &&
+          outside.length === 0,
         text,
         lines: rects.length,
         textBottom: rects.length ? Math.max(...rects.map((rect) => rect.bottom)) : 0,
@@ -274,11 +279,12 @@ test("the map credit text stays inside the visible map", async ({ page }) => {
     expect(credit.ok).toBe(true);
     expect(credit.text).toContain("Data from OpenStreetMap");
     expect(credit.text).toContain("OpenMapTiles");
-    const creditHrefs = await page.locator(".maplibregl-ctrl-attrib a").evaluateAll((links) =>
-      links.map((link) => (link as HTMLAnchorElement).href),
-    );
-    expect(creditHrefs.some((href) => href.includes("openstreetmap.org/copyright"))).toBe(true);
-    expect(creditHrefs.some((href) => href.includes("openmaptiles.org"))).toBe(true);
+    expect(credit.text).not.toContain("OpenFreeMap");
+    await expect(page.locator(".maplibregl-ctrl-attrib")).toHaveCount(1);
+    const creditLinks = page.locator(".maplibregl-ctrl-attrib a");
+    await expect(creditLinks).toHaveCount(2);
+    await expect(creditLinks.filter({ hasText: "OpenMapTiles" })).toHaveAttribute("href", /openmaptiles\.org/);
+    await expect(creditLinks.filter({ hasText: "OpenStreetMap" })).toHaveAttribute("href", /openstreetmap\.org\/copyright/);
     expect(credit.textBottom).toBeLessThanOrEqual(credit.visibleBottom + 0.5);
     expect(credit.mapBottom).toBeLessThanOrEqual(height + 0.5);
     expect(credit.mapHeight).toBeGreaterThan(120);
@@ -307,7 +313,7 @@ test("the longest popup stays reachable on a phone and on the desktop map", asyn
       const inner = document.querySelector(".maplibregl-ctrl-attrib-inner");
       if (!map || !inner) return false;
       const text = (inner.textContent ?? "").replace(/\s+/g, " ");
-      if (!text.includes("OpenStreetMap") || !text.includes("OpenMapTiles") || !text.includes("OpenFreeMap")) return false;
+      if (!text.includes("Data from OpenStreetMap") || !text.includes("OpenMapTiles") || text.includes("OpenFreeMap")) return false;
       const range = document.createRange();
       range.selectNodeContents(inner);
       const rects = [...range.getClientRects()].filter((rect) => rect.width > 0 && rect.height > 0);
