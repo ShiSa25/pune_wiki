@@ -5,30 +5,20 @@ import { EXTERNAL_ICON_PATH } from "../lib/outward";
 ---
 
 <Base
-  title="pune"
+  title="Pune"
   description="A local’s guide to falling in love with Pune"
 >
   <a class="skip" href="#content">Skip to content</a>
   <header class="top">
     <div class="brand">
-      <img class="mark" src="/favicon.svg" alt="" width="26" height="26" />
+      <img class="mark" src="/favicon.svg" alt="" width="38" height="38" />
       <div class="brand-text">
-        <h1>pune</h1>
+        <h1>Pune</h1>
         <p>A local’s guide to falling in love with Pune</p>
       </div>
     </div>
-    <form class="search" id="filters" role="search">
-      <label>
-        <span class="sr">Search</span>
-        <input id="q" type="search" name="q" autocomplete="off" placeholder="Search" />
-      </label>
-    </form>
   </header>
   <div class="nav-bar">
-    <div class="switch" role="group" aria-label="List or map">
-      <button type="button" data-view="list" aria-pressed="true">List</button>
-      <button type="button" data-view="map" aria-pressed="false">Map</button>
-    </div>
     <div class="pills" role="group" aria-label="Sections">
       <button type="button" class="pill" data-section="" aria-pressed="true">All ({places.length})</button>
       {
@@ -44,13 +34,8 @@ import { EXTERNAL_ICON_PATH } from "../lib/outward";
   </div>
   <div class="app" data-app>
     <div class="list-pane">
-      <div id="empty" class="empty" hidden>
-        <h2>No places match</h2>
-        <p>Nothing in this list matches that search. Clear it to see every place.</p>
-        <button type="button" id="reset">Reset</button>
-      </div>
       <noscript>
-        <p class="map-banner">Filters and the map need JavaScript. The full list is on this page.</p>
+        <p class="map-banner">The map needs JavaScript. The full list is on this page.</p>
       </noscript>
       <main id="content">
         {
@@ -97,7 +82,17 @@ import { EXTERNAL_ICON_PATH } from "../lib/outward";
       <div id="map" role="region" aria-label="Map of places with a verified pin"></div>
     </aside>
   </div>
-  <footer class="colophon">
+    <button type="button" class="view-fab" id="view-toggle" aria-pressed="false">
+      <span id="view-toggle-label">Show map</span>
+      <svg class="fab-map" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+        <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z" />
+        <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 5.764v15M9 3.236v15" />
+      </svg>
+      <svg class="fab-list" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+        <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 5h.01M3 12h.01M3 19h.01M8 5h13M8 12h13M8 19h13" />
+      </svg>
+    </button>
+    <footer class="colophon">
     <p>Made with love by Shivanshu Sahu</p>
   </footer>
   <script>
