@@ -76,7 +76,9 @@ test("every card links outward, and search, reset, back, and a narrow screen hol
   await page.goto("/?section=nope");
   await expect(page.locator("[data-section='']")).toHaveAttribute("aria-pressed", "true");
   await page.goto("/");
-  await expect(page.locator("article.card .card-actions a")).toHaveCount(50);
+  await expect(page.locator("article.card .card-actions a")).toHaveCount(
+    await page.locator("article.card").count(),
+  );
   const hrefs = await page.locator("article.card .card-actions a").evaluateAll((links) => links.map((link) => (link as HTMLAnchorElement).href));
   expect(hrefs.every((href) => href.startsWith("https://"))).toBe(true);
   await expect(page.locator("#blue-nile .card-actions a")).toHaveText("Search Google Maps");
@@ -108,21 +110,46 @@ test("every card links outward, and search, reset, back, and a narrow screen hol
 });
 
 test("map markers stay in step with the filtered cards", async ({ page }) => {
+  async function listedCount() {
+    const text = await page.locator("[data-section='']").innerText();
+    const match = text.match(/\((\d+)\)/);
+    return Number(match?.[1] ?? "0");
+  }
+
   async function matchingIds() {
-    const cards = await page.locator("article.card:not([hidden])").evaluateAll((els) => els.map((el) => el.id).sort());
-    const markers = await page
-      .locator(".pill-marker:not([hidden])")
-      .evaluateAll((els) => els.map((el) => el.getAttribute("data-place") ?? "").sort());
+    const { cards, markers } = await page.evaluate(() => {
+      const painted = (element: Element) => {
+        const style = getComputedStyle(element);
+        if (style.display === "none" || style.visibility === "hidden" || Number(style.opacity) === 0) return false;
+        const box = element.getBoundingClientRect();
+        return box.width > 0 && box.height > 0;
+      };
+      const cards = [...document.querySelectorAll("article.card")]
+        .filter((element) => !(element as HTMLElement).hidden)
+        .map((element) => element.id)
+        .sort();
+      const markers = [...document.querySelectorAll(".pill-marker")]
+        .filter(painted)
+        .map((element) => element.getAttribute("data-place") ?? "")
+        .sort();
+      return { cards, markers };
+    });
     expect(markers).toEqual(cards);
     return cards;
   }
 
   await page.goto("/");
-  await expect(page.locator(".pill-marker")).toHaveCount(50);
-  for (const section of ["og", "misal", "gourmet", "coffee", "sweet", "pints", "dates", "things", "coffee", ""]) {
+  const total = await listedCount();
+  await expect(page.locator(".pill-marker")).toHaveCount(total);
+  const sections = await page.locator(".pill[data-section]").evaluateAll((els) =>
+    els.map((element) => element.getAttribute("data-section") ?? ""),
+  );
+  for (const section of sections.filter((section) => section !== "")) {
     await page.locator(`[data-section="${section}"]`).click();
     await matchingIds();
   }
+  await page.locator("[data-section='']").click();
+  await matchingIds();
   await page.locator("#kayani-bakery .card-hit").click();
   await expect(page.locator(".maplibregl-popup")).toContainText("Kayani");
   await page.locator('[data-section="coffee"]').click();
@@ -131,11 +158,11 @@ test("map markers stay in step with the filtered cards", async ({ page }) => {
   await page.locator("#q").fill("Koregaon");
   const narrowed = await matchingIds();
   expect(narrowed.length).toBeGreaterThan(0);
-  expect(narrowed.length).toBeLessThan(50);
+  expect(narrowed.length).toBeLessThan(total);
   await page.locator("#q").fill("zzz-no-such-place");
   expect(await matchingIds()).toEqual([]);
   await page.locator("#reset").click();
-  expect(await matchingIds()).toHaveLength(50);
+  expect(await matchingIds()).toHaveLength(await listedCount());
   await page.locator('[data-section="sweet"]').click();
   await page.locator('[data-section="pints"]').click();
   await page.goBack();

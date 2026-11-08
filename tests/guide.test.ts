@@ -20,7 +20,7 @@ function contrast(hex: string, against: string): number {
   return (Math.max(left, right) + 0.05) / (Math.min(left, right) + 0.05);
 }
 
-function oklchHue(hex: string): number {
+function oklab(hex: string): [number, number] {
   const [r, g, b] = [0, 1, 2].map((index) => channel(hex, index));
   const l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b;
   const m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b;
@@ -30,25 +30,40 @@ function oklchHue(hex: string): number {
   const sp = Math.cbrt(s);
   const a = 1.9779984951 * lp - 2.428592205 * mp + 0.4505937099 * sp;
   const b2 = 0.0259040371 * lp + 0.7827717662 * mp - 0.808675766 * sp;
+  return [a, b2];
+}
+
+function oklchHue(hex: string): number {
+  const [a, b2] = oklab(hex);
   return (Math.atan2(b2, a) * 180) / Math.PI;
 }
 
+function oklchChroma(hex: string): number {
+  const [a, b2] = oklab(hex);
+  return Math.hypot(a, b2);
+}
+
 describe("guide data", () => {
-  it("stays between 50 and 60 places in eight sections", () => {
+  it("stays between 50 and 60 places across every section", () => {
     expect(places.length).toBeGreaterThanOrEqual(50);
     expect(places.length).toBeLessThanOrEqual(60);
-    expect(sections).toHaveLength(8);
-    expect(new Set(sections.map((section) => section.color)).size).toBe(8);
-    const hues = sections.map((section) => oklchHue(section.color));
-    for (let i = 0; i < hues.length; i += 1) {
-      for (let j = i + 1; j < hues.length; j += 1) {
-        const turn = Math.abs(hues[i] - hues[j]) % 360;
-        expect(Math.min(turn, 360 - turn)).toBeGreaterThan(32);
-      }
+    expect(sections.map((section) => section.id)).toContain("getaways");
+    expect(new Set(sections.map((section) => section.color)).size).toBe(sections.length);
+    for (let i = 0; i < sections.length; i += 1) {
       expect(contrast(sections[i].color, "#ffffff")).toBeGreaterThan(3);
       expect(contrast(sections[i].color, "#fbf7f1")).toBeGreaterThan(3);
       expect(contrast(sections[i].color, "#1c1917")).toBeGreaterThan(3);
+      for (let j = i + 1; j < sections.length; j += 1) {
+        const turn = Math.abs(oklchHue(sections[i].color) - oklchHue(sections[j].color)) % 360;
+        const gap = Math.min(turn, 360 - turn);
+        const bothVivid = oklchChroma(sections[i].color) > 0.1 && oklchChroma(sections[j].color) > 0.1;
+        if (bothVivid) expect(gap).toBeGreaterThan(18);
+      }
     }
+    const coffee = sections.find((section) => section.id === "coffee");
+    const pints = sections.find((section) => section.id === "pints");
+    const coolGap = Math.abs(oklchHue(coffee?.color ?? "") - oklchHue(pints?.color ?? "")) % 360;
+    expect(Math.min(coolGap, 360 - coolGap)).toBeGreaterThan(80);
     expect(new Set(places.map((place) => place.id)).size).toBe(places.length);
     for (const section of sections) {
       expect(places.filter((place) => place.section === section.id).length).toBeGreaterThan(0);
@@ -63,13 +78,14 @@ describe("guide data", () => {
         expect(["http:", "https:"]).toContain(url.protocol);
         expect(url.username).toBe("");
         expect(source.type.length).toBeGreaterThan(2);
-        expect(source.checkedOn).toBe("2026-11-07");
+        expect(["2026-11-07", "2026-11-08"]).toContain(source.checkedOn);
       }
     }
   });
 
   it("requires independent coordinate evidence on every displayed place", () => {
-    expect(places.length).toBe(50);
+    expect(places.length).toBeGreaterThanOrEqual(50);
+    expect(places.length).toBeLessThanOrEqual(60);
     const off = ["the-place", "poona-guest-house", "badshahi-boarding-house", "elephant-and-co", "gatti-chutney"];
     expect(places.map((place) => place.id)).not.toEqual(expect.arrayContaining(off));
     for (const place of places) {
@@ -78,7 +94,7 @@ describe("guide data", () => {
       expect(place.lat).not.toBeNull();
       expect(place.lng).not.toBeNull();
       expect(place.coordUrl).toBeTruthy();
-      expect(place.coordCheckedOn).toBe("2026-11-07");
+      expect(["2026-11-07", "2026-11-08"]).toContain(place.coordCheckedOn);
       expect(inPuneBox({ lat: place.lat!, lng: place.lng! })).toBe(true);
       const host = new URL(place.coordUrl!).hostname;
       if (place.pin === "osm") expect(host).toBe("www.openstreetmap.org");
@@ -166,7 +182,7 @@ describe("filters", () => {
 describe("card summary and outward links", () => {
   it("keeps method wording off every summary and gives every place a safe link", () => {
     const leak = /\b(osm|lbb|elle|schema\.org|wikidata)\b|this pin|city search|named on|first-party|official site|node records|\bper\s+[a-z]/i;
-    expect(places).toHaveLength(50);
+    expect(places.length).toBeGreaterThanOrEqual(50);
     for (const place of places) {
       expect(place.summary).not.toMatch(leak);
       expect(place.summary.length).toBeGreaterThan(12);

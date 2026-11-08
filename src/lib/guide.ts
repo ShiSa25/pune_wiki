@@ -88,7 +88,7 @@ export const placeSchema = z
 export const guideSchema = z
   .object({
     checkedOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-    sections: z.array(sectionSchema).length(8),
+    sections: z.array(sectionSchema).length(9),
     places: z.array(placeSchema).min(50).max(60),
   })
   .strict()

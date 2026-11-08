@@ -440,6 +440,14 @@ body[data-view="map"] .map-pane {
   padding: 3rem 1.25rem;
 }
 
+#map .maplibregl-ctrl-attrib {
+  margin: 0 0.7rem 0.55rem 0;
+  max-width: calc(100% - 3rem);
+  background: rgb(251 247 241 / 96%);
+  border-radius: 0.3rem;
+  line-height: 1.35;
+}
+
 .maplibregl-ctrl-attrib,
 .maplibregl-ctrl-attrib a {
   font-size: 0.68rem;
@@ -475,7 +483,7 @@ body[data-view="map"] .map-pane {
   }
 
   #map {
-    height: calc(100vh - 10.6rem);
+    height: calc(100vh - 13.2rem);
   }
 
   .search {
