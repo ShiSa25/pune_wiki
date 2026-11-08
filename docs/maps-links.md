@@ -73,6 +73,16 @@ There is no named listing to attach. The card links to a coordinate pin for the 
 
 The label on the card and the popup stays “Google Maps”. The `!8m2` pair is the same OpenStreetMap coordinate, written so the destination is that point rather than a camera over a search.
 
+## Removed from the active list, 8 November 2026
+
+These five cards are gone from the guide, the map, and search. The notes above stay as the record of how they were checked.
+
+- Vaidya Upahar Gruha
+- Bangalore Canteen
+- Asha Dining Hall
+- Durvankur Dining Hall
+- PMC Heritage Walk
+
 ## Nightlife, 8 November 2026
 
 Five new cards. Each outward link is the place page opened that day. The research note is `docs/nightlife.md`. The pin coordinates below are the OpenStreetMap ones, not the point encoded in the Maps URL.

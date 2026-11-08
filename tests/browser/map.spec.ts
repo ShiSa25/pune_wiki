@@ -78,10 +78,9 @@ test("every card links outward, and search, reset, back, and a narrow screen hol
   await expect(page.locator("[data-section='']")).toHaveAttribute("aria-pressed", "true");
   await page.goto("/");
   await expect(page.locator("#blue-nile .card-actions a")).toHaveAttribute("href", /1s0x3bc2c05074135b17:0xa422fee8ff1347dd/);
-  await expect(page.locator("#pmc-heritage-walk .card-actions a")).toHaveAttribute(
-    "href",
-    "https://www.google.com/maps/place/18.5200699,73.8553009/@18.5200699,73.8553009,17z/data=!4m4!3m3!8m2!3d18.5200699!4d73.8553009",
-  );
+  for (const id of ["asha-dining-hall", "durvankur-dining-hall", "vaidya-upahar-gruha", "bangalore-canteen", "pmc-heritage-walk"]) {
+    await expect(page.locator(`#${id}`)).toHaveCount(0);
+  }
   const mapsLinks = page.locator("article.card .card-actions a");
   await expect(mapsLinks).toHaveCount(await page.locator("article.card").count());
   await expect(mapsLinks).toHaveText(Array(await mapsLinks.count()).fill("Google Maps"));
@@ -248,7 +247,12 @@ test("the map credit text stays inside the visible map", async ({ page }) => {
           rect.bottom > visible.bottom - 0.5,
       );
       return {
-        ok: text.includes("OpenStreetMap") && text.includes("OpenFreeMap") && rects.length > 0 && outside.length === 0,
+        ok:
+          text.includes("Data from OpenStreetMap") &&
+          text.includes("OpenMapTiles") &&
+          !text.includes("OpenFreeMap") &&
+          rects.length > 0 &&
+          outside.length === 0,
         text,
         lines: rects.length,
         textBottom: rects.length ? Math.max(...rects.map((rect) => rect.bottom)) : 0,
@@ -274,6 +278,13 @@ test("the map credit text stays inside the visible map", async ({ page }) => {
     const credit = await creditBox();
     expect(credit.ok).toBe(true);
     expect(credit.text).toContain("Data from OpenStreetMap");
+    expect(credit.text).toContain("OpenMapTiles");
+    expect(credit.text).not.toContain("OpenFreeMap");
+    await expect(page.locator(".maplibregl-ctrl-attrib")).toHaveCount(1);
+    const creditLinks = page.locator(".maplibregl-ctrl-attrib a");
+    await expect(creditLinks).toHaveCount(2);
+    await expect(creditLinks.filter({ hasText: "OpenMapTiles" })).toHaveAttribute("href", /openmaptiles\.org/);
+    await expect(creditLinks.filter({ hasText: "OpenStreetMap" })).toHaveAttribute("href", /openstreetmap\.org\/copyright/);
     expect(credit.textBottom).toBeLessThanOrEqual(credit.visibleBottom + 0.5);
     expect(credit.mapBottom).toBeLessThanOrEqual(height + 0.5);
     expect(credit.mapHeight).toBeGreaterThan(120);
@@ -302,7 +313,7 @@ test("the longest popup stays reachable on a phone and on the desktop map", asyn
       const inner = document.querySelector(".maplibregl-ctrl-attrib-inner");
       if (!map || !inner) return false;
       const text = (inner.textContent ?? "").replace(/\s+/g, " ");
-      if (!text.includes("OpenStreetMap") || !text.includes("OpenFreeMap")) return false;
+      if (!text.includes("Data from OpenStreetMap") || !text.includes("OpenMapTiles") || text.includes("OpenFreeMap")) return false;
       const range = document.createRange();
       range.selectNodeContents(inner);
       const rects = [...range.getClientRects()].filter((rect) => rect.width > 0 && rect.height > 0);
@@ -372,9 +383,29 @@ test("the maker line is a page footer outside the card list", async ({ page }) =
     });
   }
 
+  async function footerMeasure() {
+    return page.locator("footer.colophon").evaluate((footer) => {
+      const box = footer.getBoundingClientRect();
+      const style = getComputedStyle(footer);
+      const paragraph = footer.querySelector("p");
+      return {
+        height: box.height,
+        fontSize: style.fontSize,
+        family: style.fontFamily,
+        text: paragraph?.textContent ?? "",
+      };
+    });
+  }
+
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");
   await expect.poll(footerSitsBelowTheList).toBe(true);
+  const footer = await footerMeasure();
+  expect(footer.text).toBe("Made with love by Shivanshu Sahu");
+  expect(footer.family).toContain("Inter");
+  expect(footer.fontSize).toBe("13.34px");
+  expect(footer.height).toBeGreaterThan(18);
+  expect(footer.height).toBeLessThan(36);
   await page.locator("#q").fill("Kayani");
   await expect(page.locator("article.card:visible")).toHaveCount(1);
   await expect.poll(footerSitsBelowTheList).toBe(true);
@@ -387,6 +418,9 @@ test("the maker line is a page footer outside the card list", async ({ page }) =
   await page.setViewportSize({ width: 320, height: 700 });
   await page.locator("#q").fill("Kayani");
   await expect.poll(footerSitsBelowTheList).toBe(true);
+  await page.getByRole("button", { name: "Map", exact: true }).click();
+  await expect(page.locator("footer.colophon")).toBeHidden();
+  await expect(page.locator(".maplibregl-ctrl-attrib-inner")).toContainText("Data from OpenStreetMap");
 });
 
 test("the map is the wider column and culled names keep a dot", async ({ page }) => {
@@ -404,4 +438,140 @@ test("the map is the wider column and culled names keep a dot", async ({ page })
   const dot = await culled.first().locator(".dot").boundingBox();
   expect(dot && dot.width).toBeLessThan(16);
   expect(dot && dot.height).toBeGreaterThan(4);
+});
+
+test("the masthead stays a compact row and leaves the other type alone", async ({ page }) => {
+  const tagline = "A local’s guide to falling in love with Pune";
+
+  async function measure() {
+    return page.evaluate(() => {
+      const header = document.querySelector("header.top")?.getBoundingClientRect();
+      const mark = document.querySelector(".mark")?.getBoundingClientRect();
+      const h1 = document.querySelector(".brand h1");
+      const tag = document.querySelector(".brand p");
+      const search = document.querySelector(".search input");
+      const pill = document.querySelector(".pill");
+      const card = document.querySelector(".card-name");
+      if (!header || !mark || !h1 || !tag || !search || !pill || !card) return null;
+      const h1Box = h1.getBoundingClientRect();
+      const tagBox = tag.getBoundingClientRect();
+      const style = (element: Element) => getComputedStyle(element);
+      return {
+        headerHeight: header.height,
+        headerTop: header.top,
+        headerBottom: header.bottom,
+        overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        mark: { x: mark.x, y: mark.y, w: mark.width, h: mark.height, right: mark.right, bottom: mark.bottom },
+        h1: { x: h1Box.x, y: h1Box.y, w: h1Box.width, h: h1Box.height, right: h1Box.right, text: h1.textContent, family: style(h1).fontFamily, size: style(h1).fontSize, weight: style(h1).fontWeight },
+        tag: { x: tagBox.x, y: tagBox.y, w: tagBox.width, h: tagBox.height, right: tagBox.right, bottom: tagBox.bottom, text: tag.textContent, family: style(tag).fontFamily, size: style(tag).fontSize, weight: style(tag).fontWeight },
+        search: { size: style(search).fontSize, minHeight: style(search).minHeight, family: style(search).fontFamily },
+        pill: { size: style(pill).fontSize, family: style(pill).fontFamily },
+        card: { size: style(card).fontSize, family: style(card).fontFamily, weight: style(card).fontWeight },
+      };
+    });
+  }
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+  const wide = await measure();
+  expect(wide).not.toBeNull();
+  expect(wide!.headerHeight).toBeLessThan(62);
+  expect(wide!.mark.h).toBeLessThan(32);
+  expect(wide!.mark.x).toBeLessThan(wide!.h1.x);
+  expect(wide!.h1.right).toBeLessThanOrEqual(wide!.tag.x + 1);
+  expect(Math.abs(wide!.h1.y - wide!.tag.y)).toBeLessThan(8);
+  expect(wide!.mark.y).toBeGreaterThanOrEqual(wide!.headerTop - 1);
+  expect(wide!.mark.bottom).toBeLessThanOrEqual(wide!.headerBottom + 1);
+  expect(wide!.tag.right).toBeLessThanOrEqual(1440);
+  expect(wide!.overflow).toBeLessThanOrEqual(1);
+  expect(wide!.h1.text).toBe("pune");
+  expect(wide!.tag.text).toBe(tagline);
+  expect(wide!.h1.family).toBe('Inter, "Segoe UI", sans-serif');
+  expect(wide!.tag.family).toBe(wide!.h1.family);
+  expect(wide!.h1.weight).toBe("600");
+  expect(wide!.tag.weight).toBe("400");
+  expect(wide!.search.size).toBe("16.24px");
+  expect(wide!.search.minHeight).toBe("42.05px");
+  expect(wide!.pill.size).toBe("15.225px");
+  expect(wide!.card.size).toBe("14.5px");
+  expect(wide!.card.weight).toBe("600");
+
+  for (const viewport of [
+    { width: 390, height: 844, limit: 110 },
+    { width: 320, height: 700, limit: 125 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+    const narrow = await measure();
+    expect(narrow).not.toBeNull();
+    expect(narrow!.headerHeight).toBeLessThan(viewport.limit);
+    expect(narrow!.overflow).toBeLessThanOrEqual(1);
+    expect(narrow!.mark.x).toBeLessThan(narrow!.h1.x);
+    expect(narrow!.tag.x).toBeGreaterThanOrEqual(narrow!.h1.x - 1);
+    expect(narrow!.tag.bottom).toBeLessThanOrEqual(narrow!.headerBottom + 1);
+    expect(narrow!.h1.family).toBe(wide!.h1.family);
+    expect(narrow!.tag.family).toBe(wide!.tag.family);
+    expect(narrow!.search.size).toBe(wide!.search.size);
+    expect(narrow!.pill.size).toBe(wide!.pill.size);
+    expect(narrow!.card.size).toBe(wide!.card.size);
+  }
+});
+
+test("removed places stay off the list, and a stale address still opens the guide", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator("article.card")).toHaveCount(52);
+  for (const id of ["asha-dining-hall", "durvankur-dining-hall", "vaidya-upahar-gruha", "bangalore-canteen", "pmc-heritage-walk"]) {
+    await expect(page.locator(`#${id}`)).toHaveCount(0);
+  }
+  for (const query of ["Asha Dining", "Durvankur", "Vaidya", "Bangalore Canteen", "Heritage Walk"]) {
+    await page.goto(`/?q=${encodeURIComponent(query)}`);
+    await expect(page.locator("#empty")).toBeVisible();
+    await expect(page.locator("article.card:visible")).toHaveCount(0);
+  }
+  await page.goto("/#asha-dining-hall");
+  await expect(page.locator("#asha-dining-hall")).toHaveCount(0);
+  await expect(page.locator("article.card")).toHaveCount(52);
+  await expect(page.locator("h1")).toHaveText("pune");
+  await expect(page.locator(".brand p")).toHaveText("A local’s guide to falling in love with Pune");
+});
+
+test("a maps link and a source link open a new tab and leave the guide open", async ({ page }) => {
+  await page.goto("/");
+  const maps = page.locator("#kayani-bakery .card-actions a");
+  await expect(maps).toHaveAttribute("target", "_blank");
+  await expect(maps).toHaveAttribute("rel", "noopener noreferrer");
+  const [cardPage] = await Promise.all([page.waitForEvent("popup"), maps.click()]);
+  await expect(cardPage).toHaveURL(/google\.com\/maps\/place\//);
+  await expect(page.locator("h1")).toHaveText("pune");
+  await expect(page.locator("#kayani-bakery")).toBeVisible();
+  await cardPage.close();
+
+  let sectionOpened = false;
+  page.on("popup", () => {
+    sectionOpened = true;
+  });
+  await page.locator("[data-section='coffee']").click();
+  expect(sectionOpened).toBe(false);
+
+  await page.locator("[data-section='']").click();
+  await page.locator("#kayani-bakery .card-hit").click();
+  const source = page.locator(".maplibregl-popup").getByRole("link", { name: "OpenStreetMap" });
+  await expect(source).toHaveAttribute("target", "_blank");
+  await expect(source).toHaveAttribute("rel", "noopener noreferrer");
+  const [sourcePage] = await Promise.all([page.waitForEvent("popup"), source.click()]);
+  await expect(sourcePage).toHaveURL(/openstreetmap\.org/);
+  await expect(page.locator(".maplibregl-popup")).toBeVisible();
+  await sourcePage.close();
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await page.locator("#kayani-bakery .card-hit").click();
+  await page.getByRole("button", { name: "Map", exact: true }).click();
+  const mobileMaps = page.locator(".maplibregl-popup").getByRole("link", { name: "Google Maps" });
+  await expect(mobileMaps).toHaveAttribute("target", "_blank");
+  const [mobilePage] = await Promise.all([page.waitForEvent("popup"), mobileMaps.click()]);
+  await expect(mobilePage).toHaveURL(/google\.com\/maps\/place\//);
+  await expect(page.locator("#map")).toBeVisible();
+  await expect(page.locator(".maplibregl-popup")).toContainText("Kayani");
+  await mobilePage.close();
 });

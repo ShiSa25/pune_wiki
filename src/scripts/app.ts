@@ -4,7 +4,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { cameraForSelection, filterPlaces, filterStateFromParams, paramsFromFilter, type FilterState } from "../lib/browse";
 import { MAP_STYLE, places, type Place } from "../lib/guide";
 import { visibleLabelIds, type LabelBox } from "../lib/labels";
-import { evidenceLink, EXTERNAL_ICON_PATH } from "../lib/outward";
+import { evidenceLink, EXTERNAL_ICON_PATH, markOutward } from "../lib/outward";
 
 maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
@@ -243,7 +243,7 @@ if (root) {
       const go = document.createElement("a");
       go.className = "outward";
       go.href = place.mapsUrl;
-      go.rel = "noreferrer";
+      markOutward(go);
       go.append(document.createTextNode("Google Maps"), externalIcon());
       wrap.append(go);
     }
@@ -251,7 +251,7 @@ if (root) {
       const evidence = evidenceLink(place.coordUrl);
       const source = document.createElement("a");
       source.href = evidence.href;
-      source.rel = "noreferrer";
+      markOutward(source);
       source.textContent = evidence.label;
       wrap.append(source);
     }
@@ -284,6 +284,38 @@ if (root) {
     return button;
   }
 
+  function keepRequiredCredits() {
+    const root = mapElement?.querySelector(".maplibregl-ctrl-attrib-inner");
+    if (root) {
+      for (const anchor of [...root.querySelectorAll("a")]) {
+        const href = anchor.getAttribute("href") ?? "";
+        let host = "";
+        try {
+          host = new URL(href, window.location.href).hostname;
+        } catch {
+          continue;
+        }
+        if (host === "openfreemap.org" && (anchor.textContent ?? "").replace(/\s+/g, " ").trim() === "OpenFreeMap") {
+          const previous = anchor.previousSibling;
+          anchor.remove();
+          if (previous?.nodeType === Node.TEXT_NODE && !(previous.textContent ?? "").trim()) previous.remove();
+          continue;
+        }
+        if (href.startsWith("http")) markOutward(anchor);
+      }
+      while (root.firstChild?.nodeType === Node.TEXT_NODE && !(root.firstChild.textContent ?? "").trim()) {
+        root.firstChild.remove();
+      }
+    }
+    const source = map?.getSource("openmaptiles") as { attribution?: string } | undefined;
+    if (source?.attribution?.includes("openfreemap.org")) {
+      source.attribution = source.attribution.replace(
+        /<a\b[^>]*href="https:\/\/openfreemap\.org"[^>]*>\s*OpenFreeMap\s*<\/a>\s*/i,
+        "",
+      );
+    }
+  }
+
   function ensureMap() {
     if (map || mapFailed || !mapElement || mapElement.clientWidth === 0) return;
     try {
@@ -302,6 +334,12 @@ if (root) {
     }
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
     map.addControl(new maplibregl.AttributionControl({ compact: false }), "bottom-right");
+    const credit = mapElement?.querySelector(".maplibregl-ctrl-attrib");
+    if (credit) new MutationObserver(keepRequiredCredits).observe(credit, { childList: true, subtree: true });
+    map.on("sourcedata", (event) => {
+      if (event.sourceId === "openmaptiles" && event.sourceDataType === "metadata") keepRequiredCredits();
+    });
+    keepRequiredCredits();
     map.on("error", () => {
       if (tileNote) tileNote.hidden = false;
     });
