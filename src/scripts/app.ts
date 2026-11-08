@@ -115,10 +115,46 @@ if (root) {
     else history.replaceState(state, "", path);
   }
 
+  function releasePopupLayout() {
+    document.body.classList.remove("popup-open");
+    mapElement?.style.removeProperty("min-height");
+  }
+
+  function containPopup() {
+    const shell = popup?.getElement();
+    const body = shell?.querySelector<HTMLElement>(".popup");
+    if (!shell || !body || !mapElement) return;
+    const narrow = window.innerWidth < 960;
+    shell.classList.toggle("is-contained", narrow);
+    document.body.classList.toggle("popup-open", narrow);
+    if (!narrow) {
+      body.style.maxHeight = "";
+      mapElement.style.removeProperty("min-height");
+      return;
+    }
+    body.style.maxHeight = "none";
+    const zoom = mapElement.querySelector(".maplibregl-ctrl-top-right");
+    const zoomH = zoom instanceof HTMLElement ? Math.ceil(zoom.getBoundingClientRect().height) : 68;
+    const attribH = 64;
+    const needed = Math.ceil(shell.offsetHeight + zoomH + attribH + 16);
+    const nextMin = `${needed}px`;
+    if (mapElement.style.minHeight !== nextMin) {
+      mapElement.style.minHeight = nextMin;
+      map?.resize();
+    }
+    const attrib = mapElement.querySelector(".maplibregl-ctrl-attrib");
+    const attribNow = attrib instanceof HTMLElement ? Math.ceil(attrib.getBoundingClientRect().height) + 28 : attribH;
+    shell.style.bottom = `${attribNow}px`;
+    mapElement.scrollIntoView({ block: "end" });
+  }
+
   function closePopup() {
-    popup?.remove();
+    const current = popup;
     popup = null;
     popupId = "";
+    current?.remove();
+    releasePopupLayout();
+    map?.resize();
   }
 
   function showMapFailure(message: string) {
@@ -138,14 +174,21 @@ if (root) {
       .setLngLat([camera.lng, camera.lat])
       .setDOMContent(popupNode(place))
       .addTo(map);
+    popup.on("close", () => {
+      popup = null;
+      popupId = "";
+      releasePopupLayout();
+      map?.resize();
+    });
+    containPopup();
   }
 
   function focusSelection() {
     const place = places.find((item) => item.id === selected);
     const camera = cameraForSelection(place);
     if (!map || !place || !camera) return;
-    map.easeTo({ center: [camera.lng, camera.lat], zoom: Math.max(map.getZoom(), 14) });
     openPopup(place);
+    map.easeTo({ center: [camera.lng, camera.lat], zoom: Math.max(map.getZoom(), 14) });
     layoutLabels();
   }
 
@@ -262,6 +305,7 @@ if (root) {
       if (tileNote) tileNote.hidden = false;
     });
     map.on("moveend", () => layoutLabels());
+    map.on("resize", () => containPopup());
     map.on("load", () => layoutLabels());
     for (const place of places) {
       if (!place.pin || place.lat === null || place.lng === null) continue;
@@ -311,7 +355,10 @@ if (root) {
     button.addEventListener("click", () => setView(button.dataset.view === "map" ? "map" : "list"));
   }
   window.addEventListener("popstate", () => apply(filterStateFromParams(new URLSearchParams(location.search)), "replace"));
-  window.addEventListener("resize", () => layoutLabels());
+  window.addEventListener("resize", () => {
+    layoutLabels();
+    containPopup();
+  });
 
   apply(filterStateFromParams(new URLSearchParams(location.search)), "replace");
   setView("list");

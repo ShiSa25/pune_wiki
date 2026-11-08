@@ -237,6 +237,82 @@ test("the map credit text stays inside the visible map", async ({ page }) => {
   }
 });
 
+test("the longest popup stays reachable on a phone and on the desktop map", async ({ page }) => {
+  async function insideMap(selector: string) {
+    return page.evaluate((target) => {
+      const map = document.querySelector("#map")?.getBoundingClientRect();
+      const node = document.querySelector(target);
+      if (!map || !node) return false;
+      const rect = node.getBoundingClientRect();
+      const credit = document.querySelector(".maplibregl-ctrl-attrib")?.getBoundingClientRect();
+      const top = Math.max(map.top, 0);
+      const left = Math.max(map.left, 0);
+      const right = Math.min(map.right, window.innerWidth);
+      const bottom = Math.min(map.bottom, window.innerHeight, credit ? credit.top : window.innerHeight);
+      return rect.width > 0 && rect.height > 0 && rect.top >= top - 1 && rect.bottom <= bottom + 1 && rect.left >= left - 1 && rect.right <= right + 1;
+    }, selector);
+  }
+
+  async function creditInside() {
+    return page.evaluate(() => {
+      const map = document.querySelector("#map")?.getBoundingClientRect();
+      const inner = document.querySelector(".maplibregl-ctrl-attrib-inner");
+      if (!map || !inner) return false;
+      const text = (inner.textContent ?? "").replace(/\s+/g, " ");
+      if (!text.includes("OpenStreetMap") || !text.includes("OpenFreeMap")) return false;
+      const range = document.createRange();
+      range.selectNodeContents(inner);
+      const rects = [...range.getClientRects()].filter((rect) => rect.width > 0 && rect.height > 0);
+      const top = Math.max(map.top, 0);
+      const left = Math.max(map.left, 0);
+      const right = Math.min(map.right, window.innerWidth);
+      const bottom = Math.min(map.bottom, window.innerHeight);
+      return rects.length > 0 && rects.every((rect) => rect.top >= top - 0.5 && rect.bottom <= bottom + 0.5 && rect.left >= left - 0.5 && rect.right <= right + 0.5);
+    });
+  }
+
+  for (const viewport of [
+    { width: 320, height: 700 },
+    { width: 390, height: 844 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/?section=getaways");
+    await page.locator("#sinhagad-fort .card-hit").click();
+    await page.getByRole("button", { name: "Map", exact: true }).click();
+    await expect(page.locator(".maplibregl-popup")).toContainText("Donaje");
+    await expect.poll(() => insideMap(".maplibregl-popup-close-button")).toBe(true);
+    const note = page.locator(".popup").getByText("village-route");
+    const maps = page.locator(".maplibregl-popup").getByRole("link", { name: "Search Google Maps" });
+    const source = page.locator(".maplibregl-popup").getByRole("link", { name: "OpenStreetMap" });
+    await note.scrollIntoViewIfNeeded();
+    await maps.scrollIntoViewIfNeeded();
+    await source.scrollIntoViewIfNeeded();
+    await expect.poll(() => insideMap(".maplibregl-popup a[href*='openstreetmap.org']")).toBe(true);
+    await expect.poll(() => insideMap(".maplibregl-popup a.outward")).toBe(true);
+    expect(await creditInside()).toBe(true);
+    await page.locator(".maplibregl-popup-close-button").click();
+    await expect(page.locator(".maplibregl-popup")).toHaveCount(0);
+    await page.locator("[data-section='']").click();
+    await expect.poll(creditInside).toBe(true);
+    const sections = await page.locator(".pill[data-section]").evaluateAll((els) =>
+      els.map((element) => element.getAttribute("data-section") ?? "").filter(Boolean),
+    );
+    for (const section of sections) {
+      await page.locator(`[data-section="${section}"]`).click();
+      await expect.poll(creditInside).toBe(true);
+    }
+  }
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/?section=getaways");
+  await page.locator("#sinhagad-fort .card-hit").click();
+  await expect(page.locator(".maplibregl-popup")).toContainText("Donaje");
+  await expect(page.locator(".maplibregl-popup.is-contained")).toHaveCount(0);
+  await expect.poll(() => insideMap(".maplibregl-popup a[href*='openstreetmap.org']")).toBe(true);
+  await expect.poll(() => insideMap(".maplibregl-popup-close-button")).toBe(true);
+  expect(await creditInside()).toBe(true);
+});
+
 test("the map is the wider column and culled names keep a dot", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator(".maplibregl-canvas")).toBeVisible();

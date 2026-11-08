@@ -513,6 +513,29 @@ body[data-view="map"] .map-pane {
     height: auto;
     min-height: 0;
   }
+
+  body[data-view="map"].popup-open {
+    height: auto;
+    max-height: none;
+    overflow: auto;
+  }
+
+  .maplibregl-popup.is-contained {
+    transform: none !important;
+    top: auto;
+    left: 0.4rem;
+    right: 0.4rem;
+    max-width: none !important;
+  }
+
+  .maplibregl-popup.is-contained .maplibregl-popup-tip {
+    display: none;
+  }
+
+  .maplibregl-popup.is-contained .popup {
+    overflow-y: auto;
+    padding-bottom: 0.35rem;
+  }
 }
 
 @media (max-width: 420px) {
