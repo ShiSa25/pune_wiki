@@ -17,7 +17,8 @@ if (root) {
   const count = document.querySelector<HTMLElement>("#count");
   const mapNote = document.querySelector<HTMLElement>("#map-note");
   const tileNote = document.querySelector<HTMLElement>("#tile-note");
-  const viewButtons = [...document.querySelectorAll<HTMLButtonElement>("[data-view]")];
+  const viewToggle = document.querySelector<HTMLButtonElement>("#view-toggle");
+  const viewLabel = document.querySelector<HTMLElement>("#view-toggle-label");
   const mapElement = document.querySelector<HTMLElement>("#map");
 
   let state: FilterState = { section: "", query: "" };
@@ -149,7 +150,9 @@ if (root) {
     const zoom = mapElement.querySelector(".maplibregl-ctrl-top-right");
     const zoomH = zoom instanceof HTMLElement ? Math.ceil(zoom.getBoundingClientRect().height) : 68;
     const attribH = 64;
-    const needed = Math.ceil(shell.offsetHeight + zoomH + attribH + 16);
+    const fabForHeight = document.querySelector<HTMLElement>(".view-fab");
+    const fabExtra = fabForHeight && getComputedStyle(fabForHeight).display !== "none" ? Math.ceil(fabForHeight.getBoundingClientRect().height) + 18 : 0;
+    const needed = Math.ceil(shell.offsetHeight + zoomH + attribH + fabExtra + 16);
     const nextMin = `${needed}px`;
     if (mapElement.style.minHeight !== nextMin) {
       mapElement.style.minHeight = nextMin;
@@ -157,7 +160,9 @@ if (root) {
     }
     const attrib = mapElement.querySelector(".maplibregl-ctrl-attrib");
     const attribNow = attrib instanceof HTMLElement ? Math.ceil(attrib.getBoundingClientRect().height) + 28 : attribH;
-    shell.style.bottom = `${attribNow}px`;
+    const fab = document.querySelector<HTMLElement>(".view-fab");
+    const fabSpace = fab && getComputedStyle(fab).display !== "none" ? Math.ceil(fab.getBoundingClientRect().height) + 18 : 0;
+    shell.style.bottom = `${attribNow + fabSpace}px`;
     mapElement.scrollIntoView({ block: "end" });
   }
 
@@ -375,8 +380,12 @@ if (root) {
 
   function setView(view: "list" | "map") {
     document.body.dataset.view = view;
-    for (const button of viewButtons) {
-      button.setAttribute("aria-pressed", button.dataset.view === view ? "true" : "false");
+    if (viewToggle && viewLabel) {
+      const onMap = view === "map";
+      const label = onMap ? "Show list" : "Show map";
+      viewLabel.textContent = label;
+      viewToggle.setAttribute("aria-label", label);
+      viewToggle.setAttribute("aria-pressed", onMap ? "true" : "false");
     }
     if (view === "map") {
       requestAnimationFrame(() => {
@@ -399,9 +408,10 @@ if (root) {
   for (const card of cards) {
     card.querySelector(".card-hit")?.addEventListener("click", () => selectPlace(card.dataset.place ?? "", false));
   }
-  for (const button of viewButtons) {
-    button.addEventListener("click", () => setView(button.dataset.view === "map" ? "map" : "list"));
-  }
+  viewToggle?.addEventListener("click", () => {
+    setView(document.body.dataset.view === "map" ? "list" : "map");
+    viewToggle.focus();
+  });
   window.addEventListener("popstate", () => apply(filterStateFromParams(new URLSearchParams(location.search)), "replace"));
   window.addEventListener("resize", () => {
     layoutLabels();

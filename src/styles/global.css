@@ -118,10 +118,10 @@ a {
 .brand h1 {
   margin: 0;
   flex: none;
-  font-size: 1.28rem;
+  font-size: 2.5rem;
   font-weight: 600;
   letter-spacing: -0.03em;
-  line-height: 1.15;
+  line-height: 1;
 }
 
 .brand p {
@@ -141,14 +141,6 @@ a {
   border-bottom: 1px solid var(--line);
 }
 
-.switch {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.35rem;
-  margin-bottom: 0.45rem;
-}
-
-.switch button,
 .pill,
 #reset {
   border: 1px solid var(--line);
@@ -157,13 +149,6 @@ a {
   min-height: 2.75rem;
 }
 
-.switch button {
-  font-size: 1.08rem;
-  font-weight: 600;
-  min-height: 3rem;
-}
-
-.switch button[aria-pressed="true"],
 .pill[aria-pressed="true"] {
   background: #1c1917;
   color: white;
@@ -476,11 +461,15 @@ body[data-view="map"] .map-pane {
   font-size: 0.68rem;
 }
 
-@media (min-width: 960px) {
-  .switch {
-    display: none;
-  }
+.view-fab {
+  display: none;
+}
 
+.view-fab .fab-list {
+  display: none;
+}
+
+@media (min-width: 960px) {
   body {
     height: 100svh;
     overflow: hidden;
@@ -525,6 +514,48 @@ body[data-view="map"] .map-pane {
 }
 
 @media (max-width: 959px) {
+  .view-fab {
+    display: inline-flex;
+    position: fixed;
+    left: 50%;
+    z-index: 30;
+    transform: translateX(-50%);
+    align-items: center;
+    gap: 0.45rem;
+    bottom: calc(2.6rem + env(safe-area-inset-bottom));
+    min-height: 2.75rem;
+    padding: 0.7rem 1.15rem;
+    border: 0;
+    border-radius: 999px;
+    background: #1c1917;
+    color: white;
+    font-size: 0.98rem;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgb(28 25 23 / 28%);
+    cursor: pointer;
+  }
+
+  .view-fab:focus-visible {
+    outline: 2px solid #1c1917;
+    outline-offset: 3px;
+  }
+
+  body[data-view="map"] .view-fab {
+    bottom: calc(4.5rem + env(safe-area-inset-bottom));
+  }
+
+  body[data-view="map"] .view-fab .fab-map {
+    display: none;
+  }
+
+  body[data-view="map"] .view-fab .fab-list {
+    display: block;
+  }
+
+  body[data-view="list"] .list-pane {
+    padding-bottom: 5.4rem;
+  }
+
   body[data-view="list"] {
     height: 100svh;
     overflow: hidden;

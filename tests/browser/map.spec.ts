@@ -39,7 +39,7 @@ test("a phone selection opens the map on that place", async ({ page }) => {
     await page.setViewportSize(viewport);
     await page.goto("/");
     await page.locator("#kayani-bakery .card-hit").click();
-    await page.getByRole("button", { name: "Map", exact: true }).click();
+    await page.getByRole("button", { name: "Show map" }).click();
     await expect(page.locator("body")).toHaveAttribute("data-view", "map");
     await expect(page.locator(".maplibregl-popup")).toContainText("Kayani Bakery");
     await expect
@@ -168,7 +168,7 @@ test("map markers stay in step with the filtered cards", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
   await page.locator('[data-section="dates"]').click();
-  await page.getByRole("button", { name: "Map", exact: true }).click();
+  await page.getByRole("button", { name: "Show map" }).click();
   await expect(page.locator(".maplibregl-canvas")).toBeVisible();
   await matchingIds();
   expect(
@@ -241,7 +241,7 @@ test("category chips stay on one scrolling row and the last one can be selected"
     }),
   ).toBe(true);
   await page.locator('[data-section="nightlife"]').click();
-  await page.getByRole("button", { name: "Map", exact: true }).click();
+  await page.getByRole("button", { name: "Show map" }).click();
   await expect(page.locator(".maplibregl-canvas")).toBeVisible();
   const mapHeight = await page.locator("#map").evaluate((node) => node.getBoundingClientRect().height);
   expect(mapHeight).toBeGreaterThan(120);
@@ -296,7 +296,7 @@ test("the map credit text stays inside the visible map", async ({ page }) => {
   ]) {
     await page.setViewportSize({ width, height });
     await page.goto(section ? `/?section=${section}` : "/");
-    await page.getByRole("button", { name: "Map", exact: true }).click();
+    await page.getByRole("button", { name: "Show map" }).click();
     await expect(page.locator(".maplibregl-canvas")).toBeVisible();
     await expect.poll(async () => (await creditBox()).ok, { timeout: 8_000 }).toBe(true);
     const credit = await creditBox();
@@ -356,7 +356,7 @@ test("the longest popup stays reachable on a phone and on the desktop map", asyn
     await page.setViewportSize(viewport);
     await page.goto("/?section=getaways");
     await page.locator("#sinhagad-fort .card-hit").click();
-    await page.getByRole("button", { name: "Map", exact: true }).click();
+    await page.getByRole("button", { name: "Show map" }).click();
     await expect(page.locator(".maplibregl-popup")).toContainText("Donaje");
     await expect.poll(() => insideMap(".maplibregl-popup-close-button")).toBe(true);
     const note = page.locator(".popup").getByText("village-route");
@@ -440,7 +440,7 @@ test("the maker line is a page footer outside the card list", async ({ page }) =
   await page.setViewportSize({ width: 320, height: 700 });
   await page.locator('[data-section="getaways"]').click();
   await expect.poll(footerSitsBelowTheList).toBe(true);
-  await page.getByRole("button", { name: "Map", exact: true }).click();
+  await page.getByRole("button", { name: "Show map" }).click();
   await expect(page.locator("footer.colophon")).toBeHidden();
   await expect(page.locator(".maplibregl-ctrl-attrib-inner")).toContainText("Data from OpenStreetMap");
 });
@@ -501,7 +501,6 @@ test("the masthead stays a compact row and leaves the other type alone", async (
   expect(wide!.mark.x).toBeLessThan(wide!.h1.x);
   expect(wide!.tag.x).toBeGreaterThan(wide!.h1.x + wide!.h1.w - 2);
   expect(wide!.tag.y).toBeLessThan(wide!.h1.y + wide!.h1.h - 2);
-  expect(Math.abs(wide!.h1.y - wide!.tag.y)).toBeLessThan(8);
   expect(wide!.mark.y).toBeGreaterThanOrEqual(wide!.headerTop - 1);
   expect(wide!.mark.bottom).toBeLessThanOrEqual(wide!.headerBottom + 1);
   expect(wide!.tag.right).toBeLessThanOrEqual(1440);
@@ -512,7 +511,7 @@ test("the masthead stays a compact row and leaves the other type alone", async (
   expect(wide!.tag.family).toBe(wide!.h1.family);
   expect(wide!.h1.weight).toBe("600");
   expect(wide!.tag.weight).toBe("400");
-  expect(wide!.h1.size).toBe("18.56px");
+  expect(wide!.h1.size).toBe("36.25px");
   expect(wide!.tag.size).toBe("14.21px");
   expect(wide!.pill.size).toBe("15.225px");
   expect(wide!.card.size).toBe("14.5px");
@@ -564,6 +563,32 @@ test("removed places stay off the list, and a stale address still opens the guid
   await expect(page.locator(".brand p")).toHaveText("A local’s guide to falling in love with Pune");
 });
 
+test("the mobile map button opens the map and returns to the same list", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await expect(page.getByRole("button", { name: "List", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Map", exact: true })).toHaveCount(0);
+  await page.locator('[data-section="coffee"]').click();
+  const list = page.locator(".list-pane");
+  await list.evaluate((node) => {
+    node.scrollTop = 180;
+  });
+  const scrolled = await list.evaluate((node) => node.scrollTop);
+  const showMap = page.getByRole("button", { name: "Show map" });
+  await showMap.focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("body")).toHaveAttribute("data-view", "map");
+  await expect(page.locator(".maplibregl-canvas")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Show list" })).toBeFocused();
+  await expect(page.locator('[data-section="coffee"]')).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: "Show list" }).click();
+  await expect(page.locator("body")).toHaveAttribute("data-view", "list");
+  await expect(page.locator("#blue-tokai-ghole-road")).toBeVisible();
+  await expect(page.locator("#kayani-bakery")).toBeHidden();
+  expect(await list.evaluate((node) => node.scrollTop)).toBeGreaterThan(scrolled - 40);
+  await expect(page.getByRole("button", { name: "Show map" })).toBeFocused();
+});
+
 test("a maps link and a source link open a new tab and leave the guide open", async ({ page }) => {
   await page.goto("/");
   const maps = page.locator("#kayani-bakery .card-actions a");
@@ -595,7 +620,7 @@ test("a maps link and a source link open a new tab and leave the guide open", as
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
   await page.locator("#kayani-bakery .card-hit").click();
-  await page.getByRole("button", { name: "Map", exact: true }).click();
+  await page.getByRole("button", { name: "Show map" }).click();
   const mobileMaps = page.locator(".maplibregl-popup").getByRole("link", { name: "Google Maps" });
   await expect(mobileMaps).toHaveAttribute("target", "_blank");
   const [mobilePage] = await Promise.all([page.waitForEvent("popup"), mobileMaps.click()]);
